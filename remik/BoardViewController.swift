@@ -21,7 +21,6 @@ class BoardViewController: UIViewController {
     boardScrollView.contentSize = CGSize(width: contentLength, height: contentLength)
     boardScrollView.maximumZoomScale = 2.0
     
-    
     let pl1 = Player(name: "pl1")
     let pl2 = Player(name: "pl2")
     
@@ -30,7 +29,6 @@ class BoardViewController: UIViewController {
     self.view.addSubview(hand1)
     self.view.addSubview(hand2)
     hand2.hide()
-    
     game = Game(players: [pl1, pl2])
   }
 

@@ -26,6 +26,8 @@
 		281C77BA1F702070003E044C /* joker_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 281C77B51F702070003E044C /* joker_green.png */; };
 		281C77BB1F702070003E044C /* joker_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 281C77B61F702070003E044C /* joker_blue.png */; };
 		281C77BC1F702070003E044C /* joker_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 281C77B71F702070003E044C /* joker_black.png */; };
+		281C77BF1F703236003E044C /* AnimationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77BE1F703236003E044C /* AnimationManager.swift */; };
+		281C77C11F7032C5003E044C /* Deque.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77C01F7032C5003E044C /* Deque.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		281C77B51F702070003E044C /* joker_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joker_green.png; sourceTree = "<group>"; };
 		281C77B61F702070003E044C /* joker_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joker_blue.png; sourceTree = "<group>"; };
 		281C77B71F702070003E044C /* joker_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joker_black.png; sourceTree = "<group>"; };
+		281C77BE1F703236003E044C /* AnimationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationManager.swift; sourceTree = "<group>"; };
+		281C77C01F7032C5003E044C /* Deque.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deque.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +100,7 @@
 			children = (
 				281C77B01F6FE76F003E044C /* Game */,
 				281C77AF1F6FE766003E044C /* Base */,
+				281C77BE1F703236003E044C /* AnimationManager.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -114,6 +119,7 @@
 			children = (
 				281C77AD1F6FE735003E044C /* Event.swift */,
 				281C77A41F6FC626003E044C /* Matrix.swift */,
+				281C77C01F7032C5003E044C /* Deque.swift */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -240,6 +246,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				281C77BF1F703236003E044C /* AnimationManager.swift in Sources */,
 				281C778A1F6FA992003E044C /* BoardViewController.swift in Sources */,
 				281C77AE1F6FE735003E044C /* Event.swift in Sources */,
 				281C779F1F6FB4DE003E044C /* Game.swift in Sources */,
@@ -249,6 +256,7 @@
 				281C77881F6FA992003E044C /* AppDelegate.swift in Sources */,
 				281C77A51F6FC626003E044C /* Matrix.swift in Sources */,
 				281C77A31F6FBAD2003E044C /* Board.swift in Sources */,
+				281C77C11F7032C5003E044C /* Deque.swift in Sources */,
 				281C77A11F6FB506003E044C /* Player.swift in Sources */,
 				281C779D1F6FAE3F003E044C /* ChipsCollection.swift in Sources */,
 			);

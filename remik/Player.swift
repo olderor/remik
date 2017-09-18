@@ -32,9 +32,9 @@ class Player {
     didDrawEvent.raise(data: chip)
   }
   
-  func move(chip: Chip, from: Int, to: Int) {
+  func move(from: Int, to: Int) {
+    move(chip: hand[from]!, to: to)
     hand[from] = nil
-    move(chip: chip, to: to)
   }
   
   func move(chip: Chip, to position: Int) {
