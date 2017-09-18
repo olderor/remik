@@ -18,16 +18,18 @@ enum ChipColor {
   case red,
   green,
   blue,
+  yellow,
   any
   
   static func colored() -> [ChipColor] {
-    return [red, green, blue]
+    return [red, green, blue, yellow]
   }
 
   static func all() -> [ChipColor] {
-    return [red, green, blue, any]
+    return [red, green, blue, yellow, any]
   }
 }
+
 
 class Chip {
   let color: ChipColor
@@ -55,7 +57,8 @@ class NumberChip: Chip {
 class JokerChip: Chip {
   init(color: ChipColor) {
     if color == .any {
-      super.init(color: color, number: nil, text: "", type: .anyJoker)
+      // todo replace j with empty string.
+      super.init(color: color, number: nil, text: "j", type: .anyJoker)
     } else {
       super.init(color: color, number: nil, text: "🃏", type: .coloredJoker)
     }

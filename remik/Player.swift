@@ -10,8 +10,10 @@ import Foundation
 
 class Player {
   var hand: [Chip?]
-  var name: String
+  let name: String
   var handLastIndex = 0
+  
+  private let didDrawEvent = Event<Chip>()
   
   init(name: String) {
     self.name = name
@@ -19,10 +21,15 @@ class Player {
     self.hand = [Chip?](repeating: nil, count: 90)
   }
   
+  func addDidDrawEventListener(handler: @escaping (Chip) -> ()) {
+    didDrawEvent.addHandler(handler: handler)
+  }
+  
   func draw(chip: Chip) {
     chip.handIndex = handLastIndex
     hand[handLastIndex] = chip
     handLastIndex += 1
+    didDrawEvent.raise(data: chip)
   }
   
   func move(chip: Chip, from: Int, to: Int) {
@@ -35,3 +42,4 @@ class Player {
     hand[position] = chip
   }
 }
+

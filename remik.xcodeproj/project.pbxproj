@@ -19,6 +19,8 @@
 		281C77A31F6FBAD2003E044C /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77A21F6FBAD2003E044C /* Board.swift */; };
 		281C77A51F6FC626003E044C /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77A41F6FC626003E044C /* Matrix.swift */; };
 		281C77AA1F6FDDB9003E044C /* HandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77A91F6FDDB9003E044C /* HandView.swift */; };
+		281C77AC1F6FE13C003E044C /* ChipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77AB1F6FE13C003E044C /* ChipView.swift */; };
+		281C77AE1F6FE735003E044C /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77AD1F6FE735003E044C /* Event.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		281C77A21F6FBAD2003E044C /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		281C77A41F6FC626003E044C /* Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
 		281C77A91F6FDDB9003E044C /* HandView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandView.swift; sourceTree = "<group>"; };
+		281C77AB1F6FE13C003E044C /* ChipView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChipView.swift; sourceTree = "<group>"; };
+		281C77AD1F6FE735003E044C /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,12 +87,8 @@
 		281C779B1F6FAE28003E044C /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				281C77991F6FAD9F003E044C /* Chip.swift */,
-				281C779C1F6FAE3F003E044C /* ChipsCollection.swift */,
-				281C779E1F6FB4DE003E044C /* Game.swift */,
-				281C77A01F6FB506003E044C /* Player.swift */,
-				281C77A21F6FBAD2003E044C /* Board.swift */,
-				281C77A41F6FC626003E044C /* Matrix.swift */,
+				281C77B01F6FE76F003E044C /* Game */,
+				281C77AF1F6FE766003E044C /* Base */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -97,8 +97,30 @@
 			isa = PBXGroup;
 			children = (
 				281C77A91F6FDDB9003E044C /* HandView.swift */,
+				281C77AB1F6FE13C003E044C /* ChipView.swift */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		281C77AF1F6FE766003E044C /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				281C77AD1F6FE735003E044C /* Event.swift */,
+				281C77A41F6FC626003E044C /* Matrix.swift */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		281C77B01F6FE76F003E044C /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				281C77991F6FAD9F003E044C /* Chip.swift */,
+				281C779C1F6FAE3F003E044C /* ChipsCollection.swift */,
+				281C779E1F6FB4DE003E044C /* Game.swift */,
+				281C77A01F6FB506003E044C /* Player.swift */,
+				281C77A21F6FBAD2003E044C /* Board.swift */,
+			);
+			name = Game;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -175,7 +197,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				281C778A1F6FA992003E044C /* ViewController.swift in Sources */,
+				281C77AE1F6FE735003E044C /* Event.swift in Sources */,
 				281C779F1F6FB4DE003E044C /* Game.swift in Sources */,
+				281C77AC1F6FE13C003E044C /* ChipView.swift in Sources */,
 				281C779A1F6FAD9F003E044C /* Chip.swift in Sources */,
 				281C77AA1F6FDDB9003E044C /* HandView.swift in Sources */,
 				281C77881F6FA992003E044C /* AppDelegate.swift in Sources */,
