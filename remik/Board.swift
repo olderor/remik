@@ -9,8 +9,7 @@
 import Foundation
 
 enum BoardError: Error {
-  case cellIsAlreadyBusy(cell: Cell),
-  noChipInTheCell(cell: Cell)
+  case cellIsAlreadyBusy(cell: Cell)
 }
 
 enum VerificationError: Error {
@@ -41,9 +40,6 @@ class Board {
   }
   
   func moveChip(from: Cell, to: Cell) throws {
-    guard updatedState[from.row][from.column] != nil else {
-      throw BoardError.noChipInTheCell(cell: from)
-    }
     guard updatedState[to.row][to.column] == nil else {
       throw BoardError.cellIsAlreadyBusy(cell: to)
     }

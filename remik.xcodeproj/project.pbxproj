@@ -18,6 +18,7 @@
 		281C77A11F6FB506003E044C /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77A01F6FB506003E044C /* Player.swift */; };
 		281C77A31F6FBAD2003E044C /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77A21F6FBAD2003E044C /* Board.swift */; };
 		281C77A51F6FC626003E044C /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77A41F6FC626003E044C /* Matrix.swift */; };
+		281C77AA1F6FDDB9003E044C /* HandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77A91F6FDDB9003E044C /* HandView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		281C77A01F6FB506003E044C /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		281C77A21F6FBAD2003E044C /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		281C77A41F6FC626003E044C /* Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
+		281C77A91F6FDDB9003E044C /* HandView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 		281C77861F6FA992003E044C /* remik */ = {
 			isa = PBXGroup;
 			children = (
+				281C77A81F6FDD80003E044C /* Views */,
 				281C779B1F6FAE28003E044C /* Models */,
 				281C77871F6FA992003E044C /* AppDelegate.swift */,
 				281C77891F6FA992003E044C /* ViewController.swift */,
@@ -88,6 +91,14 @@
 				281C77A41F6FC626003E044C /* Matrix.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		281C77A81F6FDD80003E044C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				281C77A91F6FDDB9003E044C /* HandView.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,6 +177,7 @@
 				281C778A1F6FA992003E044C /* ViewController.swift in Sources */,
 				281C779F1F6FB4DE003E044C /* Game.swift in Sources */,
 				281C779A1F6FAD9F003E044C /* Chip.swift in Sources */,
+				281C77AA1F6FDDB9003E044C /* HandView.swift in Sources */,
 				281C77881F6FA992003E044C /* AppDelegate.swift in Sources */,
 				281C77A51F6FC626003E044C /* Matrix.swift in Sources */,
 				281C77A31F6FBAD2003E044C /* Board.swift in Sources */,
