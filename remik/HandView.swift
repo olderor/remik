@@ -22,7 +22,6 @@ class HandView: UIScrollView {
     super.init(frame: frame)
     self.backgroundColor = UIColor.black
     player.addDidDrawEventListener(handler: didDraw)
-    self.contentSize = CGSize(width: (chipDefaultViewSize + chipDefaultOffset) * CGFloat(player.hand.count), height: self.frame.size.height)
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -36,6 +35,7 @@ class HandView: UIScrollView {
              width: chipDefaultViewSize,
              height: chipDefaultViewSize))
     chipOffset += chipDefaultOffset + chipDefaultViewSize
+    self.contentSize = CGSize(width: (chipDefaultViewSize + chipDefaultOffset) * CGFloat(player.handLastIndex), height: self.frame.size.height)
     self.addSubview(chipView)
   }
   
