@@ -1,0 +1,311 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		281C77881F6FA992003E044C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77871F6FA992003E044C /* AppDelegate.swift */; };
+		281C778A1F6FA992003E044C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77891F6FA992003E044C /* ViewController.swift */; };
+		281C778D1F6FA992003E044C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 281C778B1F6FA992003E044C /* Main.storyboard */; };
+		281C778F1F6FA992003E044C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 281C778E1F6FA992003E044C /* Assets.xcassets */; };
+		281C77921F6FA992003E044C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 281C77901F6FA992003E044C /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		281C77841F6FA992003E044C /* remik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = remik.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		281C77871F6FA992003E044C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		281C77891F6FA992003E044C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		281C778C1F6FA992003E044C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		281C778E1F6FA992003E044C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		281C77911F6FA992003E044C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		281C77931F6FA992003E044C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		281C77811F6FA992003E044C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		281C777B1F6FA992003E044C = {
+			isa = PBXGroup;
+			children = (
+				281C77861F6FA992003E044C /* remik */,
+				281C77851F6FA992003E044C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		281C77851F6FA992003E044C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				281C77841F6FA992003E044C /* remik.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		281C77861F6FA992003E044C /* remik */ = {
+			isa = PBXGroup;
+			children = (
+				281C77871F6FA992003E044C /* AppDelegate.swift */,
+				281C77891F6FA992003E044C /* ViewController.swift */,
+				281C778B1F6FA992003E044C /* Main.storyboard */,
+				281C778E1F6FA992003E044C /* Assets.xcassets */,
+				281C77901F6FA992003E044C /* LaunchScreen.storyboard */,
+				281C77931F6FA992003E044C /* Info.plist */,
+			);
+			path = remik;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		281C77831F6FA992003E044C /* remik */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 281C77961F6FA992003E044C /* Build configuration list for PBXNativeTarget "remik" */;
+			buildPhases = (
+				281C77801F6FA992003E044C /* Sources */,
+				281C77811F6FA992003E044C /* Frameworks */,
+				281C77821F6FA992003E044C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = remik;
+			productName = remik;
+			productReference = 281C77841F6FA992003E044C /* remik.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		281C777C1F6FA992003E044C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "Bohdan Yevchenko";
+				TargetAttributes = {
+					281C77831F6FA992003E044C = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = DHFYQ55Q3U;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 281C777F1F6FA992003E044C /* Build configuration list for PBXProject "remik" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 281C777B1F6FA992003E044C;
+			productRefGroup = 281C77851F6FA992003E044C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				281C77831F6FA992003E044C /* remik */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		281C77821F6FA992003E044C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				281C77921F6FA992003E044C /* LaunchScreen.storyboard in Resources */,
+				281C778F1F6FA992003E044C /* Assets.xcassets in Resources */,
+				281C778D1F6FA992003E044C /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		281C77801F6FA992003E044C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				281C778A1F6FA992003E044C /* ViewController.swift in Sources */,
+				281C77881F6FA992003E044C /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		281C778B1F6FA992003E044C /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				281C778C1F6FA992003E044C /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		281C77901F6FA992003E044C /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				281C77911F6FA992003E044C /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		281C77941F6FA992003E044C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		281C77951F6FA992003E044C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		281C77971F6FA992003E044C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = DHFYQ55Q3U;
+				INFOPLIST_FILE = remik/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.olderor.remik;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		281C77981F6FA992003E044C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = DHFYQ55Q3U;
+				INFOPLIST_FILE = remik/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.olderor.remik;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		281C777F1F6FA992003E044C /* Build configuration list for PBXProject "remik" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				281C77941F6FA992003E044C /* Debug */,
+				281C77951F6FA992003E044C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		281C77961F6FA992003E044C /* Build configuration list for PBXNativeTarget "remik" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				281C77971F6FA992003E044C /* Debug */,
+				281C77981F6FA992003E044C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 281C777C1F6FA992003E044C /* Project object */;
+}
