@@ -41,7 +41,7 @@ class Matrix<Element> {
     self.rows = rows
     self.columns = columns
     self.contents = [[Element]]()
-    for _ in 0 ..< rows {
+    for _ in 0..<rows {
       self.contents.append([Element](repeating: repeatedValue, count: columns))
     }
   }
@@ -55,10 +55,10 @@ class Matrix<Element> {
     }
     
     self.contents = [[Element]]()
-    for rowIndex in 0 ..< contents.count {
+    for rowIndex in 0..<contents.count {
       assert(self.columns == contents[rowIndex].count)
       self.contents.append([Element]())
-      for columnIndex in 0 ..< contents[rowIndex].count {
+      for columnIndex in 0..<contents[rowIndex].count {
         self.contents[rowIndex].append(contents[rowIndex][columnIndex])
       }
     }
@@ -69,9 +69,9 @@ class Matrix<Element> {
     self.columns = contents.columns
     
     self.contents = [[Element]]()
-    for rowIndex in 0 ..< contents.rows {
+    for rowIndex in 0..<contents.rows {
       self.contents.append([Element]())
-      for columnIndex in 0 ..< contents.columns {
+      for columnIndex in 0..<contents.columns {
         self.contents[rowIndex].append(contents[rowIndex][columnIndex])
       }
     }

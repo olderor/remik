@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		281C77881F6FA992003E044C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77871F6FA992003E044C /* AppDelegate.swift */; };
-		281C778A1F6FA992003E044C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77891F6FA992003E044C /* ViewController.swift */; };
+		281C778A1F6FA992003E044C /* BoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77891F6FA992003E044C /* BoardViewController.swift */; };
 		281C778D1F6FA992003E044C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 281C778B1F6FA992003E044C /* Main.storyboard */; };
 		281C778F1F6FA992003E044C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 281C778E1F6FA992003E044C /* Assets.xcassets */; };
 		281C77921F6FA992003E044C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 281C77901F6FA992003E044C /* LaunchScreen.storyboard */; };
@@ -21,12 +21,17 @@
 		281C77AA1F6FDDB9003E044C /* HandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77A91F6FDDB9003E044C /* HandView.swift */; };
 		281C77AC1F6FE13C003E044C /* ChipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77AB1F6FE13C003E044C /* ChipView.swift */; };
 		281C77AE1F6FE735003E044C /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77AD1F6FE735003E044C /* Event.swift */; };
+		281C77B81F702070003E044C /* joker_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 281C77B31F702070003E044C /* joker_yellow.png */; };
+		281C77B91F702070003E044C /* joker_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 281C77B41F702070003E044C /* joker_red.png */; };
+		281C77BA1F702070003E044C /* joker_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 281C77B51F702070003E044C /* joker_green.png */; };
+		281C77BB1F702070003E044C /* joker_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 281C77B61F702070003E044C /* joker_blue.png */; };
+		281C77BC1F702070003E044C /* joker_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 281C77B71F702070003E044C /* joker_black.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		281C77841F6FA992003E044C /* remik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = remik.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		281C77871F6FA992003E044C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		281C77891F6FA992003E044C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		281C77891F6FA992003E044C /* BoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewController.swift; sourceTree = "<group>"; };
 		281C778C1F6FA992003E044C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		281C778E1F6FA992003E044C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		281C77911F6FA992003E044C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -40,6 +45,11 @@
 		281C77A91F6FDDB9003E044C /* HandView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandView.swift; sourceTree = "<group>"; };
 		281C77AB1F6FE13C003E044C /* ChipView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChipView.swift; sourceTree = "<group>"; };
 		281C77AD1F6FE735003E044C /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		281C77B31F702070003E044C /* joker_yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joker_yellow.png; sourceTree = "<group>"; };
+		281C77B41F702070003E044C /* joker_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joker_red.png; sourceTree = "<group>"; };
+		281C77B51F702070003E044C /* joker_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joker_green.png; sourceTree = "<group>"; };
+		281C77B61F702070003E044C /* joker_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joker_blue.png; sourceTree = "<group>"; };
+		281C77B71F702070003E044C /* joker_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joker_black.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,14 +82,11 @@
 		281C77861F6FA992003E044C /* remik */ = {
 			isa = PBXGroup;
 			children = (
+				281C77B21F702056003E044C /* Assets */,
+				281C77B11F702043003E044C /* System */,
 				281C77A81F6FDD80003E044C /* Views */,
 				281C779B1F6FAE28003E044C /* Models */,
-				281C77871F6FA992003E044C /* AppDelegate.swift */,
-				281C77891F6FA992003E044C /* ViewController.swift */,
-				281C778B1F6FA992003E044C /* Main.storyboard */,
-				281C778E1F6FA992003E044C /* Assets.xcassets */,
-				281C77901F6FA992003E044C /* LaunchScreen.storyboard */,
-				281C77931F6FA992003E044C /* Info.plist */,
+				281C77891F6FA992003E044C /* BoardViewController.swift */,
 			);
 			path = remik;
 			sourceTree = "<group>";
@@ -121,6 +128,38 @@
 				281C77A21F6FBAD2003E044C /* Board.swift */,
 			);
 			name = Game;
+			sourceTree = "<group>";
+		};
+		281C77B11F702043003E044C /* System */ = {
+			isa = PBXGroup;
+			children = (
+				281C77901F6FA992003E044C /* LaunchScreen.storyboard */,
+				281C77871F6FA992003E044C /* AppDelegate.swift */,
+				281C778B1F6FA992003E044C /* Main.storyboard */,
+				281C77931F6FA992003E044C /* Info.plist */,
+			);
+			name = System;
+			sourceTree = "<group>";
+		};
+		281C77B21F702056003E044C /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				281C778E1F6FA992003E044C /* Assets.xcassets */,
+				281C77BD1F70207F003E044C /* images */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		281C77BD1F70207F003E044C /* images */ = {
+			isa = PBXGroup;
+			children = (
+				281C77B31F702070003E044C /* joker_yellow.png */,
+				281C77B41F702070003E044C /* joker_red.png */,
+				281C77B51F702070003E044C /* joker_green.png */,
+				281C77B61F702070003E044C /* joker_blue.png */,
+				281C77B71F702070003E044C /* joker_black.png */,
+			);
+			name = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -184,8 +223,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				281C77921F6FA992003E044C /* LaunchScreen.storyboard in Resources */,
+				281C77BC1F702070003E044C /* joker_black.png in Resources */,
+				281C77B81F702070003E044C /* joker_yellow.png in Resources */,
 				281C778F1F6FA992003E044C /* Assets.xcassets in Resources */,
+				281C77B91F702070003E044C /* joker_red.png in Resources */,
+				281C77BB1F702070003E044C /* joker_blue.png in Resources */,
 				281C778D1F6FA992003E044C /* Main.storyboard in Resources */,
+				281C77BA1F702070003E044C /* joker_green.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,7 +240,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				281C778A1F6FA992003E044C /* ViewController.swift in Sources */,
+				281C778A1F6FA992003E044C /* BoardViewController.swift in Sources */,
 				281C77AE1F6FE735003E044C /* Event.swift in Sources */,
 				281C779F1F6FB4DE003E044C /* Game.swift in Sources */,
 				281C77AC1F6FE13C003E044C /* ChipView.swift in Sources */,

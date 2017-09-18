@@ -68,7 +68,7 @@ class Board {
     
     var jokersCount = 0
     var colors = Set<ChipColor>()
-    for column in range.fromColumn ..< range.toColumn {
+    for column in range.fromColumn..<range.toColumn {
       if updatedState[range.row][column]!.type == .anyJoker {
         jokersCount += 1
         continue
@@ -89,7 +89,7 @@ class Board {
           startColumn += 1
       }
       let correctNumber = updatedState[range.row][startColumn]!.number!
-      for column in (startColumn + 1) ..< range.toColumn {
+      for column in (startColumn + 1)..<range.toColumn {
         if let number = updatedState[range.row][column]!.number {
           if number != correctNumber {
             return .incorrectOneColorNumber(
@@ -142,7 +142,7 @@ class Board {
     // Compare all other chips in the sequence using the difference.
     // We can predict jokers value.
     var currentNumber = secondNumber
-    for column in (secondNumberedColumn + 1) ..< range.toColumn {
+    for column in (secondNumberedColumn + 1)..<range.toColumn {
       currentNumber += difference
       if let number = updatedState[range.row][column]!.number {
         if number != currentNumber {
@@ -180,7 +180,7 @@ class Board {
   
   func verifyBoardState() -> VerificationResult {
     let result = VerificationResult()
-    for rowIndex in 0 ..< updatedState.rows {
+    for rowIndex in 0..<updatedState.rows {
       var offset = 0
       while let range = findBusyCellRange(row: rowIndex, columnOffset: offset) {
         if let error = verifyCellRange(range: range) {

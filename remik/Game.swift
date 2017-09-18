@@ -24,7 +24,7 @@ class Game {
     board = Board(rows: 100, columns: 100)
     
     for player in players {
-      for _ in 0 ..< initialHandSize {
+      for _ in 0..<initialHandSize {
         do {
           try drawChip(player: player)
         } catch { }

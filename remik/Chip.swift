@@ -18,15 +18,15 @@ enum ChipColor {
   case red,
   green,
   blue,
-  yellow,
+  black,
   any
   
   static func colored() -> [ChipColor] {
-    return [red, green, blue, yellow]
+    return [red, green, blue, black]
   }
 
   static func all() -> [ChipColor] {
-    return [red, green, blue, yellow, any]
+    return [red, green, blue, black, any]
   }
 }
 

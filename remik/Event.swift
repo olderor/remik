@@ -8,8 +8,8 @@
 
 import Foundation
 
-class Event<T> {
-  typealias EventHandler = (T) -> ()
+class Event<Data> {
+  typealias EventHandler = (Data) -> ()
   
   private var eventHandlers = [EventHandler]()
   
@@ -17,7 +17,7 @@ class Event<T> {
     eventHandlers.append(handler)
   }
   
-  func raise(data: T) {
+  func raise(data: Data) {
     for handler in eventHandlers {
       handler(data)
     }

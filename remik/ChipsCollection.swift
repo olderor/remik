@@ -25,6 +25,12 @@ class ChipsCollection {
   private var collection: [Chip]
   private var currentChipIndex = -1
   
+  static let minNumber = 1
+  static let maxNumber = 17
+  static let numberCount = 2
+  static let coloredJokersCount = 100
+  static let uncoloredJokersCount = 14
+  
   init() {
     collection = ChipsCollection.createNewCollection()
   }
@@ -39,19 +45,21 @@ class ChipsCollection {
   // 4x uncolored jokers
   static func createNewCollection() -> [Chip] {
     var collection = [Chip]()
-    for _ in 0..<2 {
-      for number in 1...17 {
+    for _ in 0..<numberCount {
+      for number in minNumber...maxNumber {
         for color in ChipColor.colored() {
           let chip = NumberChip(color: color, number: number)
           collection.append(chip)
         }
       }
     }
-    for color in ChipColor.colored() {
-      let chip = JokerChip(color: color)
-      collection.append(chip)
+    for _ in 0..<coloredJokersCount {
+      for color in ChipColor.colored() {
+        let chip = JokerChip(color: color)
+        collection.append(chip)
+      }
     }
-    for _ in 0..<4 {
+    for _ in 0..<uncoloredJokersCount {
       let chip = JokerChip(color: .any)
       collection.append(chip)
     }
