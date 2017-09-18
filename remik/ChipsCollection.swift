@@ -17,9 +17,13 @@ extension Array {
   }
 }
 
+enum ChipsCollectionError: Error {
+  case noChipsLeft
+}
+
 class ChipsCollection {
-  
-  var collection: [Chip]
+  private var collection: [Chip]
+  private var currentChipIndex = -1
   
   init() {
     collection = ChipsCollection.createNewCollection()
@@ -36,9 +40,9 @@ class ChipsCollection {
   static func createNewCollection() -> [Chip] {
     var collection = [Chip]()
     for _ in 0..<2 {
-      for index in 1...17 {
+      for number in 1...17 {
         for color in ChipColor.colored() {
-          let chip = Chip(color: color, text: "\(index)")
+          let chip = NumberChip(color: color, number: number)
           collection.append(chip)
         }
       }
@@ -52,5 +56,13 @@ class ChipsCollection {
       collection.append(chip)
     }
     return collection
+  }
+  
+  func drawChip() throws -> Chip {
+    if (currentChipIndex + 1 >= collection.count) {
+      throw ChipsCollectionError.noChipsLeft
+    }
+    currentChipIndex += 1
+    return collection[currentChipIndex]
   }
 }

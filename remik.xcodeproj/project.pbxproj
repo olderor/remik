@@ -14,6 +14,10 @@
 		281C77921F6FA992003E044C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 281C77901F6FA992003E044C /* LaunchScreen.storyboard */; };
 		281C779A1F6FAD9F003E044C /* Chip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77991F6FAD9F003E044C /* Chip.swift */; };
 		281C779D1F6FAE3F003E044C /* ChipsCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C779C1F6FAE3F003E044C /* ChipsCollection.swift */; };
+		281C779F1F6FB4DE003E044C /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C779E1F6FB4DE003E044C /* Game.swift */; };
+		281C77A11F6FB506003E044C /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77A01F6FB506003E044C /* Player.swift */; };
+		281C77A31F6FBAD2003E044C /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77A21F6FBAD2003E044C /* Board.swift */; };
+		281C77A51F6FC626003E044C /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77A41F6FC626003E044C /* Matrix.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +30,10 @@
 		281C77931F6FA992003E044C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		281C77991F6FAD9F003E044C /* Chip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chip.swift; sourceTree = "<group>"; };
 		281C779C1F6FAE3F003E044C /* ChipsCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChipsCollection.swift; sourceTree = "<group>"; };
+		281C779E1F6FB4DE003E044C /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		281C77A01F6FB506003E044C /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		281C77A21F6FBAD2003E044C /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		281C77A41F6FC626003E044C /* Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +82,10 @@
 			children = (
 				281C77991F6FAD9F003E044C /* Chip.swift */,
 				281C779C1F6FAE3F003E044C /* ChipsCollection.swift */,
+				281C779E1F6FB4DE003E044C /* Game.swift */,
+				281C77A01F6FB506003E044C /* Player.swift */,
+				281C77A21F6FBAD2003E044C /* Board.swift */,
+				281C77A41F6FC626003E044C /* Matrix.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -152,8 +164,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				281C778A1F6FA992003E044C /* ViewController.swift in Sources */,
+				281C779F1F6FB4DE003E044C /* Game.swift in Sources */,
 				281C779A1F6FAD9F003E044C /* Chip.swift in Sources */,
 				281C77881F6FA992003E044C /* AppDelegate.swift in Sources */,
+				281C77A51F6FC626003E044C /* Matrix.swift in Sources */,
+				281C77A31F6FBAD2003E044C /* Board.swift in Sources */,
+				281C77A11F6FB506003E044C /* Player.swift in Sources */,
 				281C779D1F6FAE3F003E044C /* ChipsCollection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,6 +8,12 @@
 
 import Foundation
 
+enum ChipType {
+  case number,
+  coloredJoker,
+  anyJoker
+}
+
 enum ChipColor {
   case red,
   green,
@@ -26,23 +32,29 @@ enum ChipColor {
 class Chip {
   let color: ChipColor
   let text: String
+  let type: ChipType
+  let number: Int?
   
-  init(color: ChipColor, text: String) {
+  init(color: ChipColor, number: Int?, text: String, type: ChipType) {
     self.color = color
+    self.number = number
     self.text = text
+    self.type = type
   }
-  
-  convenience init(color: ChipColor, number: Int) {
-    self.init(color: color, text: "\(number)")
+}
+
+class NumberChip: Chip {
+  init(color: ChipColor, number: Int) {
+    super.init(color: color, number: number, text: "\(number)", type: .number)
   }
 }
 
 class JokerChip: Chip {
   init(color: ChipColor) {
     if color == .any {
-      super.init(color: color, text: "")
+      super.init(color: color, number: nil, text: "", type: .anyJoker)
     } else {
-      super.init(color: color, text: "🃏")
+      super.init(color: color, number: nil, text: "🃏", type: .coloredJoker)
     }
   }
 }
