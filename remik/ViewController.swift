@@ -8,11 +8,18 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class BoardViewController: UIViewController {
 
+  @IBOutlet weak var handScrollView: UIScrollView!
+  
+  @IBOutlet weak var boardScrollView: UIScrollView!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    let contentLength = max(self.view.bounds.size.width, self.view.bounds.size.height) * 2
+    boardScrollView.contentSize = CGSize(width: contentLength, height: contentLength)
+    boardScrollView.maximumZoomScale = 2.0
   }
 
   override func didReceiveMemoryWarning() {
