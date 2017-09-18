@@ -13,6 +13,14 @@ enum ChipColor {
   green,
   blue,
   any
+  
+  static func colored() -> [ChipColor] {
+    return [red, green, blue]
+  }
+
+  static func all() -> [ChipColor] {
+    return [red, green, blue, any]
+  }
 }
 
 class Chip {
@@ -22,5 +30,19 @@ class Chip {
   init(color: ChipColor, text: String) {
     self.color = color
     self.text = text
+  }
+  
+  convenience init(color: ChipColor, number: Int) {
+    self.init(color: color, text: "\(number)")
+  }
+}
+
+class JokerChip: Chip {
+  init(color: ChipColor) {
+    if color == .any {
+      super.init(color: color, text: "")
+    } else {
+      super.init(color: color, text: "🃏")
+    }
   }
 }

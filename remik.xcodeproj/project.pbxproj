@@ -13,6 +13,7 @@
 		281C778F1F6FA992003E044C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 281C778E1F6FA992003E044C /* Assets.xcassets */; };
 		281C77921F6FA992003E044C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 281C77901F6FA992003E044C /* LaunchScreen.storyboard */; };
 		281C779A1F6FAD9F003E044C /* Chip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77991F6FAD9F003E044C /* Chip.swift */; };
+		281C779D1F6FAE3F003E044C /* ChipsCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C779C1F6FAE3F003E044C /* ChipsCollection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		281C77911F6FA992003E044C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		281C77931F6FA992003E044C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		281C77991F6FAD9F003E044C /* Chip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chip.swift; sourceTree = "<group>"; };
+		281C779C1F6FAE3F003E044C /* ChipsCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChipsCollection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +58,24 @@
 		281C77861F6FA992003E044C /* remik */ = {
 			isa = PBXGroup;
 			children = (
+				281C779B1F6FAE28003E044C /* Models */,
 				281C77871F6FA992003E044C /* AppDelegate.swift */,
 				281C77891F6FA992003E044C /* ViewController.swift */,
 				281C778B1F6FA992003E044C /* Main.storyboard */,
 				281C778E1F6FA992003E044C /* Assets.xcassets */,
 				281C77901F6FA992003E044C /* LaunchScreen.storyboard */,
 				281C77931F6FA992003E044C /* Info.plist */,
-				281C77991F6FAD9F003E044C /* Chip.swift */,
 			);
 			path = remik;
+			sourceTree = "<group>";
+		};
+		281C779B1F6FAE28003E044C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				281C77991F6FAD9F003E044C /* Chip.swift */,
+				281C779C1F6FAE3F003E044C /* ChipsCollection.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,6 +154,7 @@
 				281C778A1F6FA992003E044C /* ViewController.swift in Sources */,
 				281C779A1F6FAD9F003E044C /* Chip.swift in Sources */,
 				281C77881F6FA992003E044C /* AppDelegate.swift in Sources */,
+				281C779D1F6FAE3F003E044C /* ChipsCollection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
