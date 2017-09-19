@@ -9,7 +9,7 @@
 import UIKit
 
 extension ChipColor {
-  func getUIColor() -> UIColor {
+  func getTextColor() -> UIColor {
     switch self {
     case .red:
       return UIColor.init(red: 251.0/255.0, green: 0.0, blue: 7.0/255.0, alpha: 1.0)
@@ -21,6 +21,21 @@ extension ChipColor {
       return UIColor.black
     default:
       return UIColor.clear
+    }
+  }
+  
+  func getBorderColor() -> UIColor {
+    switch self {
+    case .red:
+      return UIColor.init(red: 251.0/255.0, green: 0.0, blue: 7.0/255.0, alpha: 1.0)
+    case .green:
+      return UIColor.init(red: 21.0/255.0, green: 158.0/255.0, blue: 24.0/255.0, alpha: 1.0)
+    case .blue:
+      return UIColor.init(red: 0.0, green: 0.0, blue: 202.0/255.0, alpha: 1.0)
+    case .black:
+      return UIColor.black
+    default:
+      return UIColor.black
     }
   }
   
@@ -47,11 +62,18 @@ class ChipView: UIView {
   
   let imageViewOffset: CGFloat = 5
   
+  static let chipDefaultOffsetX: CGFloat  = 10
+  static let chipDefaultOffsetY: CGFloat  = 20
+  static let chipDefaultViewWidth: CGFloat = 50
+  static let chipDefaultViewHeight: CGFloat = 50
+  
   init(chip: Chip, frame: CGRect) {
     self.chip = chip
     super.init(frame: frame)
     backgroundColor = UIColor.white
     layer.cornerRadius = 5.0
+    layer.borderColor = chip.color.getBorderColor().cgColor
+    layer.borderWidth = 2.0
     switch chip.type {
     case .coloredJoker:
       imageView = UIImageView(frame: CGRect(x: imageViewOffset, y: imageViewOffset, width: frame.width - 2 * imageViewOffset, height: frame.height - 2 * imageViewOffset))
@@ -62,7 +84,7 @@ class ChipView: UIView {
       label = UILabel(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
       label.text = chip.text
       label.textAlignment = .center
-      label.textColor = chip.color.getUIColor()
+      label.textColor = chip.color.getTextColor()
       label.font = UIFont.boldSystemFont(ofSize: 20.0)
       // todo: do something with a font.
       self.addSubview(label)

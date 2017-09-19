@@ -9,25 +9,46 @@
 import UIKit
 
 class BoardViewController: UIViewController {
-  
-  @IBOutlet weak var boardScrollView: UIScrollView!
-  
   var game: Game!
+  
+  var boardView: BoardView!
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    let contentLength = max(self.view.bounds.size.width, self.view.bounds.size.height) * 2
-    boardScrollView.contentSize = CGSize(width: contentLength, height: contentLength)
-    boardScrollView.maximumZoomScale = 2.0
+    boardView = BoardView(frame:
+      CGRect(x: 0,
+             y: 0,
+             width: self.view.bounds.size.width,
+             height: self.view.bounds.size.height -
+              (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight)))
+    boardView.maximumZoomScale = 2.0
+    boardView.backgroundColor = UIColor.brown
+    self.view.addSubview(boardView)
     
     let pl1 = Player(name: "pl1")
     let pl2 = Player(name: "pl2")
     
-    let hand1 = HandView(player: pl1, frame: CGRect(x: 0, y: self.view.bounds.size.height - 100, width: self.view.bounds.size.width, height: 100))
-    let hand2 = HandView(player: pl2, frame: CGRect(x: 0, y: self.view.bounds.size.height - 100, width: self.view.bounds.size.width, height: 100))
+    let hand1 = HandView(player: pl1, frame: CGRect(
+      x: 0,
+      y: self.view.bounds.size.height - (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight),
+      width: self.view.bounds.size.width,
+      height: (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight)))
+    
+    let hand2 = HandView(player: pl2, frame: CGRect(
+      x: 0,
+      y: self.view.bounds.size.height - (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight),
+      width: self.view.bounds.size.width,
+      height: (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight)))
+    
+    
     self.view.addSubview(hand1)
     self.view.addSubview(hand2)
+    
+    boardView.dragAndDropProcessor.mainView = self.view
+    hand1.dragAndDropProcessor.mainView = self.view
+    hand2.dragAndDropProcessor.mainView = self.view
+    
     hand2.hide()
     game = Game(players: [pl1, pl2])
   }
@@ -35,6 +56,15 @@ class BoardViewController: UIViewController {
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
+  }
+  
+  func moveToBoard(chipView: ChipView, gestureRecognizer: UIGestureRecognizer) {
+    
+    let locationInBoard = gestureRecognizer.location(in: boardView)
+    
+    chipView.removeFromSuperview()
+    boardView.addSubview(chipView)
+    boardView.center = locationInBoard
   }
 }
 

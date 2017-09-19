@@ -18,7 +18,7 @@ class Player {
   init(name: String) {
     self.name = name
     // TODO Think about hand size.
-    self.hand = [Chip?](repeating: nil, count: 90)
+    self.hand = [Chip?](repeating: nil, count: 0)
   }
   
   func addDidDrawEventListener(handler: @escaping (Chip) -> ()) {
@@ -26,7 +26,10 @@ class Player {
   }
   
   func draw(chip: Chip) {
-    chip.handIndex = handLastIndex
+    chip.cell = Cell(row: 0, column: handLastIndex)
+    if (handLastIndex == hand.count) {
+      hand.append(nil)
+    }
     hand[handLastIndex] = chip
     handLastIndex += 1
     didDrawEvent.raise(data: chip)

@@ -16,6 +16,10 @@ class Cell {
     self.row = row
     self.column = column
   }
+  
+  static func !=(first: Cell, second: Cell) -> Bool {
+    return first.row != second.row || first.column != second.column
+  }
 }
 
 // Row is fixed, column is the range.
@@ -33,8 +37,8 @@ class CellRange {
 }
 
 class Matrix<Element> {
-  let rows: Int
-  let columns: Int
+  private(set) var rows: Int
+  private(set) var columns: Int
   private var contents: [[Element]]
   
   init(rows: Int, columns: Int, repeatedValue: Element) {
@@ -100,6 +104,13 @@ class Matrix<Element> {
       assert(newValue.count == columns)
       contents[row] = newValue
     }
+  }
+  
+  func addColumn(defaultValue: Element) {
+    for row in 0..<contents.count {
+      contents[row].append(defaultValue)
+    }
+    columns += 1
   }
   
   fileprivate func indexIsValidFor(row: Int, column: Int) -> Bool {

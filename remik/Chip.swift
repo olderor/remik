@@ -36,9 +36,8 @@ class Chip {
   let text: String
   let type: ChipType
   let number: Int?
-  
-  var handIndex: Int?
-  var cell: Cell?
+
+  var cell: Cell!
   
   init(color: ChipColor, number: Int?, text: String, type: ChipType) {
     self.color = color

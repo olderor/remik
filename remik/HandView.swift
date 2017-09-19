@@ -8,31 +8,17 @@
 
 import UIKit
 
-class HandView: UIScrollView, UIGestureRecognizerDelegate {
-  var player: Player
+class HandView: ChipsContainerView {
+  private var player: Player
   
-  let chipDefaultOffset: CGFloat  = 10
-  var chipOffset: CGFloat  = 5
-  let chipDefaultViewSize: CGFloat = 50
-  
-  var panGestureRecognizerHash: Int!
-  
-  var chipViews: [ChipView?]
+  private var chipOffset: CGFloat  = 5
   
   init(player: Player, frame: CGRect) {
     self.player = player
-    chipViews = [ChipView?](repeating: nil, count: player.hand.count)
-    
-    super.init(frame: frame)
+    super.init(frame: frame, rows: 1, columns: player.hand.count)
     
     backgroundColor = UIColor.black
     player.addDidDrawEventListener(handler: didDraw)
-    
-    let panGestureRecognizer = UIPanGestureRecognizer(
-      target: self, action: #selector(panGestureRecognized(gestureRecognizer:)))
-    panGestureRecognizer.delegate = self
-    panGestureRecognizerHash = panGestureRecognizer.hash
-    addGestureRecognizer(panGestureRecognizer)
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -42,17 +28,16 @@ class HandView: UIScrollView, UIGestureRecognizerDelegate {
   func didDraw(chip: Chip) {
     let chipView = ChipView(chip: chip, frame:
       CGRect(x: chipOffset,
-             y: (frame.size.height - chipDefaultViewSize) / 2.0,
-             width: chipDefaultViewSize,
-             height: chipDefaultViewSize))
-    chipOffset += chipDefaultOffset + chipDefaultViewSize
+             y: (frame.size.height - ChipView.chipDefaultViewHeight) / 2.0,
+             width: ChipView.chipDefaultViewWidth,
+             height: ChipView.chipDefaultViewHeight))
+    chipOffset += ChipView.chipDefaultOffsetX + ChipView.chipDefaultViewHeight
     updateContentSize()
     addSubview(chipView)
-    chipViews[chip.handIndex!] = chipView
-  }
-  
-  func updateContentSize() {
-    contentSize = CGSize(width: (chipDefaultViewSize + chipDefaultOffset) * CGFloat(player.handLastIndex), height: self.frame.size.height)
+    while chip.cell.column >= chipViewMatrix.columns {
+      chipViewMatrix.addColumn(defaultValue: nil)
+    }
+    chipViewMatrix[chip.cell.row][chip.cell.column] = chipView
   }
   
   func hide() {
@@ -62,104 +47,18 @@ class HandView: UIScrollView, UIGestureRecognizerDelegate {
   func show() {
     isHidden = false
   }
+
+  override func updateContentSize() {
+    contentSize = CGSize(
+      width: (ChipView.chipDefaultViewWidth + ChipView.chipDefaultOffsetX) * CGFloat(player.handLastIndex),
+      height: (ChipView.chipDefaultViewHeight + ChipView.chipDefaultOffsetY) * CGFloat(chipViewMatrix.rows))
+  }
   
-  func shiftChips(from: Int) {
-    weak var weakSelf = self
-    for index in from..<chipViews.count {
-      weak var weakView = chipViews[index]
-      if let chip = chipViews[index]?.chip {
-        chip.handIndex! += 1
-        AnimationManager.addAnimationBlock {
-          if let weakSelf = weakSelf, let weakView = weakView {
-            weakView.center = CGPoint(
-              x: weakView.center.x + weakSelf.chipDefaultOffset + weakSelf.chipDefaultViewSize,
-              y: weakView.center.y)
-          }
-        }
-      }
-    }
-    
+  override func addColumnToMatrix() {
     player.handLastIndex += 1
-    player.hand.insert(nil, at: from)
-    chipViews.insert(nil, at: from)
-  }
-  
-  private func updateChipViewPosition(index: Int) {
-    weak var weakView = chipViews[index]
-    weak var weakSelf = self
-    AnimationManager.addAnimationBlock {
-      if let weakSelf = weakSelf, let weakView = weakView {
-        weakView.center = CGPoint(
-          x: (weakSelf.chipDefaultOffset + weakSelf.chipDefaultViewSize) * 0.5 +
-          (weakSelf.chipDefaultOffset + weakSelf.chipDefaultViewSize) * CGFloat(index),
-          y: weakSelf.frame.size.height / 2.0)
-      }
+    if player.handLastIndex == player.hand.count {
+      player.hand.append(nil)
     }
-  }
-  
-  func moveChip(from: Int, to: Int) {
-    if chipViews[from] == nil {
-      return
-    }
-    if from != to {
-      var from = from
-      if player.hand[to] != nil {
-        shiftChips(from: to)
-        if from > to {
-          from += 1
-        }
-      }
-      player.move(from: from, to: to)
-      chipViews[to] = chipViews[from]
-      chipViews[from] = nil
-    }
-    updateChipViewPosition(index: to)
-    AnimationManager.addLastAnimationBlock(completion: nil, type: .animation, description: nil)
-    AnimationManager.playAll()
-  }
-  
-  private var movingFrom: Int!
-  
-  func getChipIndexBy(location: CGPoint) -> Int {
-    // todo: test when scrolled
-    return Int(location.x / (chipDefaultViewSize + chipDefaultOffset))
-  }
-  
-  func panGestureRecognized(gestureRecognizer: UIGestureRecognizer) {
-    let panGestureRecognizer = gestureRecognizer as! UIPanGestureRecognizer
-    let state = panGestureRecognizer.state
-    let locationInView = panGestureRecognizer.location(in: self)
-    switch state {
-    case .began:
-      movingFrom = getChipIndexBy(location: locationInView)
-      chipViews[movingFrom]?.layer.zPosition = 100
-      break
-    case .changed:
-      chipViews[movingFrom]?.center = locationInView
-      break
-    case .ended:
-      chipViews[movingFrom]?.layer.zPosition = 0
-      moveChip(from: movingFrom, to: getChipIndexBy(location: locationInView))
-      break
-    default:
-      break
-    }
-  }
-  
-  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-    if gestureRecognizer.hash != panGestureRecognizerHash {
-      return true
-    }
-    let yOffset = (frame.size.height - chipDefaultViewSize) / 2.0
-    let locationInView = touch.location(in: self)
-    if locationInView.y < yOffset ||
-      yOffset + chipDefaultViewSize < locationInView.y {
-      return false
-    }
-    let chipIndex = getChipIndexBy(location: locationInView)
-    if chipViews[chipIndex] == nil {
-      return false
-    }
-    return true
+    super.addColumnToMatrix()
   }
 }
