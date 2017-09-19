@@ -44,19 +44,19 @@ class Board {
   }
   
   func moveChip(from: Cell, to: Cell) throws {
-    guard updatedState[to.row][to.column] == nil else {
+    guard updatedState[to.row, to.column] == nil else {
       throw BoardError.cellIsAlreadyBusy(cell: to)
     }
     
-    swap(&updatedState[from.row][from.column], &updatedState[to.row][to.column])
+    swap(&updatedState[from.row, from.column], &updatedState[to.row, to.column])
   }
   
   func move(chip: Chip, to: Cell) throws {
-    guard updatedState[to.row][to.column] == nil else {
+    guard updatedState[to.row, to.column] == nil else {
       throw BoardError.cellIsAlreadyBusy(cell: to)
     }
     
-    updatedState[to.row][to.column] = chip
+    updatedState[to.row, to.column] = chip
   }
   
   // Minimum sequence length is 3 chips.
@@ -73,12 +73,12 @@ class Board {
     var jokersCount = 0
     var colors = Set<ChipColor>()
     for column in range.fromColumn..<range.toColumn {
-      if updatedState[range.row][column]!.type == .anyJoker {
+      if updatedState[range.row, column]!.type == .anyJoker {
         jokersCount += 1
         continue
       }
-      colors.insert(updatedState[range.row][column]!.color)
-      if updatedState[range.row][column]!.type == .coloredJoker {
+      colors.insert(updatedState[range.row, column]!.color)
+      if updatedState[range.row, column]!.type == .coloredJoker {
         jokersCount += 1
       }
     }
@@ -89,12 +89,12 @@ class Board {
     
     if colors.count != 1 {
       var startColumn = range.fromColumn
-      while updatedState[range.row][startColumn]!.number == nil {
+      while updatedState[range.row, startColumn]!.number == nil {
         startColumn += 1
       }
-      let correctNumber = updatedState[range.row][startColumn]!.number!
+      let correctNumber = updatedState[range.row, startColumn]!.number!
       for column in (startColumn + 1)..<range.toColumn {
-        if let number = updatedState[range.row][column]!.number {
+        if let number = updatedState[range.row, column]!.number {
           if number != correctNumber {
             return .incorrectOneColorNumber(
               position: Cell(row: range.row, column: column),
@@ -116,15 +116,15 @@ class Board {
     // Find first chip with number and second chip with number,
     // check difference between them.
     var firstNumberedColumn = range.fromColumn
-    while updatedState[range.row][firstNumberedColumn]!.number == nil {
+    while updatedState[range.row, firstNumberedColumn]!.number == nil {
       firstNumberedColumn += 1
     }
-    let firstNumber = updatedState[range.row][firstNumberedColumn]!.number!
+    let firstNumber = updatedState[range.row, firstNumberedColumn]!.number!
     var secondNumberedColumn = firstNumberedColumn + 1
-    while updatedState[range.row][secondNumberedColumn]!.number == nil {
+    while updatedState[range.row, secondNumberedColumn]!.number == nil {
       secondNumberedColumn += 1
     }
-    let secondNumber = updatedState[range.row][secondNumberedColumn]!.number!
+    let secondNumber = updatedState[range.row, secondNumberedColumn]!.number!
     
     let difference = (secondNumber - firstNumber) / (secondNumberedColumn - firstNumberedColumn)
     if (difference != 1 && difference != -1) {
@@ -148,7 +148,7 @@ class Board {
     var currentNumber = secondNumber
     for column in (secondNumberedColumn + 1)..<range.toColumn {
       currentNumber += difference
-      if let number = updatedState[range.row][column]!.number {
+      if let number = updatedState[range.row, column]!.number {
         if number != currentNumber {
           return .incorrectNumber(position: Cell(row: range.row, column: column),
                                   possibleNumber: currentNumber)
@@ -168,7 +168,7 @@ class Board {
   private func findBusyCellRange(row: Int, columnOffset: Int) -> CellRange? {
     var startColumn = columnOffset
     while startColumn < updatedState[row].count &&
-      updatedState[row][startColumn] == nil {
+      updatedState[row, startColumn] == nil {
         startColumn += 1
     }
     if startColumn == updatedState[row].count {
@@ -176,7 +176,7 @@ class Board {
     }
     var endColumn = startColumn + 1
     while endColumn < updatedState[row].count &&
-      updatedState[row][endColumn] != nil {
+      updatedState[row, endColumn] != nil {
         endColumn += 1
     }
     return CellRange(row: row, fromColumn: startColumn, toColumn: endColumn)

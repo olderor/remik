@@ -13,6 +13,9 @@ class BoardViewController: UIViewController {
   
   var boardView: BoardView!
   
+  var players: [Player]!
+  var handViews: [HandView]!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -23,36 +26,25 @@ class BoardViewController: UIViewController {
              height: self.view.bounds.size.height -
               (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight)))
     boardView.maximumZoomScale = 2.0
-    boardView.backgroundColor = UIColor.brown
+    boardView.dragAndDropProcessor.mainView = self.view
     self.view.addSubview(boardView)
     
-    let pl1 = Player(name: "pl1")
-    let pl2 = Player(name: "pl2")
+    players = [Player(name: "pl1"), Player(name: "pl2")]
+    handViews = []
+    for player in players {
+      let handView = HandView(player: player, frame: CGRect(
+        x: 0,
+        y: self.view.bounds.size.height - (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight),
+        width: self.view.bounds.size.width,
+        height: (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight)))
+      self.view.addSubview(handView)
+      handView.dragAndDropProcessor.mainView = self.view
+      handView.addMoveOutOfViewEventListener(handler: moveToBoard(chipView:gestureRecognizer:))
+      handViews.append(handView)
+    }
     
-    let hand1 = HandView(player: pl1, frame: CGRect(
-      x: 0,
-      y: self.view.bounds.size.height - (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight),
-      width: self.view.bounds.size.width,
-      height: (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight)))
-    
-    let hand2 = HandView(player: pl2, frame: CGRect(
-      x: 0,
-      y: self.view.bounds.size.height - (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight),
-      width: self.view.bounds.size.width,
-      height: (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight)))
-    
-    
-    self.view.addSubview(hand1)
-    self.view.addSubview(hand2)
-    
-    boardView.dragAndDropProcessor.mainView = self.view
-    hand1.dragAndDropProcessor.mainView = self.view
-    hand2.dragAndDropProcessor.mainView = self.view
-    hand1.addMoveOutOfViewEventListener(handler: moveToBoard(chipView:gestureRecognizer:))
-    hand2.addMoveOutOfViewEventListener(handler: moveToBoard(chipView:gestureRecognizer:))
-    
-    hand2.hide()
-    game = Game(players: [pl1, pl2])
+    handViews[0].show()
+    game = Game(players: players)
   }
   
   override func didReceiveMemoryWarning() {
@@ -62,10 +54,7 @@ class BoardViewController: UIViewController {
   
   func moveToBoard(chipView: ChipView, gestureRecognizer: UIGestureRecognizer) {
     let locationInBoard = gestureRecognizer.location(in: boardView)
-    
-    chipView.removeFromSuperview()
-    boardView.addSubview(chipView)
-    chipView.center = locationInBoard
+    boardView.didMoveChipToBoard(chipView: chipView, toLocation: locationInBoard)
   }
 }
 

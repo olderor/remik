@@ -43,17 +43,17 @@ class Animation {
     switch type {
     case .transition:
       /* UIView.transition(with: superView,
-                        duration: AnimationManager.defaultDuration,
-                        options: UIViewAnimationOptions.transitionCrossDissolve,
-                        animations: animation,
-                        completion: { (finished: Bool) -> Void in
-                          if self.completion != nil {
-                            self.completion!(finished)
-                          }
-                          if onComplete != nil {
-                            onComplete!()
-                          }
-      })*/
+       duration: AnimationManager.defaultDuration,
+       options: UIViewAnimationOptions.transitionCrossDissolve,
+       animations: animation,
+       completion: { (finished: Bool) -> Void in
+       if self.completion != nil {
+       self.completion!(finished)
+       }
+       if onComplete != nil {
+       onComplete!()
+       }
+       })*/
       break
     case .none:
       animation()

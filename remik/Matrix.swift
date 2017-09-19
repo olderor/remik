@@ -106,11 +106,37 @@ class Matrix<Element> {
     }
   }
   
-  func addColumn(defaultValue: Element) {
-    for row in 0..<contents.count {
-      contents[row].append(defaultValue)
+  func resizeIfNeeded(defaultValue: Element, rows: Int, columns: Int) {
+    if rows - self.rows > 0 {
+      addRows(defaultValue: defaultValue, count: rows - self.rows)
     }
-    columns += 1
+    if columns - self.columns > 0 {
+      addColumns(defaultValue: defaultValue, count: columns - self.columns)
+    }
+  }
+  
+  func addRow(defaultValue: Element) {
+    addRows(defaultValue: defaultValue, count: 1)
+  }
+  
+  func addRows(defaultValue: Element, count: Int) {
+    for _ in 0..<count {
+      contents.append([Element](repeating: defaultValue, count: columns))
+    }
+    rows += count
+  }
+  
+  func addColumns(defaultValue: Element, count: Int) {
+    for row in 0..<contents.count {
+      for _ in 0..<count {
+        contents[row].append(defaultValue)
+      }
+    }
+    columns += count
+  }
+  
+  func addColumn(defaultValue: Element) {
+    addColumns(defaultValue: defaultValue, count: 1)
   }
   
   fileprivate func indexIsValidFor(row: Int, column: Int) -> Bool {

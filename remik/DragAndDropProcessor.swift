@@ -33,7 +33,7 @@ class DragAndDropProcessor: NSObject, UIGestureRecognizerDelegate {
   }
   
   private func updateChipViewPosition(cell: Cell) {
-    weak var weakView = view?.chipViewMatrix[cell.row][cell.column]
+    weak var weakView = view?.chipViewMatrix[cell.row, cell.column]
     AnimationManager.addAnimationBlock {
       if let weakView = weakView {
         weakView.center = CGPoint(
@@ -48,7 +48,7 @@ class DragAndDropProcessor: NSObject, UIGestureRecognizerDelegate {
   private func findFreeColumnInRow(starting from: Cell) -> Int {
     var column = from.column
     while column < view!.chipViewMatrix.columns {
-      if view!.chipViewMatrix[from.row][column] == nil {
+      if view!.chipViewMatrix[from.row, column] == nil {
         return column
       }
       column += 1
@@ -65,8 +65,8 @@ class DragAndDropProcessor: NSObject, UIGestureRecognizerDelegate {
     var freeColumn = findFreeColumnInRow(starting: from)
     
     while from.column < freeColumn {
-      weak var viewToMove = view!.chipViewMatrix[from.row][freeColumn - 1]
-      view!.chipViewMatrix[from.row][freeColumn] = viewToMove
+      weak var viewToMove = view!.chipViewMatrix[from.row, freeColumn - 1]
+      view!.chipViewMatrix[from.row, freeColumn] = viewToMove
       viewToMove!.chip.cell.column += 1
       
       AnimationManager.addAnimationBlock {
@@ -80,20 +80,34 @@ class DragAndDropProcessor: NSObject, UIGestureRecognizerDelegate {
     }
   }
   
+  func move(chipView: ChipView?, to: Cell) {
+    if self.view == nil || chipView == nil {
+      return
+    }
+    let view = self.view!
+    let chipView = chipView!
+    shiftChipsToRightIfNeeded(from: to)
+    view.chipViewMatrix[to.row, to.column] = chipView
+    updateChipViewPosition(cell: to)
+    AnimationManager.addLastAnimationBlock(completion: nil, type: .animation, description: nil)
+    AnimationManager.playAll()
+  }
+  
   func moveChip(from: Cell, to: Cell) {
     if self.view == nil {
       return
     }
     let view = self.view!
-    if view.chipViewMatrix[from.row][from.column] == nil {
+    if view.chipViewMatrix[from.row, from.column] == nil {
       return
     }
-    let cellToMove = view.chipViewMatrix[from.row][from.column]!
-    view.chipViewMatrix[from.row][from.column] = nil
+    view.chipViewMatrix.resizeIfNeeded(defaultValue: nil, rows: to.row + 1, columns: to.column + 1)
+    let cellToMove = view.chipViewMatrix[from.row, from.column]!
+    view.chipViewMatrix[from.row, from.column] = nil
     if from != to {
       shiftChipsToRightIfNeeded(from: to)
     }
-    view.chipViewMatrix[to.row][to.column] = cellToMove
+    view.chipViewMatrix[to.row, to.column] = cellToMove
     updateChipViewPosition(cell: to)
     AnimationManager.addLastAnimationBlock(completion: nil, type: .animation, description: nil)
     AnimationManager.playAll()
@@ -112,12 +126,8 @@ class DragAndDropProcessor: NSObject, UIGestureRecognizerDelegate {
     case .began:
       movingFromCell = LocationManager.getCellBy(
         location: locationInView,
-        cellRect: CGRect(
-          x: ChipView.chipDefaultOffsetX,
-          y: ChipView.chipDefaultOffsetY,
-          width: ChipView.chipDefaultViewWidth,
-          height: ChipView.chipDefaultViewHeight))
-      if let chipView = view.chipViewMatrix[movingFromCell.row][movingFromCell.column] {
+        cellRect: ChipView.cellRect)
+      if let chipView = view.chipViewMatrix[movingFromCell.row, movingFromCell.column] {
         chipView.removeFromSuperview()
         mainView?.addSubview(chipView)
         chipView.center = locationInMainView
@@ -125,26 +135,24 @@ class DragAndDropProcessor: NSObject, UIGestureRecognizerDelegate {
       }
       break
     case .changed:
-      view.chipViewMatrix[movingFromCell.row][movingFromCell.column]?.center = locationInMainView
+      view.chipViewMatrix[movingFromCell.row, movingFromCell.column]?.center = locationInMainView
       break
     case .ended:
       if locationInView.x < 0 || locationInView.y < 0 {
-        if let chipView = view.chipViewMatrix[movingFromCell.row][movingFromCell.column] {
+        if let chipView = view.chipViewMatrix[movingFromCell.row, movingFromCell.column] {
           moveOutOfViewEvent.raise(data:
             (chipView: chipView, gestureRecognizer: gestureRecognizer))
         }
         break
       }
-      if let chipView = view.chipViewMatrix[movingFromCell.row][movingFromCell.column] {
+      if let chipView = view.chipViewMatrix[movingFromCell.row, movingFromCell.column] {
         chipView.removeFromSuperview()
         view.addSubview(chipView)
         chipView.center = locationInView
       }
       let toCell = LocationManager.getCellBy(
         location: locationInView,
-        cellSize: CGSize(
-          width: ChipView.chipDefaultOffsetX + ChipView.chipDefaultViewWidth,
-          height: ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight))
+        cellSize: ChipView.cellSize)
       moveChip(from: movingFromCell, to: toCell)
       break
     default:
@@ -166,17 +174,17 @@ class DragAndDropProcessor: NSObject, UIGestureRecognizerDelegate {
     
     let cell = LocationManager.getCellBy(
       location: locationInView,
-      cellRect: CGRect(
-        x: ChipView.chipDefaultOffsetX,
-        y: ChipView.chipDefaultOffsetY,
-        width: ChipView.chipDefaultViewWidth,
-        height: ChipView.chipDefaultViewHeight))
+      cellRect: ChipView.cellRect)
     
     if cell == nil {
       return false
     }
+    if cell!.row >= view.chipViewMatrix.rows ||
+      cell!.column >= view.chipViewMatrix.columns {
+      return false
+    }
     
-    if view.chipViewMatrix[cell!.row][cell!.column] == nil {
+    if view.chipViewMatrix[cell!.row, cell!.column] == nil {
       return false
     }
     return true

@@ -63,9 +63,27 @@ class ChipView: UIView {
   let imageViewOffset: CGFloat = 5
   
   static let chipDefaultOffsetX: CGFloat  = 10
-  static let chipDefaultOffsetY: CGFloat  = 20
+  static let chipDefaultOffsetY: CGFloat  = 50
   static let chipDefaultViewWidth: CGFloat = 50
   static let chipDefaultViewHeight: CGFloat = 50
+  
+  static var cellSize: CGSize {
+    get {
+      return CGSize(
+        width: chipDefaultOffsetX + chipDefaultViewWidth,
+        height: chipDefaultOffsetY + chipDefaultViewHeight)
+    }
+  }
+  
+  static var cellRect: CGRect {
+    get {
+      return CGRect(
+        x: ChipView.chipDefaultOffsetX,
+        y: ChipView.chipDefaultOffsetY,
+        width: ChipView.chipDefaultViewWidth,
+        height: ChipView.chipDefaultViewHeight)
+    }
+  }
   
   init(chip: Chip, frame: CGRect) {
     self.chip = chip

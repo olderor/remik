@@ -17,8 +17,9 @@ class HandView: ChipsContainerView {
     self.player = player
     super.init(frame: frame, rows: 1, columns: player.hand.count)
     
-    backgroundColor = UIColor.black
+    backgroundColor = UIColor.darkGray
     player.addDidDrawEventListener(handler: didDraw)
+    hide()
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -37,7 +38,7 @@ class HandView: ChipsContainerView {
     while chip.cell.column >= chipViewMatrix.columns {
       chipViewMatrix.addColumn(defaultValue: nil)
     }
-    chipViewMatrix[chip.cell.row][chip.cell.column] = chipView
+    chipViewMatrix[chip.cell.row, chip.cell.column] = chipView
   }
   
   func hide() {
