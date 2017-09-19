@@ -32,7 +32,7 @@ class DragAndDropProcessor: NSObject, UIGestureRecognizerDelegate {
     moveOutOfViewEvent.addHandler(handler: handler)
   }
   
-  private func updateChipViewPosition(cell: Cell) {
+  public func updateChipViewPosition(cell: Cell) {
     weak var weakView = view?.chipViewMatrix[cell.row, cell.column]
     weakView!.currentLocation = CGPoint(
       x: (ChipView.chipDefaultOffsetX + ChipView.chipDefaultViewWidth) * 0.5 +
@@ -96,6 +96,7 @@ class DragAndDropProcessor: NSObject, UIGestureRecognizerDelegate {
     let chipView = chipView!
     shiftChipsToRightIfNeeded(from: to)
     view.chipViewMatrix[to.row, to.column] = chipView
+    chipView.chip.cell = to
     updateChipViewPosition(cell: to)
     AnimationManager.addLastAnimationBlock(completion: nil, type: .animation, description: nil)
     AnimationManager.playAll()
@@ -116,6 +117,7 @@ class DragAndDropProcessor: NSObject, UIGestureRecognizerDelegate {
       shiftChipsToRightIfNeeded(from: to)
     }
     view.chipViewMatrix[to.row, to.column] = cellToMove
+    cellToMove.chip.cell = to
     updateChipViewPosition(cell: to)
     AnimationManager.addLastAnimationBlock(completion: nil, type: .animation, description: nil)
     AnimationManager.playAll()
@@ -167,8 +169,8 @@ class DragAndDropProcessor: NSObject, UIGestureRecognizerDelegate {
     case .ended:
       if locationInView.x < 0 ||
         locationInView.y < 0 ||
-        locationInView.x > view.frame.size.width ||
-        locationInView.y > view.frame.size.height {
+        locationInView.x > view.superview!.frame.size.width ||
+        locationInView.y > view.superview!.frame.size.height {
         if let chipView = view.chipViewMatrix[movingFromCell.row, movingFromCell.column] {
           view.chipViewMatrix[movingFromCell.row, movingFromCell.column] = nil
           moveOutOfViewEvent.raise(data:

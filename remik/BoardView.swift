@@ -11,8 +11,6 @@ import UIKit
 class BoardView: ChipsContainerView {
   override init(frame: CGRect) {
     super.init(frame: frame, rows: 0, columns: 0)
-    minimumZoomScale = 1.0
-    maximumZoomScale = 2.0
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -20,10 +18,13 @@ class BoardView: ChipsContainerView {
   }
   
   override func updateContentSize() {
-    contentSize = CGSize(
-      width: (ChipView.chipDefaultViewWidth + ChipView.chipDefaultOffsetX) *
-        CGFloat(chipViewMatrix.columns * 2),
-      height: (ChipView.chipDefaultViewHeight + ChipView.chipDefaultOffsetY) *
-        CGFloat(chipViewMatrix.rows * 2))
+    let width = (ChipView.chipDefaultViewWidth + ChipView.chipDefaultOffsetX) *
+      CGFloat(chipViewMatrix.columns)
+    let height = (ChipView.chipDefaultViewHeight + ChipView.chipDefaultOffsetY) *
+      CGFloat(chipViewMatrix.rows)
+    
+    let size = max(width, height) * 2
+    frame.size = CGSize(width: size, height: size)
+    sizeChangedEvent.raise(data: frame.size)
   }
 }

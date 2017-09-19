@@ -20,8 +20,34 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ffC-FQ-489">
+                                <rect key="frame" x="0.0" y="567" width="375" height="100"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="a3W-K3-NOz"/>
+                                </constraints>
+                            </scrollView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TlX-tF-k8Z">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="567"/>
+                            </scrollView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="ffC-FQ-489" secondAttribute="trailing" id="8tS-Bu-QSz"/>
+                            <constraint firstItem="TlX-tF-k8Z" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Ifj-H5-l4S"/>
+                            <constraint firstItem="ffC-FQ-489" firstAttribute="trailing" secondItem="TlX-tF-k8Z" secondAttribute="trailing" id="JFE-gr-akF"/>
+                            <constraint firstItem="ffC-FQ-489" firstAttribute="bottom" secondItem="qDS-d5-vmI" secondAttribute="top" id="QmP-0z-WWd"/>
+                            <constraint firstItem="ffC-FQ-489" firstAttribute="top" secondItem="TlX-tF-k8Z" secondAttribute="bottom" id="VXe-RR-AL2"/>
+                            <constraint firstItem="ffC-FQ-489" firstAttribute="leading" secondItem="TlX-tF-k8Z" secondAttribute="leading" id="X35-gf-Bme"/>
+                            <constraint firstItem="ffC-FQ-489" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="gDU-S5-c3O"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="boardScrollView" destination="TlX-tF-k8Z" id="r1L-Ys-Gjh"/>
+                        <outlet property="handScrollView" destination="ffC-FQ-489" id="OWT-PZ-0Co"/>
+                        <outlet property="handScrollViewHeightLayoutConstraint" destination="a3W-K3-NOz" id="68b-SE-qmW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

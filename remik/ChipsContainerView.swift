@@ -8,16 +8,16 @@
 
 import UIKit
 
-class ChipsContainerView: UIScrollView, UIGestureRecognizerDelegate {
+class ChipsContainerView: UIView {
   var chipViewMatrix: Matrix<ChipView?>
   var dragAndDropProcessor: DragAndDropProcessor!
+  let sizeChangedEvent = Event<(CGSize)>()
   
   override init(frame: CGRect) {
     chipViewMatrix = Matrix<ChipView?>(rows: 0, columns: 0, repeatedValue: nil)
     super.init(frame: frame)
     dragAndDropProcessor = DragAndDropProcessor(view: self)
     updateContentSize()
-    panGestureRecognizer.delegate = self
   }
   
   init(frame: CGRect, rows: Int, columns: Int) {
@@ -31,10 +31,15 @@ class ChipsContainerView: UIScrollView, UIGestureRecognizerDelegate {
     fatalError("init(coder:) has not been implemented")
   }
   
+  func addSizeChangedEventListener(handler: @escaping (CGSize) -> ()) {
+    sizeChangedEvent.addHandler(handler: handler)
+  }
+  
   func updateContentSize() {
-    contentSize = CGSize(
+    frame.size = CGSize(
       width: (ChipView.chipDefaultViewWidth + ChipView.chipDefaultOffsetX) * CGFloat(chipViewMatrix.columns),
       height: (ChipView.chipDefaultViewHeight + ChipView.chipDefaultOffsetY) * CGFloat(chipViewMatrix.rows))
+    sizeChangedEvent.raise(data: frame.size)
   }
   
   func didMoveChipToView(chipView: ChipView, toLocation: CGPoint) {
@@ -57,9 +62,5 @@ class ChipsContainerView: UIScrollView, UIGestureRecognizerDelegate {
     @escaping ((chipView: ChipView, gestureRecognizer: UIGestureRecognizer)) -> ()) {
     
     dragAndDropProcessor.addMoveOutOfViewEventListener(handler: handler)
-  }
-  
-  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-    return true
   }
 }

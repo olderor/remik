@@ -8,7 +8,14 @@
 
 import UIKit
 
-class BoardViewController: UIViewController {
+class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
+  
+  @IBOutlet weak var handScrollViewHeightLayoutConstraint: NSLayoutConstraint!
+  
+  @IBOutlet weak var boardScrollView: UIScrollView!
+  
+  @IBOutlet weak var handScrollView: UIScrollView!
+  
   var game: Game!
   
   var boardView: BoardView!
@@ -25,19 +32,22 @@ class BoardViewController: UIViewController {
               (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight)))
     boardView.dragAndDropProcessor.mainView = self.view
     boardView.addMoveOutOfViewEventListener(handler: moveToHand)
-    self.view.addSubview(boardView)
+    boardView.addSizeChangedEventListener(handler: updateBoardScrollViewContentSize)
+    boardScrollView.addSubview(boardView)
+    boardScrollView.backgroundColor = boardView.backgroundColor
     
     let players = [Player(name: "pl1"), Player(name: "pl2")]
     handViews = []
     for player in players {
       let handView = HandView(player: player, frame: CGRect(
         x: 0,
-        y: self.view.bounds.size.height - (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight),
+        y: 0,
         width: self.view.bounds.size.width,
         height: (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight)))
-      self.view.addSubview(handView)
+      handScrollView.addSubview(handView)
       handView.dragAndDropProcessor.mainView = self.view
       handView.addMoveOutOfViewEventListener(handler: moveToBoard)
+      handView.addSizeChangedEventListener(handler: updateHandScrollViewContentSize)
       handViews.append(handView)
     }
     
@@ -61,9 +71,25 @@ class BoardViewController: UIViewController {
       let locationInHand = gestureRecognizer.location(in: handViews[game.currentPlayerIndex])
       handViews[game.currentPlayerIndex].didMoveChipToView(chipView: chipView, toLocation: locationInHand)
     } else {
-      let locationInBoard = gestureRecognizer.location(in: boardView)
-      boardView.didMoveChipToView(chipView: chipView, toLocation: locationInBoard)
+      //todo show alert: wrong move
+      boardView.addSubview(chipView)
+      boardView.chipViewMatrix[chipView.chip.cell.row, chipView.chip.cell.column] = chipView
+      boardView.dragAndDropProcessor.updateChipViewPosition(cell: chipView.chip.cell)
+      AnimationManager.addLastAnimationBlock(completion: nil, type: .animation, description: nil)
+      AnimationManager.playAll()
     }
   }
+  
+  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    return true
+  }
+  
+  func updateBoardScrollViewContentSize(newSize: CGSize) {
+    boardScrollView.contentSize = newSize
+  }
+  
+  func updateHandScrollViewContentSize(newSize: CGSize) {
+    handScrollView.contentSize = newSize
+    handScrollViewHeightLayoutConstraint.constant = newSize.height
+  }
 }
-
