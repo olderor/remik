@@ -9,9 +9,9 @@
 import Foundation
 
 class Game {
-  private var players: [Player]
+  private(set) var players: [Player]
   private var bagChipsCollection = ChipsCollection()
-  private var currentPlayerIndex = 0
+  private(set) var currentPlayerIndex = 0
   private var board: Board
   
   let initialHandSize = 14

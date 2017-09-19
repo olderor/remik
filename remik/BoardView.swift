@@ -26,15 +26,4 @@ class BoardView: ChipsContainerView {
       height: (ChipView.chipDefaultViewHeight + ChipView.chipDefaultOffsetY) *
         CGFloat(chipViewMatrix.rows * 2))
   }
-
-  func didMoveChipToBoard(chipView: ChipView, toLocation: CGPoint) {
-    chipView.removeFromSuperview()
-    addSubview(chipView)
-    chipView.center = toLocation
-    
-    let cell = LocationManager.getCellBy(location: toLocation, cellSize: ChipView.cellSize)
-    chipViewMatrix.resizeIfNeeded(defaultValue: nil, rows: cell.row + 1, columns: cell.column + 1)
-    dragAndDropProcessor.move(chipView: chipView, to: cell)
-    updateContentSize()
-  }
 }

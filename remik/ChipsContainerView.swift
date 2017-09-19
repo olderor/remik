@@ -37,6 +37,17 @@ class ChipsContainerView: UIScrollView, UIGestureRecognizerDelegate {
       height: (ChipView.chipDefaultViewHeight + ChipView.chipDefaultOffsetY) * CGFloat(chipViewMatrix.rows))
   }
   
+  func didMoveChipToView(chipView: ChipView, toLocation: CGPoint) {
+    addSubview(chipView)
+    chipView.center = toLocation
+    chipView.currentLocation = toLocation
+    
+    let cell = LocationManager.getCellBy(location: toLocation, cellSize: ChipView.cellSize)
+    chipViewMatrix.resizeIfNeeded(defaultValue: nil, rows: cell.row + 1, columns: cell.column + 1)
+    dragAndDropProcessor.move(chipView: chipView, to: cell)
+    updateContentSize()
+  }
+  
   func addColumnToMatrix() {
     chipViewMatrix.addColumn(defaultValue: nil)
     updateContentSize()

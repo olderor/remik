@@ -12,8 +12,6 @@ class BoardViewController: UIViewController {
   var game: Game!
   
   var boardView: BoardView!
-  
-  var players: [Player]!
   var handViews: [HandView]!
   
   override func viewDidLoad() {
@@ -26,9 +24,10 @@ class BoardViewController: UIViewController {
              height: self.view.bounds.size.height -
               (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight)))
     boardView.dragAndDropProcessor.mainView = self.view
+    boardView.addMoveOutOfViewEventListener(handler: moveToHand)
     self.view.addSubview(boardView)
     
-    players = [Player(name: "pl1"), Player(name: "pl2")]
+    let players = [Player(name: "pl1"), Player(name: "pl2")]
     handViews = []
     for player in players {
       let handView = HandView(player: player, frame: CGRect(
@@ -38,7 +37,7 @@ class BoardViewController: UIViewController {
         height: (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight)))
       self.view.addSubview(handView)
       handView.dragAndDropProcessor.mainView = self.view
-      handView.addMoveOutOfViewEventListener(handler: moveToBoard(chipView:gestureRecognizer:))
+      handView.addMoveOutOfViewEventListener(handler: moveToBoard)
       handViews.append(handView)
     }
     
@@ -53,7 +52,18 @@ class BoardViewController: UIViewController {
   
   func moveToBoard(chipView: ChipView, gestureRecognizer: UIGestureRecognizer) {
     let locationInBoard = gestureRecognizer.location(in: boardView)
-    boardView.didMoveChipToBoard(chipView: chipView, toLocation: locationInBoard)
+    boardView.didMoveChipToView(chipView: chipView, toLocation: locationInBoard)
+  }
+  
+  func moveToHand(chipView: ChipView, gestureRecognizer: UIGestureRecognizer) {
+    // Only jokers are allowed to be returned into the hand.
+    if chipView.chip.type == .anyJoker || chipView.chip.type == .coloredJoker {
+      let locationInHand = gestureRecognizer.location(in: handViews[game.currentPlayerIndex])
+      handViews[game.currentPlayerIndex].didMoveChipToView(chipView: chipView, toLocation: locationInHand)
+    } else {
+      let locationInBoard = gestureRecognizer.location(in: boardView)
+      boardView.didMoveChipToView(chipView: chipView, toLocation: locationInBoard)
+    }
   }
 }
 

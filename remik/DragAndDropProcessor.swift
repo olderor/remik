@@ -165,7 +165,10 @@ class DragAndDropProcessor: NSObject, UIGestureRecognizerDelegate {
       }
       break
     case .ended:
-      if locationInView.x < 0 || locationInView.y < 0 {
+      if locationInView.x < 0 ||
+        locationInView.y < 0 ||
+        locationInView.x > view.frame.size.width ||
+        locationInView.y > view.frame.size.height {
         if let chipView = view.chipViewMatrix[movingFromCell.row, movingFromCell.column] {
           view.chipViewMatrix[movingFromCell.row, movingFromCell.column] = nil
           moveOutOfViewEvent.raise(data:
