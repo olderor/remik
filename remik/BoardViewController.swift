@@ -24,6 +24,12 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    handScrollView.backgroundColor = HandView.defaultBackgroundColor
+    
+    boardScrollView.delegate = self
+    boardScrollView.minimumZoomScale = 0.5
+    boardScrollView.maximumZoomScale = 1.0
+    
     boardView = BoardView(frame:
       CGRect(x: 0,
              y: 0,
@@ -34,7 +40,6 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     boardView.addMoveOutOfViewEventListener(handler: moveToHand)
     boardView.addSizeChangedEventListener(handler: updateBoardScrollViewContentSize)
     boardScrollView.addSubview(boardView)
-    boardScrollView.backgroundColor = boardView.backgroundColor
     
     let players = [Player(name: "pl1"), Player(name: "pl2")]
     handViews = []
@@ -91,5 +96,12 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
   func updateHandScrollViewContentSize(newSize: CGSize) {
     handScrollView.contentSize = newSize
     handScrollViewHeightLayoutConstraint.constant = newSize.height
+  }
+  
+  func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+    if scrollView.subviews.count == 0 {
+      return nil
+    }
+    return scrollView.subviews[0]
   }
 }

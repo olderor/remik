@@ -13,11 +13,13 @@ class HandView: ChipsContainerView {
   
   private var chipOffset: CGFloat  = 5
   
+  static let defaultBackgroundColor = UIColor.darkGray
+  
   init(player: Player, frame: CGRect) {
     self.player = player
     super.init(frame: frame, rows: 1, columns: player.hand.count)
     
-    backgroundColor = UIColor.darkGray
+    backgroundColor = HandView.defaultBackgroundColor
     player.addDidDrawEventListener(handler: didDraw)
     hide()
   }

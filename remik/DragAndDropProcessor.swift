@@ -141,6 +141,7 @@ class DragAndDropProcessor: NSObject, UIGestureRecognizerDelegate {
     let state = gestureRecognizer.state
     
     let locationInView = gestureRecognizer.location(in: view)
+    let locationInSuperView = gestureRecognizer.location(in: view.superview)
     let locationInMainView = gestureRecognizer.location(in: mainView)
     
     switch state {
@@ -167,10 +168,10 @@ class DragAndDropProcessor: NSObject, UIGestureRecognizerDelegate {
       }
       break
     case .ended:
-      if locationInView.x < 0 ||
-        locationInView.y < 0 ||
-        locationInView.x > view.superview!.frame.size.width ||
-        locationInView.y > view.superview!.frame.size.height {
+      if locationInSuperView.x < 0 ||
+        locationInSuperView.y < 0 ||
+        locationInSuperView.x > view.superview!.frame.size.width ||
+        locationInSuperView.y > view.superview!.frame.size.height {
         if let chipView = view.chipViewMatrix[movingFromCell.row, movingFromCell.column] {
           view.chipViewMatrix[movingFromCell.row, movingFromCell.column] = nil
           moveOutOfViewEvent.raise(data:
