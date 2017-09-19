@@ -25,7 +25,6 @@ class BoardViewController: UIViewController {
              width: self.view.bounds.size.width,
              height: self.view.bounds.size.height -
               (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight)))
-    boardView.maximumZoomScale = 2.0
     boardView.dragAndDropProcessor.mainView = self.view
     self.view.addSubview(boardView)
     

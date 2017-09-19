@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChipsContainerView: UIScrollView {
+class ChipsContainerView: UIScrollView, UIGestureRecognizerDelegate {
   var chipViewMatrix: Matrix<ChipView?>
   var dragAndDropProcessor: DragAndDropProcessor!
   
@@ -17,6 +17,7 @@ class ChipsContainerView: UIScrollView {
     super.init(frame: frame)
     dragAndDropProcessor = DragAndDropProcessor(view: self)
     updateContentSize()
+    panGestureRecognizer.delegate = self
   }
   
   init(frame: CGRect, rows: Int, columns: Int) {
@@ -45,5 +46,9 @@ class ChipsContainerView: UIScrollView {
     @escaping ((chipView: ChipView, gestureRecognizer: UIGestureRecognizer)) -> ()) {
     
     dragAndDropProcessor.addMoveOutOfViewEventListener(handler: handler)
+  }
+  
+  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    return true
   }
 }

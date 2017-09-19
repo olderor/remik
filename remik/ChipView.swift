@@ -62,6 +62,8 @@ class ChipView: UIView {
   
   let imageViewOffset: CGFloat = 5
   
+  var currentLocation: CGPoint!
+  
   static let chipDefaultOffsetX: CGFloat  = 10
   static let chipDefaultOffsetY: CGFloat  = 50
   static let chipDefaultViewWidth: CGFloat = 50
@@ -88,6 +90,7 @@ class ChipView: UIView {
   init(chip: Chip, frame: CGRect) {
     self.chip = chip
     super.init(frame: frame)
+    currentLocation = self.center
     backgroundColor = UIColor.white
     layer.cornerRadius = 5.0
     layer.borderColor = chip.color.getBorderColor().cgColor

@@ -34,6 +34,11 @@ class DragAndDropProcessor: NSObject, UIGestureRecognizerDelegate {
   
   private func updateChipViewPosition(cell: Cell) {
     weak var weakView = view?.chipViewMatrix[cell.row, cell.column]
+    weakView!.currentLocation = CGPoint(
+      x: (ChipView.chipDefaultOffsetX + ChipView.chipDefaultViewWidth) * 0.5 +
+        (ChipView.chipDefaultOffsetX + ChipView.chipDefaultViewWidth) * CGFloat(cell.column),
+      y: (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight) * 0.5 +
+        (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight) * CGFloat(cell.row))
     AnimationManager.addAnimationBlock {
       if let weakView = weakView {
         weakView.center = CGPoint(
@@ -69,6 +74,9 @@ class DragAndDropProcessor: NSObject, UIGestureRecognizerDelegate {
       view!.chipViewMatrix[from.row, freeColumn] = viewToMove
       viewToMove!.chip.cell.column += 1
       
+      viewToMove!.currentLocation = CGPoint(
+        x: viewToMove!.currentLocation.x + ChipView.chipDefaultOffsetX + ChipView.chipDefaultViewWidth,
+        y: viewToMove!.currentLocation.y)
       AnimationManager.addAnimationBlock {
         if let viewToMove = viewToMove {
           viewToMove.center = CGPoint(
@@ -113,42 +121,62 @@ class DragAndDropProcessor: NSObject, UIGestureRecognizerDelegate {
     AnimationManager.playAll()
   }
   
+  private func beginTouch(touch: UITouch) {
+    let locationInView = touch.location(in: view)
+    
+    movingFromCell = LocationManager.getCellBy(
+      location: locationInView,
+      cellRect: ChipView.cellRect)
+  }
+  
   func panGestureRecognized(gestureRecognizer: UIGestureRecognizer) {
     if self.view == nil {
       return
     }
+    
     let view = self.view!
-    let panGestureRecognizer = gestureRecognizer as! UIPanGestureRecognizer
-    let state = panGestureRecognizer.state
-    let locationInView = panGestureRecognizer.location(in: view)
-    let locationInMainView = panGestureRecognizer.location(in: mainView)
+    
+    let state = gestureRecognizer.state
+    
+    let locationInView = gestureRecognizer.location(in: view)
+    let locationInMainView = gestureRecognizer.location(in: mainView)
+    
     switch state {
     case .began:
-      movingFromCell = LocationManager.getCellBy(
-        location: locationInView,
-        cellRect: ChipView.cellRect)
       if let chipView = view.chipViewMatrix[movingFromCell.row, movingFromCell.column] {
-        chipView.removeFromSuperview()
         mainView?.addSubview(chipView)
         chipView.center = locationInMainView
+        chipView.currentLocation = locationInView
         mainView?.bringSubview(toFront: chipView)
       }
       break
+    case .cancelled, .failed:
+      if movingFromCell != nil {
+        if let chipView = view.chipViewMatrix[movingFromCell.row, movingFromCell.column] {
+          view.addSubview(chipView)
+        }
+        updateChipViewPosition(cell: movingFromCell)
+      }
+      break
     case .changed:
-      view.chipViewMatrix[movingFromCell.row, movingFromCell.column]?.center = locationInMainView
+      if let chipView = view.chipViewMatrix[movingFromCell.row, movingFromCell.column] {
+        chipView.currentLocation = locationInView
+        chipView.center = locationInMainView
+      }
       break
     case .ended:
       if locationInView.x < 0 || locationInView.y < 0 {
         if let chipView = view.chipViewMatrix[movingFromCell.row, movingFromCell.column] {
+          view.chipViewMatrix[movingFromCell.row, movingFromCell.column] = nil
           moveOutOfViewEvent.raise(data:
             (chipView: chipView, gestureRecognizer: gestureRecognizer))
         }
         break
       }
       if let chipView = view.chipViewMatrix[movingFromCell.row, movingFromCell.column] {
-        chipView.removeFromSuperview()
         view.addSubview(chipView)
         chipView.center = locationInView
+        chipView.currentLocation = locationInView
       }
       let toCell = LocationManager.getCellBy(
         location: locationInView,
@@ -156,6 +184,7 @@ class DragAndDropProcessor: NSObject, UIGestureRecognizerDelegate {
       moveChip(from: movingFromCell, to: toCell)
       break
     default:
+      print(state)
       break
     }
   }
@@ -187,6 +216,7 @@ class DragAndDropProcessor: NSObject, UIGestureRecognizerDelegate {
     if view.chipViewMatrix[cell!.row, cell!.column] == nil {
       return false
     }
+    beginTouch(touch: touch)
     return true
   }
 }
