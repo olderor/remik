@@ -48,6 +48,8 @@ class BoardViewController: UIViewController {
     boardView.dragAndDropProcessor.mainView = self.view
     hand1.dragAndDropProcessor.mainView = self.view
     hand2.dragAndDropProcessor.mainView = self.view
+    hand1.addMoveOutOfViewEventListener(handler: moveToBoard(chipView:gestureRecognizer:))
+    hand2.addMoveOutOfViewEventListener(handler: moveToBoard(chipView:gestureRecognizer:))
     
     hand2.hide()
     game = Game(players: [pl1, pl2])
@@ -59,12 +61,11 @@ class BoardViewController: UIViewController {
   }
   
   func moveToBoard(chipView: ChipView, gestureRecognizer: UIGestureRecognizer) {
-    
     let locationInBoard = gestureRecognizer.location(in: boardView)
     
     chipView.removeFromSuperview()
     boardView.addSubview(chipView)
-    boardView.center = locationInBoard
+    chipView.center = locationInBoard
   }
 }
 

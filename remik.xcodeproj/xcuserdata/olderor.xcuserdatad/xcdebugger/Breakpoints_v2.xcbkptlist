@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "remik/BoardViewController.swift"
-            timestampString = "527522369.448786"
+            timestampString = "527523116.580081"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
             landmarkName = "moveToBoard(chipView:gestureRecognizer:)"
             landmarkType = "7">
          </BreakpointContent>
