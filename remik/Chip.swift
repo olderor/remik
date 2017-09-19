@@ -24,7 +24,7 @@ enum ChipColor {
   static func colored() -> [ChipColor] {
     return [red, green, blue, black]
   }
-
+  
   static func all() -> [ChipColor] {
     return [red, green, blue, black, any]
   }
@@ -33,13 +33,13 @@ enum ChipColor {
 
 class Chip {
   let color: ChipColor
-  let text: String
+  let text: String!
   let type: ChipType
   let number: Int?
-
+  
   var cell: Cell!
   
-  init(color: ChipColor, number: Int?, text: String, type: ChipType) {
+  fileprivate init(color: ChipColor, number: Int?, text: String, type: ChipType) {
     self.color = color
     self.number = number
     self.text = text
@@ -56,10 +56,9 @@ class NumberChip: Chip {
 class JokerChip: Chip {
   init(color: ChipColor) {
     if color == .any {
-      // todo replace j with empty string.
-      super.init(color: color, number: nil, text: "j", type: .anyJoker)
+      super.init(color: color, number: nil, text: "", type: .anyJoker)
     } else {
-      super.init(color: color, number: nil, text: "🃏", type: .coloredJoker)
+      super.init(color: color, number: nil, text: "", type: .coloredJoker)
     }
   }
 }

@@ -12,28 +12,28 @@ let DequeOverAllocateFactor = 2
 let DequeDownsizeTriggerFactor = 16
 let DequeDefaultMinimumCapacity = 0
 
-public struct Deque<T>: RandomAccessCollection, RangeReplaceableCollection, ExpressibleByArrayLiteral, CustomDebugStringConvertible {
-  public typealias Index = Int
-  public typealias Indices = CountableRange<Int>
-  public typealias Element = T
+struct Deque<T>: RandomAccessCollection, RangeReplaceableCollection, ExpressibleByArrayLiteral, CustomDebugStringConvertible {
+  typealias Index = Int
+  typealias Indices = CountableRange<Int>
+  typealias Element = T
   
   var buffer: DequeBuffer<T>? = nil
   let minCapacity: Int
   
-  public init() {
+  init() {
     self.minCapacity = DequeDefaultMinimumCapacity
   }
   
-  public init(minCapacity: Int) {
+  init(minCapacity: Int) {
     self.minCapacity = minCapacity
   }
   
-  public init(arrayLiteral: T...) {
+  init(arrayLiteral: T...) {
     self.minCapacity = DequeDefaultMinimumCapacity
     replaceSubrange(0..<0, with: arrayLiteral)
   }
   
-  public var debugDescription: String {
+  var debugDescription: String {
     var result = "\(type(of: self))(["
     var iterator = makeIterator()
     if let next = iterator.next() {
@@ -47,11 +47,11 @@ public struct Deque<T>: RandomAccessCollection, RangeReplaceableCollection, Expr
     return result
   }
   
-  public subscript(bounds: Range<Index>) -> RangeReplaceableRandomAccessSlice<Deque<T>> {
+  subscript(bounds: Range<Index>) -> RangeReplaceableRandomAccessSlice<Deque<T>> {
     return RangeReplaceableRandomAccessSlice<Deque<T>>(base: self, bounds: bounds)
   }
   
-  public subscript(_ at: Index) -> T {
+  subscript(_ at: Index) -> T {
     get {
       if let b = buffer {
         precondition(at < b.unsafeHeader.pointee.count)
@@ -66,11 +66,11 @@ public struct Deque<T>: RandomAccessCollection, RangeReplaceableCollection, Expr
     }
   }
   
-  public var startIndex: Index {
+  var startIndex: Index {
     return 0
   }
   
-  public var endIndex: Index {
+  var endIndex: Index {
     if let b = buffer {
       return b.unsafeHeader.pointee.count
     }
@@ -78,7 +78,7 @@ public struct Deque<T>: RandomAccessCollection, RangeReplaceableCollection, Expr
     return 0
   }
   
-  public var isEmpty: Bool {
+  var isEmpty: Bool {
     if let b = buffer {
       return b.unsafeHeader.pointee.count == 0
     }
@@ -86,11 +86,11 @@ public struct Deque<T>: RandomAccessCollection, RangeReplaceableCollection, Expr
     return true
   }
   
-  public var count: Int {
+  var count: Int {
     return endIndex
   }
   
-  public mutating func append(_ newElement: T) {
+  mutating func append(_ newElement: T) {
     if let b = buffer {
       if b.unsafeHeader.pointee.capacity >= b.unsafeHeader.pointee.count + 1 {
         var index = b.unsafeHeader.pointee.offset + b.unsafeHeader.pointee.count
@@ -107,7 +107,7 @@ public struct Deque<T>: RandomAccessCollection, RangeReplaceableCollection, Expr
     return replaceSubrange(index..<index, with: CollectionOfOne(newElement))
   }
   
-  public mutating func prepend(_ newElement: T) {
+  mutating func prepend(_ newElement: T) {
     var index = startIndex
     if let b = buffer {
       if b.unsafeHeader.pointee.capacity >= b.unsafeHeader.pointee.count + 1 {
@@ -122,7 +122,7 @@ public struct Deque<T>: RandomAccessCollection, RangeReplaceableCollection, Expr
     return replaceSubrange(index..<index, with: CollectionOfOne(newElement))
   }
   
-  public mutating func insert(_ newElement: T, at: Int) {
+  mutating func insert(_ newElement: T, at: Int) {
     if let b = buffer {
       if at == 0, b.unsafeHeader.pointee.capacity >= b.unsafeHeader.pointee.count + 1 {
         var index = b.unsafeHeader.pointee.offset - 1
@@ -139,7 +139,7 @@ public struct Deque<T>: RandomAccessCollection, RangeReplaceableCollection, Expr
     return replaceSubrange(at..<at, with: CollectionOfOne(newElement))
   }
   
-  public mutating func remove(at: Int) {
+  mutating func remove(at: Int) {
     if let b = buffer {
       if at == b.unsafeHeader.pointee.count - 1 {
         b.unsafeHeader.pointee.count -= 1
@@ -157,7 +157,7 @@ public struct Deque<T>: RandomAccessCollection, RangeReplaceableCollection, Expr
     return replaceSubrange(at...at, with: EmptyCollection())
   }
   
-  public mutating func removeFirst() -> T {
+  mutating func removeFirst() -> T {
     if let b = buffer {
       precondition(b.unsafeHeader.pointee.count > 0, "Index beyond bounds")
       let result = b.unsafeElements[b.unsafeHeader.pointee.offset]
@@ -323,7 +323,7 @@ public struct Deque<T>: RandomAccessCollection, RangeReplaceableCollection, Expr
     }
   }
   
-  public mutating func replaceSubrange<C>(_ subrange: Range<Int>, with newElements: C) where C: Collection, C.Iterator.Element == T {
+  mutating func replaceSubrange<C>(_ subrange: Range<Int>, with newElements: C) where C: Collection, C.Iterator.Element == T {
     precondition(subrange.lowerBound >= 0, "Subrange lowerBound is negative")
     
     if isKnownUniquelyReferenced(&buffer), let b = buffer {

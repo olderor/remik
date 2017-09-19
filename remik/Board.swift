@@ -34,6 +34,10 @@ class Board {
   var state: Matrix<Chip?>
   var updatedState: Matrix<Chip?>
   
+  convenience init() {
+    self.init(rows: 0, columns: 0)
+  }
+  
   init(rows: Int, columns: Int) {
     state = Matrix(rows: rows, columns: columns, repeatedValue: nil)
     updatedState = Matrix(rows: rows, columns: columns, repeatedValue: nil)
@@ -86,7 +90,7 @@ class Board {
     if colors.count != 1 {
       var startColumn = range.fromColumn
       while updatedState[range.row][startColumn]!.number == nil {
-          startColumn += 1
+        startColumn += 1
       }
       let correctNumber = updatedState[range.row][startColumn]!.number!
       for column in (startColumn + 1)..<range.toColumn {

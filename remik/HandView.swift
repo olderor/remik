@@ -47,7 +47,7 @@ class HandView: ChipsContainerView {
   func show() {
     isHidden = false
   }
-
+  
   override func updateContentSize() {
     contentSize = CGSize(
       width: (ChipView.chipDefaultViewWidth + ChipView.chipDefaultOffsetX) * CGFloat(player.handLastIndex),

@@ -20,8 +20,7 @@ class Game {
     self.players = players
     bagChipsCollection.shuffle()
     
-    // TODO adjust matrix size somehow
-    board = Board(rows: 100, columns: 100)
+    board = Board()
     
     for player in players {
       for _ in 0..<initialHandSize {
@@ -40,7 +39,7 @@ class Game {
     let chip = try bagChipsCollection.drawChip()
     player.draw(chip: chip)
   }
-
+  
   func drawChip() {
     do {
       try drawChip(player: players[currentPlayerIndex])

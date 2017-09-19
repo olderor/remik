@@ -13,7 +13,7 @@ class DragAndDropProcessor: NSObject, UIGestureRecognizerDelegate {
   private var panGestureRecognizerHash: Int!
   private weak var view: ChipsContainerView?
   private let moveOutOfViewEvent = Event<(chipView: ChipView, gestureRecognizer: UIGestureRecognizer)>()
-  public weak var mainView: UIView?
+  weak var mainView: UIView?
   
   init(view: ChipsContainerView) {
     super.init()
@@ -161,7 +161,7 @@ class DragAndDropProcessor: NSObject, UIGestureRecognizerDelegate {
     if gestureRecognizer.hash != panGestureRecognizerHash {
       return true
     }
-
+    
     let locationInView = touch.location(in: view)
     
     let cell = LocationManager.getCellBy(

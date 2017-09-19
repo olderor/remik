@@ -9,8 +9,8 @@
 import UIKit
 
 class ChipsContainerView: UIScrollView {
-  public var chipViewMatrix: Matrix<ChipView?>
-  public var dragAndDropProcessor: DragAndDropProcessor!
+  var chipViewMatrix: Matrix<ChipView?>
+  var dragAndDropProcessor: DragAndDropProcessor!
   
   override init(frame: CGRect) {
     chipViewMatrix = Matrix<ChipView?>(rows: 0, columns: 0, repeatedValue: nil)

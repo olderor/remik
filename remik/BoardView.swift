@@ -10,8 +10,7 @@ import UIKit
 
 class BoardView: ChipsContainerView {
   override init(frame: CGRect) {
-    super.init(frame: frame, rows: 1000, columns: 1000)
-    // todo size
+    super.init(frame: frame, rows: 0, columns: 0)
   }
   
   required init?(coder aDecoder: NSCoder) {

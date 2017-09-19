@@ -54,7 +54,7 @@ class BoardViewController: UIViewController {
     hand2.hide()
     game = Game(players: [pl1, pl2])
   }
-
+  
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.

@@ -86,7 +86,6 @@ class ChipView: UIView {
       label.textAlignment = .center
       label.textColor = chip.color.getTextColor()
       label.font = UIFont.boldSystemFont(ofSize: 20.0)
-      // todo: do something with a font.
       self.addSubview(label)
       break
     default:

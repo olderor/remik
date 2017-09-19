@@ -17,7 +17,6 @@ class Player {
   
   init(name: String) {
     self.name = name
-    // TODO Think about hand size.
     self.hand = [Chip?](repeating: nil, count: 0)
   }
   
