@@ -8,6 +8,11 @@
 
 import Foundation
 
+enum ChipGamePosition {
+  case inHand,
+  onBoard
+}
+
 enum ChipType {
   case number,
   coloredJoker,
@@ -38,6 +43,8 @@ class Chip {
   let number: Int?
   
   var cell: Cell!
+  
+  var gamePosition = ChipGamePosition.inHand
   
   fileprivate init(color: ChipColor, number: Int?, text: String, type: ChipType) {
     self.color = color

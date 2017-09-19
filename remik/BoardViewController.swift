@@ -71,12 +71,17 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
   }
   
   func moveToHand(chipView: ChipView, gestureRecognizer: UIGestureRecognizer) {
-    // Only jokers are allowed to be returned into the hand.
-    if chipView.chip.type == .anyJoker || chipView.chip.type == .coloredJoker {
+    // Only jokers are allowed to be returned into the hand. Or user wants to cancel his choice.
+    if chipView.chip.type == .anyJoker ||
+      chipView.chip.type == .coloredJoker ||
+      chipView.chip.gamePosition == .inHand {
+      
       let locationInHand = gestureRecognizer.location(in: handViews[game.currentPlayerIndex])
       handViews[game.currentPlayerIndex].didMoveChipToView(chipView: chipView, toLocation: locationInHand)
     } else {
-      //todo show alert: wrong move
+      let alertController = UIAlertController(title: "Incorrect move", message: "You can not move chips with numbers to your hand. Only jokers are allowed to be grabbed.", preferredStyle: .alert)
+      alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+      self.present(alertController, animated: true, completion: nil)
       boardView.addSubview(chipView)
       boardView.chipViewMatrix[chipView.chip.cell.row, chipView.chip.cell.column] = chipView
       boardView.dragAndDropProcessor.updateChipViewPosition(cell: chipView.chip.cell)
