@@ -11,7 +11,6 @@ import Foundation
 class Player {
   var hand: [Chip?]
   let name: String
-  var handLastIndex = 0
   
   private let didDrawEvent = Event<Chip>()
   
@@ -24,13 +23,20 @@ class Player {
     didDrawEvent.addHandler(handler: handler)
   }
   
-  func draw(chip: Chip) {
-    chip.cell = Cell(row: 0, column: handLastIndex)
-    if (handLastIndex == hand.count) {
+  func findFreeCellInHand() -> Cell {
+    let cell = Cell(row: 0, column: 0)
+    while cell.column < hand.count && hand[cell.column] != nil {
+      cell.column += 1
+    }
+    if cell.column == hand.count {
       hand.append(nil)
     }
-    hand[handLastIndex] = chip
-    handLastIndex += 1
+    return cell
+  }
+  
+  func draw(chip: Chip) {
+    chip.cell = findFreeCellInHand()
+    hand[chip.cell.column] = chip
     didDrawEvent.raise(data: chip)
   }
   
@@ -40,8 +46,16 @@ class Player {
   }
   
   func move(chip: Chip, to position: Int) {
-    handLastIndex = max(handLastIndex, position + 1)
     hand[position] = chip
+  }
+  
+  func updateHand(newHand: Matrix<ChipView?>) {
+    while newHand.columns > hand.count {
+      hand.append(nil)
+    }
+    for i in 0..<hand.count {
+      hand[i] = newHand[0, i]?.chip
+    }
   }
 }
 

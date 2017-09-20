@@ -12,9 +12,11 @@ class Game {
   private(set) var players: [Player]
   private var bagChipsCollection = ChipsCollection()
   private(set) var currentPlayerIndex = 0
-  private var board: Board
+  private(set) var board: Board
   
   let initialHandSize = 14
+  
+  var chipsPlacedOnBoardCount = 0
   
   init(players: [Player]) {
     self.players = players
@@ -31,21 +33,32 @@ class Game {
     }
   }
   
-  func endTurn() {
-    currentPlayerIndex = (currentPlayerIndex + 1) % players.count
-  }
-  
   private func drawChip(player: Player) throws {
     let chip = try bagChipsCollection.drawChip()
     player.draw(chip: chip)
   }
   
-  func drawChip() {
+  private func drawChip() {
     do {
       try drawChip(player: players[currentPlayerIndex])
-      endTurn()
     } catch {
       print("no cheaps left");
     }
+  }
+  
+  func endTurn(handState: Matrix<Chip?>, boardState: Matrix<Chip?>) -> VerificationResult {
+    if chipsPlacedOnBoardCount == 0 {
+      drawChip()
+    } else {
+      let result = board.verifyBoardState(state: boardState)
+      if !result.success {
+        return result
+      }
+      board.applyUpdatedBoardState(newState: boardState)
+      players[currentPlayerIndex].upd(handState)
+    }
+    currentPlayerIndex = (currentPlayerIndex + 1) % players.count
+    chipsPlacedOnBoardCount = 0
+    return VerificationResult()
   }
 }

@@ -3,35 +3,30 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "BoardViewController.updateHandScrollViewContentSize(newSize : CGSize) -&gt; ():BoardViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "handScrollView.frame.size.height">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "DragAndDropProcessor.updateChipViewPosition(cell : Cell) -&gt; ():DragAndDropProcessor.swift">
       </ContextState>
       <ContextState
          contextName = "static LocationManager.getCellBy(location : CGPoint, cellRect : CGRect) -&gt; Cell?:LocationManager.swift">
          <PersistentStrings>
             <PersistentString
-               value = "cellRect.origin.x * 0.5 + cellRect.size.width">
+               value = "cellRect.origin.y * 0.5 + cellRect.size.height">
             </PersistentString>
             <PersistentString
                value = "cellRect.origin.y * 0.5">
             </PersistentString>
             <PersistentString
-               value = "cellRect.origin.y * 0.5 + cellRect.size.height">
+               value = "cellRect.origin.x * 0.5">
             </PersistentString>
             <PersistentString
-               value = "cellRect.origin.x * 0.5">
+               value = "cellRect.origin.x * 0.5 + cellRect.size.width">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "DragAndDropProcessor.gestureRecognizer(UIGestureRecognizer, shouldReceive : UITouch) -&gt; Bool:DragAndDropProcessor.swift">
+         contextName = "Matrix.addRows(defaultValue : A, count : Int) -&gt; ():Matrix.swift">
       </ContextState>
       <ContextState
-         contextName = "Matrix.addRows(defaultValue : A, count : Int) -&gt; ():Matrix.swift">
+         contextName = "DragAndDropProcessor.gestureRecognizer(UIGestureRecognizer, shouldReceive : UITouch) -&gt; Bool:DragAndDropProcessor.swift">
       </ContextState>
       <ContextState
          contextName = "DragAndDropProcessor.panGestureRecognized(gestureRecognizer : UIGestureRecognizer) -&gt; ():DragAndDropProcessor.swift">
@@ -43,10 +38,23 @@
          contextName = "DragAndDropProcessor.moveChip(from : Cell, to : Cell) -&gt; ():DragAndDropProcessor.swift">
       </ContextState>
       <ContextState
+         contextName = "HandView.updateContentSize():HandView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "chipViewMatrix">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "Matrix.subscript.getter:Matrix.swift">
       </ContextState>
       <ContextState
-         contextName = "DragAndDropProcessor.updateChipViewPosition(cell : Cell) -&gt; ():DragAndDropProcessor.swift">
+         contextName = "BoardViewController.updateHandScrollViewContentSize(newSize : CGSize) -&gt; ():BoardViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "handScrollView.frame.size.height">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
    </ContextStates>
 </VariablesViewState>

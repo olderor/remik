@@ -8,7 +8,14 @@
 
 import UIKit
 
+enum EndTurnStates: String {
+  case endTurn = "End turn",
+  drawChip = "Draw chip"
+}
+
 class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
+  
+  @IBOutlet weak var endTurnButton: UIButton!
   
   @IBOutlet weak var handScrollViewHeightLayoutConstraint: NSLayoutConstraint!
   
@@ -60,22 +67,36 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     game = Game(players: players)
   }
   
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
+  
+  @IBAction func onEndTurnButtonTouchUpInside(_ sender: UIButton) {
+    handViews[game.currentPlayerIndex].hide()
+    let result = game.endTurn()
+    handViews[game.currentPlayerIndex].show()
+    for error in result.errors {
+      print(error.localizedDescription)
+    }
   }
   
   func moveToBoard(chipView: ChipView, gestureRecognizer: UIGestureRecognizer) {
+    game.chipsPlacedOnBoardCount += 1
+    endTurnButton.setTitle(EndTurnStates.endTurn.rawValue, for: .normal)
     let locationInBoard = gestureRecognizer.location(in: boardView)
     boardView.didMoveChipToView(chipView: chipView, toLocation: locationInBoard)
   }
   
   func moveToHand(chipView: ChipView, gestureRecognizer: UIGestureRecognizer) {
     // Only jokers are allowed to be returned into the hand. Or user wants to cancel his choice.
+    
+    if chipView.chip.gamePosition == .inHand {
+      game.chipsPlacedOnBoardCount -= 1
+      if game.chipsPlacedOnBoardCount == 0 {
+        endTurnButton.setTitle(EndTurnStates.drawChip.rawValue, for: .normal)
+      }
+    }
+    
     if chipView.chip.type == .anyJoker ||
       chipView.chip.type == .coloredJoker ||
       chipView.chip.gamePosition == .inHand {
-      
       let locationInHand = gestureRecognizer.location(in: handViews[game.currentPlayerIndex])
       handViews[game.currentPlayerIndex].didMoveChipToView(chipView: chipView, toLocation: locationInHand)
     } else {
@@ -110,3 +131,5 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     return scrollView.subviews[0]
   }
 }
+
+// todo chip changed cell: update model
