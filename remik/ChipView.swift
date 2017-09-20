@@ -156,11 +156,13 @@ class ChipView: UIView {
     cell.row = initialCell.row
     cell.column = initialCell.column
     chip.gamePosition = chip.initialGamePosition
+    backgroundColor = UIColor.white
   }
   
   func applyState() {
     initialCell.row = cell.row
     initialCell.column = cell.column
     chip.initialGamePosition = chip.gamePosition
+    backgroundColor = UIColor.white
   }
 }

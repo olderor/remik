@@ -13,13 +13,53 @@ enum BoardError: Error {
 }
 
 enum VerificationError: Error {
-  case invalidSequenceLength(length: Int),
-  tooManyJokers(jokersCount: Int),
-  incorrectJoker(position: Cell, possibleNumber: Int),
-  incorrectOneColorNumber(position: Cell, differTo: Cell),
-  incorrectDifference(firstNumber: Cell, secondNumber: Cell, difference: Int),
-  incorrectNumber(position: Cell, possibleNumber: Int),
-  incorrectColorInSequence
+  case incorrectSequenceLength(range: CellRange),
+  tooManyJokers(range: CellRange, jokersCount: Int),
+  incorrectJoker(range: CellRange, possibleNumber: Int),
+  incorrectOneColorNumber(range: CellRange),
+  incorrectDifference(range: CellRange, difference: Int),
+  incorrectNumber(range: CellRange, possibleNumber: Int),
+  incorrectColorInSequence(range: CellRange)
+}
+
+extension VerificationError: LocalizedError {
+  public var errorDescription: String {
+    switch self {
+    case .incorrectSequenceLength(let length):
+      return "Incorrect sequence length: \(length). Sequence must contain at least \(Board.minimumSequenceLength) chips."
+    case .tooManyJokers(let jokersCount):
+      return "Too many jokers in the sequence (\(jokersCount)). More than a half of the chips must be numbered chips."
+    case .incorrectJoker(_, let possibleNumber):
+      return "Incorrect joker found. Predicted \(possibleNumber) number. Mind that all chips can be only \(ChipsCollection.minNumber)-\(ChipsCollection.maxNumber) including."
+    case .incorrectOneColorNumber(_):
+      return "Incorrect sequence. If sequence contains of few colors, its numbers must have the same value. If sequence is the sequence of consecutive numbers, then they all must be the same color."
+    case .incorrectDifference(_, let difference):
+      return "Incorrect sequence. The sequence must be the sequence of consecutive numbers (found \(difference) between adjacent numbers, it has to be either 1 or -1)."
+    case .incorrectNumber(_, let possibleNumber):
+      return "Incorrect sequence. The sequence must be the sequence of consecutive numbers (hint: there must be \(possibleNumber) chip)."
+    case .incorrectColorInSequence(_):
+      return "Incorrect color in the sequence found. There can only be one chip for each of the colors."
+    }
+  }
+  
+  public var cellRange: CellRange {
+    switch self {
+    case .incorrectSequenceLength(let range):
+      return range
+    case .tooManyJokers(let range, _):
+      return range
+    case .incorrectJoker(let range, _):
+      return range
+    case .incorrectOneColorNumber(let range):
+      return range
+    case .incorrectDifference(let range, _):
+      return range
+    case .incorrectNumber(let range, _):
+      return range
+    case .incorrectColorInSequence(let range):
+      return range
+    }
+  }
 }
 
 class VerificationResult {
@@ -34,6 +74,8 @@ class VerificationResult {
 class Board {
   var state: Matrix<Chip?>
   var updatedState: Matrix<Chip?>
+  
+  static let minimumSequenceLength = 3
   
   convenience init() {
     self.init(rows: 0, columns: 0)
@@ -61,14 +103,14 @@ class Board {
   }
   
   // Minimum sequence length is 3 chips.
-  // At least half of the chips must be numbered chips.
+  // More than a half of the chips must be numbered chips.
   // Jokers can only replace number in range 1...17.
   // The sequence must be either:
   // a sequence with equal numbers but different colors or
   // a sequence with increasing or decreasing by 1 numbers of the same color.
   private func verifyCellRange(range: CellRange) -> VerificationError? {
-    if range.toColumn - range.fromColumn < 3 {
-      return .invalidSequenceLength(length: range.toColumn - range.fromColumn)
+    if range.toColumn - range.fromColumn < Board.minimumSequenceLength {
+      return .incorrectSequenceLength(range: range)
     }
     
     var jokersCount = 0
@@ -87,13 +129,13 @@ class Board {
     }
     
     if jokersCount * 2 >= range.toColumn - range.fromColumn {
-      return .tooManyJokers(jokersCount: jokersCount)
+      return .tooManyJokers(range: range, jokersCount: jokersCount)
     }
     
     if colors.count != 1 {
       if colors.count + anyJokers != range.toColumn - range.fromColumn ||
-        range.toColumn - range.fromColumn > 4 {
-        return .incorrectColorInSequence
+        range.toColumn - range.fromColumn > ChipColor.colored().count {
+        return .incorrectColorInSequence(range: range)
       }
       var startColumn = range.fromColumn
       while updatedState[range.row, startColumn]!.number == nil {
@@ -103,9 +145,7 @@ class Board {
       for column in (startColumn + 1)..<range.toColumn {
         if let number = updatedState[range.row, column]!.number {
           if number != correctNumber {
-            return .incorrectOneColorNumber(
-              position: Cell(row: range.row, column: column),
-              differTo: Cell(row: range.row, column: startColumn))
+            return .incorrectOneColorNumber(range: range)
           }
         }
       }
@@ -135,10 +175,7 @@ class Board {
     
     let difference = (secondNumber - firstNumber) / (secondNumberedColumn - firstNumberedColumn)
     if (difference != 1 && difference != -1) {
-      return .incorrectDifference(
-        firstNumber: Cell(row: range.row, column: firstNumberedColumn),
-        secondNumber: Cell(row: range.row, column: secondNumberedColumn),
-        difference: difference)
+      return .incorrectDifference(range: range, difference: difference)
     }
     
     // Check all jokers before first number.
@@ -146,8 +183,10 @@ class Board {
     // check if it fits the range 1...17.
     let beforeJokers = firstNumberedColumn - range.fromColumn
     let jokerNumber = firstNumber - difference * beforeJokers
-    if jokerNumber < 1 || 17 < jokerNumber {
-      return .incorrectJoker(position: Cell(row: range.row, column: range.fromColumn), possibleNumber: jokerNumber)
+    if jokerNumber < ChipsCollection.minNumber ||
+      ChipsCollection.maxNumber < jokerNumber {
+      
+      return .incorrectJoker(range: range, possibleNumber: jokerNumber)
     }
     
     // Compare all other chips in the sequence using the difference.
@@ -157,13 +196,13 @@ class Board {
       currentNumber += difference
       if let number = updatedState[range.row, column]!.number {
         if number != currentNumber {
-          return .incorrectNumber(position: Cell(row: range.row, column: column),
-                                  possibleNumber: currentNumber)
+          return .incorrectNumber(range: range, possibleNumber: currentNumber)
         }
       } else {
-        if currentNumber < 1 || 17 < currentNumber {
-          return .incorrectJoker(position: Cell(row: range.row, column: column),
-                                 possibleNumber: currentNumber)
+        if currentNumber < ChipsCollection.minNumber ||
+          ChipsCollection.maxNumber < currentNumber {
+          
+          return .incorrectJoker(range: range, possibleNumber: currentNumber)
         }
       }
     }

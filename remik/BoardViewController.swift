@@ -23,10 +23,10 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
   
   @IBOutlet weak var handScrollView: UIScrollView!
   
-  var game: Game!
+  private var game: Game!
   
-  var boardView: BoardView!
-  var handViews: [HandView]!
+  private var boardView: BoardView!
+  private var handViews: [HandView]!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -96,7 +96,7 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     chipView.addAnimationToCurrentPosition()
   }
   
-  func getCurrentHandState(playerIndex: Int) -> Matrix<Chip?> {
+  private func getCurrentHandState(playerIndex: Int) -> Matrix<Chip?> {
     let state = Matrix<Chip?>(
       rows: handViews[playerIndex].chipViewMatrix.rows,
       columns: handViews[playerIndex].chipViewMatrix.columns,
@@ -111,7 +111,7 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     return state
   }
   
-  func getCurrentBoardState() -> Matrix<Chip?> {
+  private func getCurrentBoardState() -> Matrix<Chip?> {
     let state = Matrix<Chip?>(
       rows: boardView.chipViewMatrix.rows,
       columns: boardView.chipViewMatrix.columns,
@@ -126,7 +126,7 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     return state
   }
   
-  func applyStateChanges(for playerIndex: Int) {
+  private func applyStateChanges(for playerIndex: Int) {
     game.chipsPlacedOnBoardCount = 0
     endTurnButton.setTitle(EndTurnStates.drawChip.rawValue, for: .normal)
     let handChipViewMatrix = Matrix<ChipView?>(rows: 0, columns: 0, repeatedValue: nil)
@@ -163,7 +163,7 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     AnimationManager.playAll()
   }
   
-  func resetBoardStateChanges(for playerIndex: Int) {
+  private func resetBoardStateChanges(for playerIndex: Int) {
     game.chipsPlacedOnBoardCount = 0
     endTurnButton.setTitle(EndTurnStates.drawChip.rawValue, for: .normal)
     
@@ -211,7 +211,7 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
       getCurrentHandState(playerIndex: playerIndex)
   }
   
-  func resetStateChanges(for playerIndex: Int) {
+  private func resetStateChanges(for playerIndex: Int) {
     game.chipsPlacedOnBoardCount = 0
     endTurnButton.setTitle(EndTurnStates.drawChip.rawValue, for: .normal)
     let handChipViewMatrix = Matrix<ChipView?>(rows: 0, columns: 0, repeatedValue: nil)
@@ -251,6 +251,12 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
       getCurrentHandState(playerIndex: playerIndex)
   }
   
+  private func hightlightChipsOnBoard(range: CellRange) {
+    for column in range.fromColumn..<range.toColumn {
+      boardView.chipViewMatrix[range.row, column]?.backgroundColor = UIColor.yellow
+    }
+  }
+  
   @IBAction func onEndTurnButtonTouchUpInside(_ sender: UIButton) {
     let currentPlayerIndex = game.currentPlayerIndex
     
@@ -265,16 +271,27 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     game.board.updatedState = getCurrentBoardState()
     game.players[currentPlayerIndex].updatedState =
       getCurrentHandState(playerIndex: currentPlayerIndex)
-
+    
     let result = game.tryEndTurn()
     if result.success {
       handViews[currentPlayerIndex].hide()
       applyStateChanges(for: currentPlayerIndex)
       handViews[game.currentPlayerIndex].show()
     } else {
+      var errorsList = [String]()
       for error in result.errors {
-        print(error.localizedDescription)
+        hightlightChipsOnBoard(range: error.cellRange)
+        if errorsList.count < 3 {
+          errorsList.append(error.errorDescription)
+        }
       }
+      var errorsMessage = errorsList.joined(separator: "\n\n")
+      if errorsList.count != result.errors.count {
+        errorsMessage += "..."
+      }
+      let alertController = UIAlertController(title: "Incorrect board state (found \(result.errors.count) incorrect sequences)", message: "Consider fixing those mistakes (or you can reset board state).\n\n" + errorsMessage, preferredStyle: .alert)
+      alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+      self.present(alertController, animated: true, completion: nil)
     }
   }
   
@@ -282,7 +299,7 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     resetStateChanges(for: game.currentPlayerIndex)
   }
   
-  func moveToBoard(chipView: ChipView, gestureRecognizer: UIGestureRecognizer) {
+  private func moveToBoard(chipView: ChipView, gestureRecognizer: UIGestureRecognizer) {
     chipView.chip.gamePosition = .onBoard
     game.chipsPlacedOnBoardCount += 1
     endTurnButton.setTitle(EndTurnStates.endTurn.rawValue, for: .normal)
@@ -290,7 +307,7 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     boardView.didMoveChipToView(chipView: chipView, toLocation: locationInBoard)
   }
   
-  func moveToHand(chipView: ChipView, gestureRecognizer: UIGestureRecognizer) {
+  private func moveToHand(chipView: ChipView, gestureRecognizer: UIGestureRecognizer) {
     // Only jokers are allowed to be returned into the hand. Or user wants to cancel his choice.
     
     if chipView.chip.initialGamePosition == .inHand {
@@ -304,10 +321,15 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
       chipView.chip.type == .coloredJoker ||
       chipView.chip.initialGamePosition == .inHand {
       let locationInHand = gestureRecognizer.location(in: handViews[game.currentPlayerIndex])
-      handViews[game.currentPlayerIndex].didMoveChipToView(chipView: chipView, toLocation: locationInHand)
+      handViews[game.currentPlayerIndex].didMoveChipToView(
+        chipView: chipView, toLocation: locationInHand)
       chipView.chip.gamePosition = .inHand
     } else {
-      let alertController = UIAlertController(title: "Incorrect move", message: "You can not move chips with numbers to your hand. Only jokers are allowed to be grabbed.", preferredStyle: .alert)
+      let alertController = UIAlertController(
+        title: "Incorrect move",
+        message: "You can not move chips with numbers to your hand. Only jokers are allowed to be grabbed.",
+        preferredStyle: .alert)
+      
       alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
       self.present(alertController, animated: true, completion: nil)
       boardView.addSubview(chipView)
@@ -318,15 +340,18 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     }
   }
   
-  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+  func gestureRecognizer(
+    _ gestureRecognizer: UIGestureRecognizer,
+    shouldReceive touch: UITouch) -> Bool {
+    
     return true
   }
   
-  func updateBoardScrollViewContentSize(newSize: CGSize) {
+  private func updateBoardScrollViewContentSize(newSize: CGSize) {
     boardScrollView.contentSize = newSize
   }
   
-  func updateHandScrollViewContentSize(newSize: CGSize) {
+  private func updateHandScrollViewContentSize(newSize: CGSize) {
     handScrollView.contentSize = newSize
     handScrollViewHeightLayoutConstraint.constant = newSize.height
   }

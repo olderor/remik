@@ -131,6 +131,7 @@ class DragAndDropProcessor: NSObject, UIGestureRecognizerDelegate {
         chipView.center = locationInMainView
         chipView.currentLocation = locationInView
         mainView?.bringSubview(toFront: chipView)
+        chipView.backgroundColor = UIColor.white
       }
       break
     case .cancelled, .failed:
