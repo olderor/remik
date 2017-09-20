@@ -161,9 +161,6 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     boardView.updateContentSize()
     AnimationManager.addLastAnimationBlock(completion: nil, type: .animation, description: nil)
     AnimationManager.playAll()
-    
-    game.players[playerIndex].updatedState =
-      getCurrentHandState(playerIndex: playerIndex)
   }
   
   func resetBoardStateChanges(for playerIndex: Int) {
@@ -266,6 +263,9 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     }
     
     game.board.updatedState = getCurrentBoardState()
+    game.players[currentPlayerIndex].updatedState =
+      getCurrentHandState(playerIndex: currentPlayerIndex)
+
     let result = game.tryEndTurn()
     if result.success {
       handViews[currentPlayerIndex].hide()
