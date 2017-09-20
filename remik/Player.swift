@@ -12,32 +12,32 @@ class Player {
   var hand: [Chip?]
   let name: String
   
-  private let didDrawEvent = Event<Chip>()
+  private let didDrawEvent = Event<(chip: Chip, handIndex: Int)>()
   
   init(name: String) {
     self.name = name
     self.hand = [Chip?](repeating: nil, count: 0)
   }
   
-  func addDidDrawEventListener(handler: @escaping (Chip) -> ()) {
+  func addDidDrawEventListener(handler: @escaping ((chip: Chip, handIndex: Int)) -> ()) {
     didDrawEvent.addHandler(handler: handler)
   }
   
-  func findFreeCellInHand() -> Cell {
-    let cell = Cell(row: 0, column: 0)
-    while cell.column < hand.count && hand[cell.column] != nil {
-      cell.column += 1
+  func findFreeSpaceInHand() -> Int {
+    var index = 0
+    while index < hand.count && hand[index] != nil {
+      index += 1
     }
-    if cell.column == hand.count {
+    if index == hand.count {
       hand.append(nil)
     }
-    return cell
+    return index
   }
   
   func draw(chip: Chip) {
-    chip.cell = findFreeCellInHand()
-    hand[chip.cell.column] = chip
-    didDrawEvent.raise(data: chip)
+    let index = findFreeSpaceInHand()
+    hand[index] = chip
+    didDrawEvent.raise(data: (chip: chip, handIndex: index))
   }
   
   func move(from: Int, to: Int) {

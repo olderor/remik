@@ -63,6 +63,10 @@ class ChipView: UIView {
   let imageViewOffset: CGFloat = 5
   
   var currentLocation: CGPoint!
+  var initialLocation: CGPoint!
+  
+  var cell: Cell!
+  var initialCell: Cell!
   
   static let chipDefaultOffsetX: CGFloat  = 10
   static let chipDefaultOffsetY: CGFloat  = 50
@@ -85,6 +89,18 @@ class ChipView: UIView {
         width: ChipView.chipDefaultViewWidth,
         height: ChipView.chipDefaultViewHeight)
     }
+  }
+  
+  convenience init(chip: Chip, cell: Cell) {
+    self.init(chip: chip, frame: CGRect(
+      x: ChipView.chipDefaultOffsetX / 2.0 +
+        CGFloat(cell.column) * (ChipView.chipDefaultOffsetX + ChipView.chipDefaultViewWidth),
+      y: ChipView.chipDefaultOffsetY / 2.0 +
+        CGFloat(cell.row) * (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight),
+      width: ChipView.chipDefaultViewWidth,
+      height: ChipView.chipDefaultViewHeight))
+    self.cell = Cell(row: cell.row, column: cell.column)
+    self.initialCell = Cell(row: cell.row, column: cell.column)
   }
   
   init(chip: Chip, frame: CGRect) {
@@ -116,5 +132,35 @@ class ChipView: UIView {
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+  
+  func addAnimationToCurrentPosition() {
+    currentLocation = CGPoint(
+      x: (ChipView.chipDefaultOffsetX + ChipView.chipDefaultViewWidth) * 0.5 +
+        (ChipView.chipDefaultOffsetX + ChipView.chipDefaultViewWidth) * CGFloat(cell.column),
+      y: (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight) * 0.5 +
+        (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight) * CGFloat(cell.row))
+    weak var weakSelf = self
+    AnimationManager.addAnimationBlock {
+      if let weakSelf = weakSelf {
+        weakSelf.center = CGPoint(
+          x: (ChipView.chipDefaultOffsetX + ChipView.chipDefaultViewWidth) * 0.5 +
+            (ChipView.chipDefaultOffsetX + ChipView.chipDefaultViewWidth) * CGFloat(weakSelf.cell.column),
+          y: (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight) * 0.5 +
+            (ChipView.chipDefaultOffsetY + ChipView.chipDefaultViewHeight) * CGFloat(weakSelf.cell.row))
+      }
+    }
+  }
+  
+  func resetToInitialState() {
+    cell.row = initialCell.row
+    cell.column = initialCell.column
+    chip.gamePosition = chip.initialGamePosition
+  }
+  
+  func applyState() {
+    initialCell.row = cell.row
+    initialCell.column = cell.column
+    chip.initialGamePosition = chip.gamePosition
   }
 }

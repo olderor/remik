@@ -28,19 +28,14 @@ class HandView: ChipsContainerView {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func didDraw(chip: Chip) {
-    let chipView = ChipView(chip: chip, frame:
-      CGRect(x: chipOffset,
-             y: (frame.size.height - ChipView.chipDefaultViewHeight) / 2.0,
-             width: ChipView.chipDefaultViewWidth,
-             height: ChipView.chipDefaultViewHeight))
-    chipOffset += ChipView.chipDefaultOffsetX + ChipView.chipDefaultViewHeight
-    updateContentSize()
+  func didDraw(chip: Chip, handIndex: Int) {
+    let chipView = ChipView(chip: chip, cell: Cell(row: 0, column: handIndex))
     addSubview(chipView)
-    while chip.cell.column >= chipViewMatrix.columns {
+    while chipView.cell.column >= chipViewMatrix.columns {
       chipViewMatrix.addColumn(defaultValue: nil)
     }
-    chipViewMatrix[chip.cell.row, chip.cell.column] = chipView
+    chipViewMatrix[chipView.cell.row, chipView.cell.column] = chipView
+    updateContentSize()
   }
   
   func hide() {

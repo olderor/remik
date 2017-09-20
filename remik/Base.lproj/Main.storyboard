@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -34,20 +34,30 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sH2-Ha-Q93">
-                                        <rect key="frame" x="132" y="0.0" width="111" height="30"/>
+                                        <rect key="frame" x="153" y="0.0" width="69" height="30"/>
                                         <state key="normal" title="Draw chip"/>
                                         <connections>
                                             <action selector="onEndTurnButtonTouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lRq-el-zAS"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q5b-0J-fIu">
+                                        <rect key="frame" x="328" y="0.0" width="39" height="30"/>
+                                        <state key="normal" title="Reset"/>
+                                        <connections>
+                                            <action selector="onResetButtonTouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OpW-Tm-fcH"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="sH2-Ha-Q93" secondAttribute="trailing" constant="132" id="1H4-ai-Oz9"/>
+                                    <constraint firstItem="Q5b-0J-fIu" firstAttribute="top" secondItem="lJu-a0-RcX" secondAttribute="top" id="1XN-3U-2XS"/>
                                     <constraint firstAttribute="bottom" secondItem="sH2-Ha-Q93" secondAttribute="bottom" id="3iY-dm-nH9"/>
+                                    <constraint firstAttribute="bottom" secondItem="Q5b-0J-fIu" secondAttribute="bottom" id="HDE-Vp-I9b"/>
+                                    <constraint firstAttribute="trailing" secondItem="Q5b-0J-fIu" secondAttribute="trailing" constant="8" id="UeF-9E-yjc"/>
                                     <constraint firstAttribute="height" constant="30" id="W1h-qi-PWH"/>
+                                    <constraint firstItem="sH2-Ha-Q93" firstAttribute="leading" secondItem="lJu-a0-RcX" secondAttribute="leading" constant="153" id="jJX-h3-q6A"/>
                                     <constraint firstItem="sH2-Ha-Q93" firstAttribute="top" secondItem="lJu-a0-RcX" secondAttribute="top" id="qAm-ZR-et9"/>
-                                    <constraint firstItem="sH2-Ha-Q93" firstAttribute="leading" secondItem="lJu-a0-RcX" secondAttribute="leading" constant="132" id="rO5-Ah-zi7"/>
+                                    <constraint firstAttribute="trailing" secondItem="sH2-Ha-Q93" secondAttribute="trailing" constant="153" id="sg9-a6-ZQJ"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -77,9 +87,4 @@
             <point key="canvasLocation" x="85.5" y="152.5"/>
         </scene>
     </scenes>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
-    </simulatedMetricsContainer>
 </document>

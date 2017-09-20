@@ -18,7 +18,8 @@ enum VerificationError: Error {
   incorrectJoker(position: Cell, possibleNumber: Int),
   incorrectOneColorNumber(position: Cell, differTo: Cell),
   incorrectDifference(firstNumber: Cell, secondNumber: Cell, difference: Int),
-  incorrectNumber(position: Cell, possibleNumber: Int)
+  incorrectNumber(position: Cell, possibleNumber: Int),
+  incorrectColorInSequence
 }
 
 class VerificationResult {
@@ -71,10 +72,12 @@ class Board {
     }
     
     var jokersCount = 0
+    var anyJokers = 0
     var colors = Set<ChipColor>()
     for column in range.fromColumn..<range.toColumn {
       if updatedState[range.row, column]!.type == .anyJoker {
         jokersCount += 1
+        anyJokers += 1
         continue
       }
       colors.insert(updatedState[range.row, column]!.color)
@@ -88,6 +91,10 @@ class Board {
     }
     
     if colors.count != 1 {
+      if colors.count + anyJokers != range.toColumn - range.fromColumn ||
+        range.toColumn - range.fromColumn > 4 {
+        return .incorrectColorInSequence
+      }
       var startColumn = range.fromColumn
       while updatedState[range.row, startColumn]!.number == nil {
         startColumn += 1

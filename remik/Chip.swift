@@ -42,9 +42,8 @@ class Chip {
   let type: ChipType
   let number: Int?
   
-  var cell: Cell!
-  
   var gamePosition = ChipGamePosition.inHand
+  var initialGamePosition = ChipGamePosition.inHand
   
   fileprivate init(color: ChipColor, number: Int?, text: String, type: ChipType) {
     self.color = color
