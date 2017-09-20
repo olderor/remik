@@ -67,7 +67,7 @@ extension ChipView {
     case .normal:
       return UIColor.white
     case .justDrawn:
-      return UIColor.init(red: 200.0 / 255.0, green: 255.0 / 255.0, blue: 200.0 / 255.0, alpha: 1.0)
+      return UIColor.init(red: 255.0 / 255.0, green: 255.0 / 255.0, blue: 200.0 / 255.0, alpha: 1.0)
     case .wrongPlaced:
       return UIColor.yellow
     }
