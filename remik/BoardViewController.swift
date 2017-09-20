@@ -319,6 +319,10 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     resetStateChanges(for: game.currentPlayerIndex)
   }
   
+  @IBAction func onExitButtonTouchUpInside(_ sender: UIButton) {
+    self.dismiss(animated: true, completion: nil)
+  }
+  
   private func moveToBoard(chipView: ChipView, gestureRecognizer: UIGestureRecognizer) {
     chipView.chip.gamePosition = .onBoard
     game.chipsPlacedOnBoardCount += 1

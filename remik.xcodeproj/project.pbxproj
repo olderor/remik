@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		280594A31F72FD26000B1509 /* PlayersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280594A21F72FD25000B1509 /* PlayersViewController.swift */; };
 		281C77881F6FA992003E044C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77871F6FA992003E044C /* AppDelegate.swift */; };
 		281C778A1F6FA992003E044C /* BoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281C77891F6FA992003E044C /* BoardViewController.swift */; };
 		281C778D1F6FA992003E044C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 281C778B1F6FA992003E044C /* Main.storyboard */; };
@@ -35,6 +36,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		280594A21F72FD25000B1509 /* PlayersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersViewController.swift; sourceTree = "<group>"; };
 		281C77841F6FA992003E044C /* remik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = remik.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		281C77871F6FA992003E044C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		281C77891F6FA992003E044C /* BoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewController.swift; sourceTree = "<group>"; };
@@ -75,6 +77,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		280594A41F72FD2B000B1509 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				281C77891F6FA992003E044C /* BoardViewController.swift */,
+				280594A21F72FD25000B1509 /* PlayersViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
 		281C777B1F6FA992003E044C = {
 			isa = PBXGroup;
 			children = (
@@ -94,11 +105,11 @@
 		281C77861F6FA992003E044C /* remik */ = {
 			isa = PBXGroup;
 			children = (
+				280594A41F72FD2B000B1509 /* ViewControllers */,
 				281C77B21F702056003E044C /* Assets */,
 				281C77B11F702043003E044C /* System */,
 				281C77A81F6FDD80003E044C /* Views */,
 				281C779B1F6FAE28003E044C /* Models */,
-				281C77891F6FA992003E044C /* BoardViewController.swift */,
 			);
 			path = remik;
 			sourceTree = "<group>";
@@ -276,6 +287,7 @@
 				281C77C11F7032C5003E044C /* Deque.swift in Sources */,
 				281C77A11F6FB506003E044C /* Player.swift in Sources */,
 				281C779D1F6FAE3F003E044C /* ChipsCollection.swift in Sources */,
+				280594A31F72FD26000B1509 /* PlayersViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
