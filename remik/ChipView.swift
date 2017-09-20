@@ -8,6 +8,12 @@
 
 import UIKit
 
+enum ChipViewState {
+  case normal,
+  wrongPlaced,
+  justDrawn
+}
+
 extension ChipColor {
   func getTextColor() -> UIColor {
     switch self {
@@ -51,6 +57,19 @@ extension ChipColor {
       return "joker_black.png"
     default:
       return nil
+    }
+  }
+}
+
+extension ChipView {
+  static func getChipBackgroundColor(forState state: ChipViewState) -> UIColor {
+    switch state {
+    case .normal:
+      return UIColor.white
+    case .justDrawn:
+      return UIColor.init(red: 200.0 / 255.0, green: 255.0 / 255.0, blue: 200.0 / 255.0, alpha: 1.0)
+    case .wrongPlaced:
+      return UIColor.yellow
     }
   }
 }
@@ -107,7 +126,7 @@ class ChipView: UIView {
     self.chip = chip
     super.init(frame: frame)
     currentLocation = self.center
-    backgroundColor = UIColor.white
+    backgroundColor = ChipView.getChipBackgroundColor(forState: .normal)
     layer.cornerRadius = 5.0
     layer.borderColor = chip.color.getBorderColor().cgColor
     layer.borderWidth = 2.0
@@ -156,13 +175,13 @@ class ChipView: UIView {
     cell.row = initialCell.row
     cell.column = initialCell.column
     chip.gamePosition = chip.initialGamePosition
-    backgroundColor = UIColor.white
+    backgroundColor = ChipView.getChipBackgroundColor(forState: .normal)
   }
   
   func applyState() {
     initialCell.row = cell.row
     initialCell.column = cell.column
     chip.initialGamePosition = chip.gamePosition
-    backgroundColor = UIColor.white
+    backgroundColor = ChipView.getChipBackgroundColor(forState: .normal)
   }
 }

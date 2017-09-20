@@ -65,6 +65,10 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     
     handViews[0].show()
     game = Game(players: players)
+    for handView in handViews {
+      handView.previousDrawnChipView?.backgroundColor =
+        ChipView.getChipBackgroundColor(forState: .normal)
+    }
   }
   
   private func updateChipView(
@@ -251,9 +255,11 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
       getCurrentHandState(playerIndex: playerIndex)
   }
   
-  private func hightlightChipsOnBoard(range: CellRange) {
+  private func hightlightWrongPlacedChipsOnBoard(range: CellRange) {
     for column in range.fromColumn..<range.toColumn {
-      boardView.chipViewMatrix[range.row, column]?.backgroundColor = UIColor.yellow
+      if let chipView = boardView.chipViewMatrix[range.row, column] {
+        chipView.backgroundColor = ChipView.getChipBackgroundColor(forState: .wrongPlaced)
+      }
     }
   }
   
@@ -280,7 +286,7 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     } else {
       var errorsList = [String]()
       for error in result.errors {
-        hightlightChipsOnBoard(range: error.cellRange)
+        hightlightWrongPlacedChipsOnBoard(range: error.cellRange)
         if errorsList.count < 3 {
           errorsList.append(error.errorDescription)
         }

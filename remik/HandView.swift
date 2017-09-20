@@ -15,6 +15,8 @@ class HandView: ChipsContainerView {
   
   static let defaultBackgroundColor = UIColor.darkGray
   
+  weak var previousDrawnChipView: ChipView?
+  
   init(player: Player, frame: CGRect) {
     self.player = player
     super.init(frame: frame, rows: 1, columns: player.hand.columns)
@@ -29,12 +31,15 @@ class HandView: ChipsContainerView {
   }
   
   func didDraw(chip: Chip, handIndex: Int) {
+    previousDrawnChipView?.backgroundColor = UIColor.white
     let chipView = ChipView(chip: chip, cell: Cell(row: 0, column: handIndex))
     addSubview(chipView)
     while chipView.cell.column >= chipViewMatrix.columns {
       chipViewMatrix.addColumn(defaultValue: nil)
     }
     chipViewMatrix[chipView.cell.row, chipView.cell.column] = chipView
+    chipView.backgroundColor = ChipView.getChipBackgroundColor(forState: .justDrawn)
+    previousDrawnChipView = chipView
     updateContentSize()
   }
   
