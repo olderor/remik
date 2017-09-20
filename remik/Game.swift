@@ -14,6 +14,12 @@ class Game {
   private(set) var currentPlayerIndex = 0
   private(set) var board: Board
   
+  var currentPlayer: Player {
+    get {
+      return players[currentPlayerIndex]
+    }
+  }
+  
   let initialHandSize = 14
   
   var chipsPlacedOnBoardCount = 0
@@ -45,9 +51,9 @@ class Game {
   }
   
   func drawChip() {
-    players[currentPlayerIndex].applyUpdatedHandState()
+    currentPlayer.applyUpdatedHandState()
     do {
-      try drawChip(player: players[currentPlayerIndex])
+      try drawChip(player: currentPlayer)
     } catch {
       print("no cheaps left");
     }
@@ -59,7 +65,7 @@ class Game {
     if !result.success {
       return result
     }
-    players[currentPlayerIndex].applyUpdatedHandState()
+    currentPlayer.applyUpdatedHandState()
     board.applyUpdatedBoardState()
     forceEndTurn()
     return VerificationResult()

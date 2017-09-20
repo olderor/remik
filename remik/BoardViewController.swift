@@ -263,6 +263,20 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     }
   }
   
+  private func waitForNextPlayer() {
+    let alertController = UIAlertController(
+      title: "Waiting for the next player",
+      message: "Give device to the next player \(game.currentPlayer.name). Press OK, when ready.", preferredStyle: .alert)
+    alertController.addAction(UIAlertAction(
+      title: "OK",
+      style: UIAlertActionStyle.default,
+      handler: {(alert: UIAlertAction!) in
+        self.handViews[self.game.currentPlayerIndex].show()
+      }))
+    
+    self.present(alertController, animated: true, completion: nil)
+  }
+  
   @IBAction func onEndTurnButtonTouchUpInside(_ sender: UIButton) {
     let currentPlayerIndex = game.currentPlayerIndex
     
@@ -270,7 +284,7 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
       handViews[currentPlayerIndex].hide()
       resetBoardStateChanges(for: currentPlayerIndex)
       game.drawChip()
-      handViews[game.currentPlayerIndex].show()
+      waitForNextPlayer()
       return
     }
     
@@ -282,7 +296,7 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     if result.success {
       handViews[currentPlayerIndex].hide()
       applyStateChanges(for: currentPlayerIndex)
-      handViews[game.currentPlayerIndex].show()
+      waitForNextPlayer()
     } else {
       var errorsList = [String]()
       for error in result.errors {
