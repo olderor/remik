@@ -54,16 +54,12 @@ class HandView: ChipsContainerView {
   
   override func updateContentSize() {
     frame.size = CGSize(
-      width: (ChipView.chipDefaultViewWidth + ChipView.chipDefaultOffsetX) * CGFloat(player.handLastIndex),
+      width: (ChipView.chipDefaultViewWidth + ChipView.chipDefaultOffsetX) * CGFloat(chipViewMatrix.columns),
       height: (ChipView.chipDefaultViewHeight + ChipView.chipDefaultOffsetY) * CGFloat(chipViewMatrix.rows))
     sizeChangedEvent.raise(data: frame.size)
   }
   
   override func addColumnToMatrix() {
-    player.handLastIndex += 1
-    if player.handLastIndex == player.hand.count {
-      player.hand.append(nil)
-    }
     super.addColumnToMatrix()
   }
 }

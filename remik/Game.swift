@@ -46,16 +46,15 @@ class Game {
     }
   }
   
-  func endTurn(handState: Matrix<Chip?>, boardState: Matrix<Chip?>) -> VerificationResult {
+  func endTurn() -> VerificationResult {
     if chipsPlacedOnBoardCount == 0 {
       drawChip()
     } else {
-      let result = board.verifyBoardState(state: boardState)
+      let result = board.verifyBoardState()
       if !result.success {
         return result
       }
-      board.applyUpdatedBoardState(newState: boardState)
-      players[currentPlayerIndex].upd(handState)
+      board.applyUpdatedBoardState()
     }
     currentPlayerIndex = (currentPlayerIndex + 1) % players.count
     chipsPlacedOnBoardCount = 0
