@@ -17,7 +17,7 @@ class HandView: ChipsContainerView {
   
   init(player: Player, frame: CGRect) {
     self.player = player
-    super.init(frame: frame, rows: 1, columns: player.hand.count)
+    super.init(frame: frame, rows: 1, columns: player.hand.columns)
     
     backgroundColor = HandView.defaultBackgroundColor
     player.addDidDrawEventListener(handler: didDraw)

@@ -96,6 +96,21 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     chipView.addAnimationToCurrentPosition()
   }
   
+  func getCurrentHandState(playerIndex: Int) -> Matrix<Chip?> {
+    let state = Matrix<Chip?>(
+      rows: handViews[playerIndex].chipViewMatrix.rows,
+      columns: handViews[playerIndex].chipViewMatrix.columns,
+      repeatedValue: nil)
+    
+    for row in 0..<handViews[playerIndex].chipViewMatrix.rows {
+      for column in 0..<handViews[playerIndex].chipViewMatrix.columns {
+        state[row, column] = handViews[playerIndex].chipViewMatrix[row, column]?.chip
+      }
+    }
+    
+    return state
+  }
+  
   func getCurrentBoardState() -> Matrix<Chip?> {
     let state = Matrix<Chip?>(
       rows: boardView.chipViewMatrix.rows,
@@ -146,6 +161,58 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     boardView.updateContentSize()
     AnimationManager.addLastAnimationBlock(completion: nil, type: .animation, description: nil)
     AnimationManager.playAll()
+    
+    game.players[playerIndex].updatedState =
+      getCurrentHandState(playerIndex: playerIndex)
+    game.board.updatedState = getCurrentBoardState()
+  }
+  
+  func resetBoardStateChanges(for playerIndex: Int) {
+    game.chipsPlacedOnBoardCount = 0
+    endTurnButton.setTitle(EndTurnStates.drawChip.rawValue, for: .normal)
+    
+    let handChipViewMatrix = Matrix<ChipView?>(rows: 0, columns: 0, repeatedValue: nil)
+    let boardChipViewMatrix = Matrix<ChipView?>(rows: 0, columns: 0, repeatedValue: nil)
+    for row in 0..<handViews[playerIndex].chipViewMatrix.rows {
+      for column in 0..<handViews[playerIndex].chipViewMatrix.columns {
+        if let chipView = handViews[playerIndex].chipViewMatrix[row, column] {
+          
+          // Can put joker in the hand. And still draw.
+          // Can move chip from one place in hand to another place in hand.
+          if chipView.chip.isJoker || chipView.chip.initialGamePosition == .inHand {
+            chipView.applyState()
+          } else {
+            chipView.resetToInitialState()
+          }
+          updateChipView(
+            chipView: chipView,
+            playerIndex: playerIndex,
+            handChipViewMatrix: handChipViewMatrix,
+            boardChipViewMatrix: boardChipViewMatrix)
+        }
+      }
+    }
+    for row in 0..<boardView.chipViewMatrix.rows {
+      for column in 0..<boardView.chipViewMatrix.columns {
+        if let chipView = boardView.chipViewMatrix[row, column] {
+          chipView.resetToInitialState()
+          updateChipView(
+            chipView: chipView,
+            playerIndex: playerIndex,
+            handChipViewMatrix: handChipViewMatrix,
+            boardChipViewMatrix: boardChipViewMatrix)
+        }
+      }
+    }
+    handViews[playerIndex].chipViewMatrix = handChipViewMatrix
+    boardView.chipViewMatrix = boardChipViewMatrix
+    handViews[playerIndex].updateContentSize()
+    boardView.updateContentSize()
+    AnimationManager.addLastAnimationBlock(completion: nil, type: .animation, description: nil)
+    AnimationManager.playAll()
+    
+    game.players[playerIndex].updatedState =
+      getCurrentHandState(playerIndex: playerIndex)
   }
   
   func resetStateChanges(for playerIndex: Int) {
@@ -183,19 +250,28 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     boardView.updateContentSize()
     AnimationManager.addLastAnimationBlock(completion: nil, type: .animation, description: nil)
     AnimationManager.playAll()
+    
+    game.players[playerIndex].updatedState =
+      getCurrentHandState(playerIndex: playerIndex)
   }
   
   @IBAction func onEndTurnButtonTouchUpInside(_ sender: UIButton) {
     let currentPlayerIndex = game.currentPlayerIndex
     
-    game.board.updatedState = getCurrentBoardState()
-    let result = game.endTurn()
+    if game.shouldDrawChip {
+      handViews[currentPlayerIndex].hide()
+      resetBoardStateChanges(for: currentPlayerIndex)
+      game.drawChip()
+      handViews[game.currentPlayerIndex].show()
+      return
+    }
+    
+    let result = game.tryEndTurn()
     if result.success {
       handViews[currentPlayerIndex].hide()
       applyStateChanges(for: currentPlayerIndex)
       handViews[game.currentPlayerIndex].show()
     } else {
-      resetStateChanges(for: currentPlayerIndex)
       for error in result.errors {
         print(error.localizedDescription)
       }
@@ -262,5 +338,3 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     return scrollView.subviews[0]
   }
 }
-
-// todo chip changed cell: update model

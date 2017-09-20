@@ -9,14 +9,15 @@
 import Foundation
 
 class Player {
-  var hand: [Chip?]
+  var hand: Matrix<Chip?>
+  var updatedState: Matrix<Chip?>!
   let name: String
   
   private let didDrawEvent = Event<(chip: Chip, handIndex: Int)>()
   
   init(name: String) {
     self.name = name
-    self.hand = [Chip?](repeating: nil, count: 0)
+    self.hand = Matrix<Chip?>(rows: 1, columns: 0, repeatedValue: nil)
   }
   
   func addDidDrawEventListener(handler: @escaping ((chip: Chip, handIndex: Int)) -> ()) {
@@ -25,37 +26,22 @@ class Player {
   
   func findFreeSpaceInHand() -> Int {
     var index = 0
-    while index < hand.count && hand[index] != nil {
+    while index < hand.columns && hand[0, index] != nil {
       index += 1
     }
-    if index == hand.count {
-      hand.append(nil)
+    if index == hand.columns {
+      hand.addColumn(defaultValue: nil)
     }
     return index
   }
   
   func draw(chip: Chip) {
     let index = findFreeSpaceInHand()
-    hand[index] = chip
+    hand[0, index] = chip
     didDrawEvent.raise(data: (chip: chip, handIndex: index))
   }
   
-  func move(from: Int, to: Int) {
-    move(chip: hand[from]!, to: to)
-    hand[from] = nil
-  }
-  
-  func move(chip: Chip, to position: Int) {
-    hand[position] = chip
-  }
-  
-  func updateHand(newHand: Matrix<ChipView?>) {
-    while newHand.columns > hand.count {
-      hand.append(nil)
-    }
-    for i in 0..<hand.count {
-      hand[i] = newHand[0, i]?.chip
-    }
+  func applyUpdatedHandState() {
+    hand = Matrix<Chip?>(contents: updatedState)
   }
 }
-

@@ -18,6 +18,12 @@ class Game {
   
   var chipsPlacedOnBoardCount = 0
   
+  var shouldDrawChip: Bool {
+    get {
+      return chipsPlacedOnBoardCount == 0
+    }
+  }
+  
   init(players: [Player]) {
     self.players = players
     bagChipsCollection.shuffle()
@@ -38,26 +44,29 @@ class Game {
     player.draw(chip: chip)
   }
   
-  private func drawChip() {
+  func drawChip() {
+    players[currentPlayerIndex].applyUpdatedHandState()
     do {
       try drawChip(player: players[currentPlayerIndex])
     } catch {
       print("no cheaps left");
     }
+    forceEndTurn()
   }
   
-  func endTurn() -> VerificationResult {
-    if chipsPlacedOnBoardCount == 0 {
-      drawChip()
-    } else {
-      let result = board.verifyBoardState()
-      if !result.success {
-        return result
-      }
-      board.applyUpdatedBoardState()
+  func tryEndTurn() -> VerificationResult {
+    let result = board.verifyBoardState()
+    if !result.success {
+      return result
     }
+    players[currentPlayerIndex].applyUpdatedHandState()
+    board.applyUpdatedBoardState()
+    forceEndTurn()
+    return VerificationResult()
+  }
+  
+  func forceEndTurn() {
     currentPlayerIndex = (currentPlayerIndex + 1) % players.count
     chipsPlacedOnBoardCount = 0
-    return VerificationResult()
   }
 }

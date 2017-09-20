@@ -42,6 +42,12 @@ class Chip {
   let type: ChipType
   let number: Int?
   
+  var isJoker: Bool {
+    get {
+      return type == .anyJoker || type == .coloredJoker
+    }
+  }
+  
   var gamePosition = ChipGamePosition.inHand
   var initialGamePosition = ChipGamePosition.inHand
   
