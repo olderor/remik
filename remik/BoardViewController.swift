@@ -164,7 +164,6 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     
     game.players[playerIndex].updatedState =
       getCurrentHandState(playerIndex: playerIndex)
-    game.board.updatedState = getCurrentBoardState()
   }
   
   func resetBoardStateChanges(for playerIndex: Int) {
@@ -266,6 +265,7 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
       return
     }
     
+    game.board.updatedState = getCurrentBoardState()
     let result = game.tryEndTurn()
     if result.success {
       handViews[currentPlayerIndex].hide()
