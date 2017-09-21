@@ -89,7 +89,7 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
       style: UIAlertActionStyle.default,
       handler: {(alert: UIAlertAction!) in
         self.game.isStarted = true
-        self.handViews[0].show()
+        self.showCurrentHand()
     }))
     self.present(alertController, animated: true, completion: nil)
   }
@@ -294,7 +294,7 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
       title: "OK",
       style: UIAlertActionStyle.default,
       handler: {(alert: UIAlertAction!) in
-        self.handViews[self.game.currentPlayerIndex].show()
+        self.showCurrentHand()
       }))
     
     self.present(alertController, animated: true, completion: nil)
@@ -411,6 +411,13 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     return true
   }
   
+  func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+    if scrollView.subviews.count == 0 {
+      return nil
+    }
+    return scrollView.subviews[0]
+  }
+  
   private func updateBoardScrollViewContentSize(newSize: CGSize) {
     boardScrollView.contentSize = newSize
   }
@@ -420,10 +427,25 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     handScrollViewHeightLayoutConstraint.constant = newSize.height
   }
   
-  func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-    if scrollView.subviews.count == 0 {
-      return nil
+  private func showCurrentHand() {
+    handViews[game.currentPlayerIndex].show()
+  }
+  
+  @IBAction func increaseHandSize(_ sender: UIBarButtonItem) {
+    handViews[game.currentPlayerIndex].addRowToMatrix()
+  }
+  
+  @IBAction func decreaseHandSize(_ sender: UIBarButtonItem) {
+    do {
+      try handViews[game.currentPlayerIndex].removeLastRow()
+    } catch {
+      let alertController = UIAlertController(
+        title: "Warning",
+        message: "The raw contains some chips, move them up to clear the row before removing it.",
+        preferredStyle: .alert)
+      
+      alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+      self.present(alertController, animated: true, completion: nil)
     }
-    return scrollView.subviews[0]
   }
 }

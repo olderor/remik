@@ -127,7 +127,7 @@
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" style="plain" id="7J1-RK-By8">
                                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="qPt-p8-usQ">
-                                                <rect key="frame" x="309" y="7" width="50" height="30"/>
+                                                <rect key="frame" x="329" y="7" width="30" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" title="Edit"/>
                                                 <connections>
@@ -177,14 +177,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ffC-FQ-489">
-                                <rect key="frame" x="0.0" y="567" width="375" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="a3W-K3-NOz"/>
-                                </constraints>
-                            </scrollView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TlX-tF-k8Z">
-                                <rect key="frame" x="0.0" y="65" width="375" height="502"/>
+                                <rect key="frame" x="0.0" y="65" width="375" height="461"/>
                             </scrollView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CfV-Rg-pnD">
                                 <rect key="frame" x="0.0" y="21" width="375" height="44"/>
@@ -222,18 +216,49 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zKE-bU-Wzy">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="z4R-f4-iHU"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem systemItem="flexibleSpace" id="pge-IM-kd1"/>
+                                    <barButtonItem systemItem="stop" id="6Ru-md-rGM">
+                                        <connections>
+                                            <action selector="decreaseHandSize:" destination="BYZ-38-t0r" id="zqy-7n-SGs"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem systemItem="flexibleSpace" id="OMN-f5-SB8"/>
+                                    <barButtonItem systemItem="add" id="ZK9-kT-LTO">
+                                        <connections>
+                                            <action selector="increaseHandSize:" destination="BYZ-38-t0r" id="gHP-YZ-Fta"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem systemItem="flexibleSpace" id="KgH-hh-REy"/>
+                                </items>
+                            </toolbar>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ffC-FQ-489">
+                                <rect key="frame" x="0.0" y="526" width="375" height="97"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="97" id="pHf-Tl-ySe"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="ffC-FQ-489" secondAttribute="trailing" id="8tS-Bu-QSz"/>
+                            <constraint firstItem="qDS-d5-vmI" firstAttribute="top" secondItem="zKE-bU-Wzy" secondAttribute="bottom" id="3jW-7m-DgV"/>
+                            <constraint firstItem="zKE-bU-Wzy" firstAttribute="top" secondItem="ffC-FQ-489" secondAttribute="bottom" id="DnS-lX-BcZ"/>
                             <constraint firstItem="CfV-Rg-pnD" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="21" id="I5y-LX-DFd"/>
                             <constraint firstItem="CfV-Rg-pnD" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="J4c-Af-zuE"/>
-                            <constraint firstItem="ffC-FQ-489" firstAttribute="trailing" secondItem="TlX-tF-k8Z" secondAttribute="trailing" id="JFE-gr-akF"/>
-                            <constraint firstItem="ffC-FQ-489" firstAttribute="bottom" secondItem="qDS-d5-vmI" secondAttribute="top" id="QmP-0z-WWd"/>
-                            <constraint firstItem="ffC-FQ-489" firstAttribute="top" secondItem="TlX-tF-k8Z" secondAttribute="bottom" id="VXe-RR-AL2"/>
-                            <constraint firstItem="ffC-FQ-489" firstAttribute="leading" secondItem="TlX-tF-k8Z" secondAttribute="leading" id="X35-gf-Bme"/>
+                            <constraint firstItem="TlX-tF-k8Z" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="KHq-JP-Fqs"/>
+                            <constraint firstItem="zKE-bU-Wzy" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="L7j-3x-ZWH"/>
+                            <constraint firstAttribute="trailing" secondItem="zKE-bU-Wzy" secondAttribute="trailing" id="Mio-zZ-7Ra"/>
+                            <constraint firstItem="ffC-FQ-489" firstAttribute="top" secondItem="TlX-tF-k8Z" secondAttribute="bottom" id="OaM-ET-GZw"/>
+                            <constraint firstAttribute="trailing" secondItem="TlX-tF-k8Z" secondAttribute="trailing" id="RRo-zh-3L0"/>
+                            <constraint firstItem="TlX-tF-k8Z" firstAttribute="top" secondItem="CfV-Rg-pnD" secondAttribute="bottom" id="Vzk-n5-NE7"/>
                             <constraint firstItem="TlX-tF-k8Z" firstAttribute="top" secondItem="CfV-Rg-pnD" secondAttribute="bottom" id="a1p-r5-BOd"/>
-                            <constraint firstItem="ffC-FQ-489" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="gDU-S5-c3O"/>
+                            <constraint firstAttribute="trailing" secondItem="ffC-FQ-489" secondAttribute="trailing" id="nIE-YV-DoG"/>
+                            <constraint firstItem="ffC-FQ-489" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="nRh-ZG-6Bi"/>
                             <constraint firstAttribute="trailing" secondItem="CfV-Rg-pnD" secondAttribute="trailing" id="w0k-Kq-7Hb"/>
                         </constraints>
                     </view>
@@ -242,12 +267,12 @@
                         <outlet property="boardScrollView" destination="TlX-tF-k8Z" id="r1L-Ys-Gjh"/>
                         <outlet property="endTurnButton" destination="sH2-Ha-Q93" id="JbU-W2-c9t"/>
                         <outlet property="handScrollView" destination="ffC-FQ-489" id="OWT-PZ-0Co"/>
-                        <outlet property="handScrollViewHeightLayoutConstraint" destination="a3W-K3-NOz" id="68b-SE-qmW"/>
+                        <outlet property="handScrollViewHeightLayoutConstraint" destination="pHf-Tl-ySe" id="Api-Tj-gnT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="330" y="153"/>
+            <point key="canvasLocation" x="329.5" y="152.5"/>
         </scene>
     </scenes>
 </document>

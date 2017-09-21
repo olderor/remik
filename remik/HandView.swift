@@ -8,6 +8,10 @@
 
 import UIKit
 
+enum HandError: Error {
+  case rowIsBusy
+}
+
 class HandView: ChipsContainerView {
   private var player: Player
   
@@ -61,5 +65,20 @@ class HandView: ChipsContainerView {
   
   override func addColumnToMatrix() {
     super.addColumnToMatrix()
+  }
+  
+  func addRowToMatrix() {
+    chipViewMatrix.addRow(defaultValue: nil)
+    updateContentSize()
+  }
+  
+  func removeLastRow() throws {
+    for column in 0..<chipViewMatrix.columns {
+      if chipViewMatrix[chipViewMatrix.rows - 1, column] != nil {
+        throw HandError.rowIsBusy
+      }
+    }
+    chipViewMatrix.removeLastRow()
+    updateContentSize()
   }
 }

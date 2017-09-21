@@ -139,6 +139,11 @@ class Matrix<Element> {
     addColumns(defaultValue: defaultValue, count: 1)
   }
   
+  func removeLastRow() {
+    contents.removeLast()
+    rows -= 1
+  }
+  
   fileprivate func indexIsValidFor(row: Int, column: Int) -> Bool {
     return 0 <= row && row < rows && 0 <= column && column < columns
   }
