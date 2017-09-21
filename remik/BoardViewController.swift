@@ -156,7 +156,7 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
   private func applyStateChanges(for playerIndex: Int) {
     game.chipsPlacedOnBoardCount = 0
     endTurnButton.setTitle(EndTurnStates.drawChip.rawValue, for: .normal)
-    let handChipViewMatrix = Matrix<ChipView?>(rows: 0, columns: 0, repeatedValue: nil)
+    let handChipViewMatrix = Matrix<ChipView?>(rows: handViews[playerIndex].chipViewMatrix.rows, columns: 0, repeatedValue: nil)
     let boardChipViewMatrix = Matrix<ChipView?>(rows: 0, columns: 0, repeatedValue: nil)
     for row in 0..<handViews[playerIndex].chipViewMatrix.rows {
       for column in 0..<handViews[playerIndex].chipViewMatrix.columns {
@@ -194,7 +194,7 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     game.chipsPlacedOnBoardCount = 0
     endTurnButton.setTitle(EndTurnStates.drawChip.rawValue, for: .normal)
     
-    let handChipViewMatrix = Matrix<ChipView?>(rows: 0, columns: 0, repeatedValue: nil)
+    let handChipViewMatrix = Matrix<ChipView?>(rows: handViews[playerIndex].chipViewMatrix.rows, columns: 0, repeatedValue: nil)
     let boardChipViewMatrix = Matrix<ChipView?>(rows: 0, columns: 0, repeatedValue: nil)
     for row in 0..<handViews[playerIndex].chipViewMatrix.rows {
       for column in 0..<handViews[playerIndex].chipViewMatrix.columns {
@@ -313,14 +313,26 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     self.present(alertController, animated: true, completion: nil)
   }
   
-  @IBAction func onEndTurnButtonTouchUpInside(_ sender: UIButton) {
+  private func endTurn() {
     let currentPlayerIndex = game.currentPlayerIndex
     
     if game.shouldDrawChip {
-      handViews[currentPlayerIndex].hide()
-      resetBoardStateChanges(for: currentPlayerIndex)
-      game.drawChip()
-      waitForNextPlayer()
+      
+      game.board.updatedState = getCurrentBoardState()
+      let result = game.board.verifyBoardState()
+      if result.success {
+        game.players[currentPlayerIndex].updatedState =
+          getCurrentHandState(playerIndex: currentPlayerIndex)
+        applyStateChanges(for: currentPlayerIndex)
+        handViews[currentPlayerIndex].hide()
+        game.drawChip()
+        waitForNextPlayer()
+      } else {
+        for error in result.errors {
+          hightlightWrongPlacedChipsOnBoard(range: error.cellRange)
+        }
+        askToResetStateBeforeEndTurn()
+      }
       return
     }
     
@@ -353,6 +365,28 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
       alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
       self.present(alertController, animated: true, completion: nil)
     }
+  }
+  
+  private func askToResetStateBeforeEndTurn() {
+    let alertController = UIAlertController(
+      title: "Board is in incorrect state",
+      message: "You did some actions that turned board into incorrect state. Do you want to cancel your actions and end the turn by drawing a chip or continue your turn and do some other actions?", preferredStyle: .alert)
+    alertController.addAction(UIAlertAction(
+      title: "Reset",
+      style: UIAlertActionStyle.default,
+      handler: {(alert: UIAlertAction!) in
+        self.resetStateChanges(for: self.game.currentPlayerIndex)
+        self.endTurn()
+    }))
+    alertController.addAction(UIAlertAction(
+      title: "Continue turn",
+      style: UIAlertActionStyle.default,
+      handler: nil))
+    self.present(alertController, animated: true, completion: nil)
+  }
+  
+  @IBAction func onEndTurnButtonTouchUpInside(_ sender: UIButton) {
+    endTurn()
   }
   
   @IBAction func onResetButtonTouchUpInside(_ sender: UIButton) {
