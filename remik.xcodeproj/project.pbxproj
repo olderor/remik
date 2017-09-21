@@ -33,6 +33,7 @@
 		281D5A471F710DF1008CFE14 /* DragAndDropProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281D5A461F710DF1008CFE14 /* DragAndDropProcessor.swift */; };
 		281D5A491F710EEC008CFE14 /* ChipsContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281D5A481F710EEC008CFE14 /* ChipsContainerView.swift */; };
 		28ECF4C81F70FAA0004CEC2F /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28ECF4C71F70FAA0004CEC2F /* BoardView.swift */; };
+		28F7AA981F73EA710042C6F9 /* PlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F7AA971F73EA710042C6F9 /* PlayerTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 		281D5A461F710DF1008CFE14 /* DragAndDropProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragAndDropProcessor.swift; sourceTree = "<group>"; };
 		281D5A481F710EEC008CFE14 /* ChipsContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChipsContainerView.swift; sourceTree = "<group>"; };
 		28ECF4C71F70FAA0004CEC2F /* BoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
+		28F7AA971F73EA710042C6F9 /* PlayerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 				281C77A91F6FDDB9003E044C /* HandView.swift */,
 				281C77AB1F6FE13C003E044C /* ChipView.swift */,
 				281D5A481F710EEC008CFE14 /* ChipsContainerView.swift */,
+				28F7AA971F73EA710042C6F9 /* PlayerTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 				281C77AC1F6FE13C003E044C /* ChipView.swift in Sources */,
 				281C779A1F6FAD9F003E044C /* Chip.swift in Sources */,
 				281C77AA1F6FDDB9003E044C /* HandView.swift in Sources */,
+				28F7AA981F73EA710042C6F9 /* PlayerTableViewCell.swift in Sources */,
 				281D5A491F710EEC008CFE14 /* ChipsContainerView.swift in Sources */,
 				28ECF4C81F70FAA0004CEC2F /* BoardView.swift in Sources */,
 				281C77881F6FA992003E044C /* AppDelegate.swift in Sources */,

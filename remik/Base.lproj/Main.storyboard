@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -25,10 +26,73 @@
                                 <rect key="frame" x="0.0" y="65" width="375" height="544"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="KdY-Yp-wcV">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <rect key="frame" x="0.0" y="116" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="AIC-wB-0st" customClass="PlayerTableViewCell" customModule="remik" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AIC-wB-0st" id="Ruz-0N-ZTJ">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Player #1" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EOc-bH-Ak5">
+                                                    <rect key="frame" x="147" y="6" width="220" height="30"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Player #1 name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rFx-PH-ZpK">
+                                                    <rect key="frame" x="8" y="11" width="116" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="EOc-bH-Ak5" secondAttribute="trailing" constant="8" id="3TV-zz-YfM"/>
+                                                <constraint firstItem="EOc-bH-Ak5" firstAttribute="leading" secondItem="rFx-PH-ZpK" secondAttribute="trailing" constant="23" id="BeF-uh-pLe"/>
+                                                <constraint firstAttribute="trailing" secondItem="EOc-bH-Ak5" secondAttribute="trailing" constant="8" id="LRj-02-sNG"/>
+                                                <constraint firstItem="rFx-PH-ZpK" firstAttribute="leading" secondItem="Ruz-0N-ZTJ" secondAttribute="leadingMargin" id="egl-hU-Qf6"/>
+                                                <constraint firstItem="EOc-bH-Ak5" firstAttribute="top" secondItem="Ruz-0N-ZTJ" secondAttribute="topMargin" constant="-2" id="vab-7T-b59"/>
+                                                <constraint firstItem="EOc-bH-Ak5" firstAttribute="centerY" secondItem="rFx-PH-ZpK" secondAttribute="centerY" id="yDS-Vt-NCE"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="label" destination="rFx-PH-ZpK" id="sgy-kg-BGL"/>
+                                            <outlet property="nameTextField" destination="EOc-bH-Ak5" id="Hrd-KE-rT9"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="addCell" id="wur-wg-1sv">
+                                        <rect key="frame" x="0.0" y="72" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wur-wg-1sv" id="Sm9-IA-eh6">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r5C-iw-frm">
+                                                    <rect key="frame" x="112" y="8" width="151" height="29"/>
+                                                    <state key="normal" title="Add new player"/>
+                                                    <connections>
+                                                        <action selector="onAddPlayerButtonTouchUpInside:" destination="ZE7-bc-GuY" eventType="touchUpInside" id="ypH-MR-N9a"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="r5C-iw-frm" firstAttribute="leading" secondItem="Sm9-IA-eh6" secondAttribute="leading" constant="112" id="Aun-Xx-QOa"/>
+                                                <constraint firstItem="r5C-iw-frm" firstAttribute="centerY" secondItem="Sm9-IA-eh6" secondAttribute="centerY" id="DhS-gq-33Y"/>
+                                                <constraint firstAttribute="trailing" secondItem="r5C-iw-frm" secondAttribute="trailing" constant="112" id="gy3-Eu-toI"/>
+                                                <constraint firstItem="r5C-iw-frm" firstAttribute="top" secondItem="Sm9-IA-eh6" secondAttribute="topMargin" id="ny9-Bb-deY"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="ZE7-bc-GuY" id="Dft-R9-iNd"/>
+                                    <outlet property="delegate" destination="ZE7-bc-GuY" id="FBP-mB-Zfx"/>
+                                </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8bX-Gh-tcy">
                                 <rect key="frame" x="0.0" y="609" width="375" height="58"/>
@@ -37,7 +101,7 @@
                                         <rect key="frame" x="136" y="14" width="103" height="30"/>
                                         <state key="normal" title="Start game!"/>
                                         <connections>
-                                            <segue destination="BYZ-38-t0r" kind="modal" id="hbh-wz-cP0"/>
+                                            <action selector="onStartGameButtonTouchUpInside:" destination="ZE7-bc-GuY" eventType="touchUpInside" id="KXg-Ju-OHo"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -63,11 +127,11 @@
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" style="plain" id="7J1-RK-By8">
                                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="qPt-p8-usQ">
-                                                <rect key="frame" x="329" y="7" width="30" height="30"/>
+                                                <rect key="frame" x="309" y="7" width="50" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" title="Add"/>
+                                                <state key="normal" title="Edit"/>
                                                 <connections>
-                                                    <action selector="onAddPlayerButtonTouchUpInside:" destination="ZE7-bc-GuY" eventType="touchUpInside" id="lSF-C8-KJm"/>
+                                                    <action selector="onEditButtonTouchUpInside:" destination="ZE7-bc-GuY" eventType="touchUpInside" id="i4e-wc-GUi"/>
                                                 </connections>
                                             </button>
                                         </barButtonItem>
@@ -91,6 +155,11 @@
                             <constraint firstItem="8bX-Gh-tcy" firstAttribute="top" secondItem="D8y-OH-ucP" secondAttribute="bottom" id="xtw-8R-G66"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="editButton" destination="qPt-p8-usQ" id="U2J-KV-jxT"/>
+                        <outlet property="keyboardHeightLayoutConstraint" destination="4ue-NZ-pUC" id="V0e-Cx-WEj"/>
+                        <outlet property="playersTableView" destination="D8y-OH-ucP" id="Rds-zP-RlP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X3M-kT-XJh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -99,7 +168,7 @@
         <!--Board View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="BoardViewController" customModule="remik" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="board" id="BYZ-38-t0r" customClass="BoardViewController" customModule="remik" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xd2-8H-Tss"/>
                         <viewControllerLayoutGuide type="bottom" id="qDS-d5-vmI"/>
@@ -123,7 +192,7 @@
                                     <navigationItem id="vnd-Aq-71b">
                                         <nil key="title"/>
                                         <barButtonItem key="leftBarButtonItem" style="plain" id="mvY-8o-E8P">
-                                            <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ohY-4f-oty">
+                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ohY-4f-oty">
                                                 <rect key="frame" x="16" y="7" width="30" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" title="Exit"/>
@@ -132,7 +201,7 @@
                                                 </connections>
                                             </button>
                                         </barButtonItem>
-                                        <button key="titleView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="sH2-Ha-Q93">
+                                        <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="sH2-Ha-Q93">
                                             <rect key="frame" x="153" y="7" width="69" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" title="Draw chip"/>
@@ -141,7 +210,7 @@
                                             </connections>
                                         </button>
                                         <barButtonItem key="rightBarButtonItem" style="plain" id="Fm6-YJ-Vt5">
-                                            <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Q5b-0J-fIu">
+                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Q5b-0J-fIu">
                                                 <rect key="frame" x="320" y="7" width="39" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" title="Reset"/>

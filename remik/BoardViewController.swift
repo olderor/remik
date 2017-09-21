@@ -28,6 +28,8 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
   private var boardView: BoardView!
   private var handViews: [HandView]!
   
+  var playerNames: [String]!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -48,9 +50,11 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     boardView.addSizeChangedEventListener(handler: updateBoardScrollViewContentSize)
     boardScrollView.addSubview(boardView)
     
-    let players = [Player(name: "pl1"), Player(name: "pl2")]
     handViews = []
-    for player in players {
+    var players = [Player]()
+    for name in playerNames {
+      let player = Player(name: name)
+      players.append(player)
       let handView = HandView(player: player, frame: CGRect(
         x: 0,
         y: 0,
@@ -63,12 +67,31 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
       handViews.append(handView)
     }
     
-    handViews[0].show()
     game = Game(players: players)
     for handView in handViews {
       handView.previousDrawnChipView?.backgroundColor =
         ChipView.getChipBackgroundColor(forState: .normal)
     }
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    if game.isStarted {
+      return
+    }
+    
+    let alertController = UIAlertController(
+      title: "Ready",
+      message: "Game is ready to start. The first player is \(game.currentPlayer.name). Press OK, when ready.", preferredStyle: .alert)
+    alertController.addAction(UIAlertAction(
+      title: "OK",
+      style: UIAlertActionStyle.default,
+      handler: {(alert: UIAlertAction!) in
+        self.game.isStarted = true
+        self.handViews[0].show()
+    }))
+    self.present(alertController, animated: true, completion: nil)
   }
   
   private func updateChipView(

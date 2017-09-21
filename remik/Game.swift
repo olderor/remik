@@ -14,6 +14,8 @@ class Game {
   private(set) var currentPlayerIndex = 0
   private(set) var board: Board
   
+  var isStarted = false
+  
   var currentPlayer: Player {
     get {
       return players[currentPlayerIndex]
