@@ -88,7 +88,7 @@ class ChipView: UIView {
   var initialCell: Cell!
   
   static let chipDefaultOffsetX: CGFloat  = 10
-  static let chipDefaultOffsetY: CGFloat  = 50
+  static let chipDefaultOffsetY: CGFloat  = 20
   static let chipDefaultViewWidth: CGFloat = 50
   static let chipDefaultViewHeight: CGFloat = 50
   

@@ -34,7 +34,6 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     super.viewDidLoad()
     
     handScrollView.backgroundColor = HandView.defaultBackgroundColor
-    
     boardScrollView.delegate = self
     boardScrollView.minimumZoomScale = 0.5
     boardScrollView.maximumZoomScale = 1.0
