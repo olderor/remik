@@ -31,6 +31,7 @@ class PlayersViewController: UIViewController, UITableViewDelegate, UITableViewD
     } else {
       editButton.setTitle("Done", for: UIControlState.normal)
     }
+    editButton.sizeToFit()
     playersTableView.setEditing(!playersTableView.isEditing, animated: true)
   }
   
