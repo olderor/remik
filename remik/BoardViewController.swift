@@ -399,8 +399,10 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
   
   private func moveToBoard(chipView: ChipView, gestureRecognizer: UIGestureRecognizer) {
     chipView.chip.gamePosition = .onBoard
-    game.chipsPlacedOnBoardCount += 1
-    endTurnButton.setTitle(EndTurnStates.endTurn.rawValue, for: .normal)
+    if !(chipView.chip.isJoker && chipView.chip.initialGamePosition == .inHand) {
+      game.chipsPlacedOnBoardCount += 1
+      endTurnButton.setTitle(EndTurnStates.endTurn.rawValue, for: .normal)
+    }
     let locationInBoard = gestureRecognizer.location(in: boardView)
     boardView.didMoveChipToView(chipView: chipView, toLocation: locationInBoard)
   }
@@ -409,15 +411,15 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     // Only jokers are allowed to be returned into the hand. Or user wants to cancel his choice.
     
     if chipView.chip.initialGamePosition == .inHand {
-      game.chipsPlacedOnBoardCount -= 1
+      if !chipView.chip.isJoker {
+        game.chipsPlacedOnBoardCount -= 1
+      }
       if game.chipsPlacedOnBoardCount == 0 {
         endTurnButton.setTitle(EndTurnStates.drawChip.rawValue, for: .normal)
       }
     }
     
-    if chipView.chip.type == .anyJoker ||
-      chipView.chip.type == .coloredJoker ||
-      chipView.chip.initialGamePosition == .inHand {
+    if chipView.chip.isJoker || chipView.chip.initialGamePosition == .inHand {
       let locationInHand = gestureRecognizer.location(in: handViews[game.currentPlayerIndex])
       handViews[game.currentPlayerIndex].didMoveChipToView(
         chipView: chipView, toLocation: locationInHand)
