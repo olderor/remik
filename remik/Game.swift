@@ -20,6 +20,12 @@ class Game {
     }
   }
   
+  var previousPlayer: Player {
+    get {
+      return players[(currentPlayerIndex - 1) % players.count]
+    }
+  }
+  
   let initialHandSize = 14
   
   var chipsPlacedOnBoardCount = 0
@@ -72,6 +78,9 @@ class Game {
   }
   
   func forceEndTurn() {
+    if currentPlayer.chipsInHandCount == 0 {
+      return
+    }
     currentPlayerIndex = (currentPlayerIndex + 1) % players.count
     chipsPlacedOnBoardCount = 0
   }

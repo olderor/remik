@@ -13,6 +13,8 @@ class Player {
   var updatedState: Matrix<Chip?>!
   let name: String
   
+  private(set) var chipsInHandCount = 0
+  
   private let didDrawEvent = Event<(chip: Chip, handIndex: Int)>()
   
   init(name: String) {
@@ -38,10 +40,19 @@ class Player {
   func draw(chip: Chip) {
     let index = findFreeSpaceInHand()
     hand[0, index] = chip
+    chipsInHandCount += 1
     didDrawEvent.raise(data: (chip: chip, handIndex: index))
   }
   
   func applyUpdatedHandState() {
     hand = Matrix<Chip?>(contents: updatedState)
+    chipsInHandCount = 0
+    for row in 0..<hand.rows {
+      for column in 0..<hand.columns {
+        if hand[row, column] != nil {
+          chipsInHandCount += 1
+        }
+      }
+    }
   }
 }

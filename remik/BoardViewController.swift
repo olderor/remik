@@ -277,6 +277,19 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     self.present(alertController, animated: true, completion: nil)
   }
   
+  private func onPlayerWon() {
+    let alertController = UIAlertController(
+      title: "You win!",
+      message: "Congratulations! Player \(game.currentPlayer.name) won the game.", preferredStyle: .alert)
+    alertController.addAction(UIAlertAction(
+      title: "OK",
+      style: UIAlertActionStyle.default,
+      handler: {(alert: UIAlertAction!) in
+        self.dismiss(animated: true, completion: nil)
+    }))
+    self.present(alertController, animated: true, completion: nil)
+  }
+  
   @IBAction func onEndTurnButtonTouchUpInside(_ sender: UIButton) {
     let currentPlayerIndex = game.currentPlayerIndex
     
@@ -294,6 +307,10 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     
     let result = game.tryEndTurn()
     if result.success {
+      if game.currentPlayer.chipsInHandCount == 0 {
+        onPlayerWon()
+        return
+      }
       handViews[currentPlayerIndex].hide()
       applyStateChanges(for: currentPlayerIndex)
       waitForNextPlayer()
