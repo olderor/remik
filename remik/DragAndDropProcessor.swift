@@ -109,8 +109,6 @@ class DragAndDropProcessor: NSObject, UIGestureRecognizerDelegate {
     movingFromCell = LocationManager.getCellBy(
       location: locationInView,
       cellRect: ChipView.cellRect)
-    print("begin touch \(locationInView.x) \(locationInView.y)")
-    print("begin touch \(movingFromCell.row) \(movingFromCell.column)")
   }
   
   @objc func panGestureRecognized(gestureRecognizer: UIGestureRecognizer) {
@@ -154,9 +152,7 @@ class DragAndDropProcessor: NSObject, UIGestureRecognizerDelegate {
       }
       break
     case .ended:
-      print("end touch \(locationInSuperView.x) \(locationInSuperView.y)")
       if !CGRect(x: 0, y: 0, width: superView.frame.size.width, height: view.superview!.frame.size.height).contains(locationInSuperView) {
-        print("move out")
         if let chipView = view.chipViewMatrix[movingFromCell.row, movingFromCell.column] {
           view.chipViewMatrix[movingFromCell.row, movingFromCell.column] = nil
           moveOutOfViewEvent.raise(data:
