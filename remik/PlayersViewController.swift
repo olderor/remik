@@ -10,7 +10,7 @@ import UIKit
 
 class PlayersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
   
-  var playerNames = [String?]()
+  var playerNames: [String?]!
   
   let minimumNumberOfPlayers = 1
   
@@ -36,6 +36,11 @@ class PlayersViewController: UIViewController, UITableViewDelegate, UITableViewD
   
   
   @IBAction func onStartGameButtonTouchUpInside(_ sender: UIButton) {
+    
+    let namesData = NSKeyedArchiver.archivedData(withRootObject: playerNames)
+    UserDefaults.standard.set(namesData, forKey: "playerNames")
+    UserDefaults.standard.synchronize()
+    
     let boardViewController = storyboard?.instantiateViewController(withIdentifier: "board") as! BoardViewController
     var names = [String]()
     for index in 0..<playerNames.count {
@@ -51,8 +56,16 @@ class PlayersViewController: UIViewController, UITableViewDelegate, UITableViewD
   }
   
   override func viewDidLoad() {
-    for _ in 0..<3 {
-      playerNames.append(nil)
+    if let namesData = UserDefaults.standard.data(forKey: "playerNames") {
+      if let names = NSKeyedUnarchiver.unarchiveObject(with: namesData) as? [String?] {
+        playerNames = names
+      }
+    }
+    if playerNames == nil {
+      playerNames = [String?]()
+      for _ in 0..<3 {
+        playerNames.append(nil)
+      }
     }
     
     NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
