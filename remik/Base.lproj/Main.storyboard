@@ -119,14 +119,14 @@
                                 <items>
                                     <navigationItem title="Players" id="sOd-MW-Ica">
                                         <barButtonItem key="leftBarButtonItem" style="plain" id="xFa-ct-DEX">
-                                            <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="h0B-Fc-Q53">
+                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="h0B-Fc-Q53">
                                                 <rect key="frame" x="16" y="7" width="57" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" title="Settings"/>
                                             </button>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" style="plain" id="7J1-RK-By8">
-                                            <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="qPt-p8-usQ">
+                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="qPt-p8-usQ">
                                                 <rect key="frame" x="329" y="7" width="30" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" title="Edit"/>
@@ -183,10 +183,9 @@
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CfV-Rg-pnD">
                                 <rect key="frame" x="0.0" y="21" width="375" height="44"/>
                                 <items>
-                                    <navigationItem id="vnd-Aq-71b">
-                                        <nil key="title"/>
+                                    <navigationItem title="Game is ready!" id="vnd-Aq-71b">
                                         <barButtonItem key="leftBarButtonItem" style="plain" id="mvY-8o-E8P">
-                                            <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ohY-4f-oty">
+                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ohY-4f-oty">
                                                 <rect key="frame" x="16" y="7" width="30" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" title="Exit"/>
@@ -195,16 +194,8 @@
                                                 </connections>
                                             </button>
                                         </barButtonItem>
-                                        <button key="titleView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="sH2-Ha-Q93">
-                                            <rect key="frame" x="153" y="7" width="69" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" title="Draw chip"/>
-                                            <connections>
-                                                <action selector="onEndTurnButtonTouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lRq-el-zAS"/>
-                                            </connections>
-                                        </button>
                                         <barButtonItem key="rightBarButtonItem" style="plain" id="Fm6-YJ-Vt5">
-                                            <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Q5b-0J-fIu">
+                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Q5b-0J-fIu">
                                                 <rect key="frame" x="320" y="7" width="39" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" title="Reset"/>
@@ -227,6 +218,17 @@
                                         <connections>
                                             <action selector="decreaseHandSize:" destination="BYZ-38-t0r" id="zqy-7n-SGs"/>
                                         </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="rqi-Av-Mxs"/>
+                                    <barButtonItem style="plain" id="Hve-Cw-tKX">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="sH2-Ha-Q93">
+                                            <rect key="frame" x="153" y="7" width="69" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="Draw chip"/>
+                                            <connections>
+                                                <action selector="onEndTurnButtonTouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lRq-el-zAS"/>
+                                            </connections>
+                                        </button>
                                     </barButtonItem>
                                     <barButtonItem systemItem="flexibleSpace" id="OMN-f5-SB8"/>
                                     <barButtonItem systemItem="add" id="ZK9-kT-LTO">
@@ -268,6 +270,7 @@
                         <outlet property="endTurnButton" destination="sH2-Ha-Q93" id="JbU-W2-c9t"/>
                         <outlet property="handScrollView" destination="ffC-FQ-489" id="OWT-PZ-0Co"/>
                         <outlet property="handScrollViewHeightLayoutConstraint" destination="pHf-Tl-ySe" id="Api-Tj-gnT"/>
+                        <outlet property="navigationLabel" destination="vnd-Aq-71b" id="w8e-7w-jpq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

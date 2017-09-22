@@ -23,6 +23,8 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
   
   @IBOutlet weak var handScrollView: UIScrollView!
   
+  @IBOutlet weak var navigationLabel: UINavigationItem!
+  
   private var game: Game!
   
   private var boardView: BoardView!
@@ -463,6 +465,7 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
   }
   
   private func showCurrentHand() {
+    navigationLabel.title = game.currentPlayer.name
     handViews[game.currentPlayerIndex].show()
   }
   
