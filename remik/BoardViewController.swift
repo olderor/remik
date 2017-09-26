@@ -84,9 +84,9 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     
     let alertController = UIAlertController(
       title: "Ready",
-      message: "Game is ready to start. The first player is \(game.currentPlayer.name). Press OK, when ready.", preferredStyle: .alert)
+      message: "Game is ready to start. The first player is \(game.currentPlayer.name)", preferredStyle: .alert)
     alertController.addAction(UIAlertAction(
-      title: "OK",
+      title: "I am \(game.currentPlayer.name)",
       style: UIAlertActionStyle.default,
       handler: {(alert: UIAlertAction!) in
         self.game.isStarted = true
@@ -290,9 +290,9 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
   private func waitForNextPlayer() {
     let alertController = UIAlertController(
       title: "Waiting for the next player",
-      message: "Give device to the next player \(game.currentPlayer.name). Press OK, when ready.", preferredStyle: .alert)
+      message: "Give device to the next player \(game.currentPlayer.name)", preferredStyle: .alert)
     alertController.addAction(UIAlertAction(
-      title: "OK",
+      title: "I am \(game.currentPlayer.name)!",
       style: UIAlertActionStyle.default,
       handler: {(alert: UIAlertAction!) in
         self.showCurrentHand()
