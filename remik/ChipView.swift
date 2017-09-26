@@ -11,7 +11,8 @@ import UIKit
 enum ChipViewState {
   case normal,
   wrongPlaced,
-  justDrawn
+  justDrawn,
+  placedToBoardByOtherPlayerInPreviousTurn
 }
 
 extension ChipColor {
@@ -70,6 +71,16 @@ extension ChipView {
       return UIColor.init(red: 255.0 / 255.0, green: 255.0 / 255.0, blue: 200.0 / 255.0, alpha: 1.0)
     case .wrongPlaced:
       return UIColor.yellow
+    case .placedToBoardByOtherPlayerInPreviousTurn:
+      return UIColor.init(red: 255.0 / 255.0, green: 255.0 / 255.0, blue: 200.0 / 255.0, alpha: 1.0)
+    }
+  }
+  
+  func updateChipBackgroundColor(forState state: ChipViewState) {
+    if chip.isInHistory && state == .normal {
+      backgroundColor = ChipView.getChipBackgroundColor(forState: .placedToBoardByOtherPlayerInPreviousTurn)
+    } else {
+      backgroundColor = ChipView.getChipBackgroundColor(forState: state)
     }
   }
 }
@@ -126,7 +137,7 @@ class ChipView: UIView {
     self.chip = chip
     super.init(frame: frame)
     currentLocation = self.center
-    backgroundColor = ChipView.getChipBackgroundColor(forState: .normal)
+    updateChipBackgroundColor(forState: .normal)
     layer.cornerRadius = 5.0
     layer.borderColor = chip.color.getBorderColor().cgColor
     layer.borderWidth = 5.0
@@ -175,13 +186,17 @@ class ChipView: UIView {
     cell.row = initialCell.row
     cell.column = initialCell.column
     chip.gamePosition = chip.initialGamePosition
-    backgroundColor = ChipView.getChipBackgroundColor(forState: .normal)
+    updateChipBackgroundColor(forState: .normal)
   }
   
   func applyState() {
     initialCell.row = cell.row
     initialCell.column = cell.column
+    if chip.gamePosition == .onBoard && chip.initialGamePosition == .inHand {
+      updateChipBackgroundColor(forState: .justDrawn)
+    } else {
+      updateChipBackgroundColor(forState: .normal)
+    }
     chip.initialGamePosition = chip.gamePosition
-    backgroundColor = ChipView.getChipBackgroundColor(forState: .normal)
   }
 }

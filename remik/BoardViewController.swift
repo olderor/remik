@@ -29,6 +29,7 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
   
   private var boardView: BoardView!
   private var handViews: [HandView]!
+  private var historyViews = Deque< Array<ChipView> >()
   
   var playerNames: [String]!
   
@@ -70,8 +71,7 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     
     game = Game(players: players)
     for handView in handViews {
-      handView.previousDrawnChipView?.backgroundColor =
-        ChipView.getChipBackgroundColor(forState: .normal)
+      handView.previousDrawnChipView?.updateChipBackgroundColor(forState: .normal)
     }
   }
   
@@ -154,11 +154,12 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     return state
   }
   
-  private func applyStateChanges(for playerIndex: Int) {
+  private func applyStateChanges(for playerIndex: Int) -> [ChipView] {
     game.chipsPlacedOnBoardCount = 0
     endTurnButton.setTitle(EndTurnStates.drawChip.rawValue, for: .normal)
     let handChipViewMatrix = Matrix<ChipView?>(rows: handViews[playerIndex].chipViewMatrix.rows, columns: 0, repeatedValue: nil)
     let boardChipViewMatrix = Matrix<ChipView?>(rows: 0, columns: 0, repeatedValue: nil)
+    var newChipsOnBoard = [ChipView]()
     for row in 0..<handViews[playerIndex].chipViewMatrix.rows {
       for column in 0..<handViews[playerIndex].chipViewMatrix.columns {
         if let chipView = handViews[playerIndex].chipViewMatrix[row, column] {
@@ -174,6 +175,10 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     for row in 0..<boardView.chipViewMatrix.rows {
       for column in 0..<boardView.chipViewMatrix.columns {
         if let chipView = boardView.chipViewMatrix[row, column] {
+          if chipView.chip.initialGamePosition == .inHand {
+            newChipsOnBoard.append(chipView)
+            chipView.chip.isInHistory = true
+          }
           chipView.applyState()
           updateChipView(
             chipView: chipView,
@@ -189,6 +194,7 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     boardView.updateContentSize()
     AnimationManager.addLastAnimationBlock(completion: nil, type: .animation, description: nil)
     AnimationManager.playAll()
+    return newChipsOnBoard
   }
   
   private func resetBoardStateChanges(for playerIndex: Int) {
@@ -282,7 +288,7 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
   private func hightlightWrongPlacedChipsOnBoard(range: CellRange) {
     for column in range.fromColumn..<range.toColumn {
       if let chipView = boardView.chipViewMatrix[range.row, column] {
-        chipView.backgroundColor = ChipView.getChipBackgroundColor(forState: .wrongPlaced)
+        chipView.updateChipBackgroundColor(forState: .wrongPlaced)
       }
     }
   }
@@ -296,7 +302,7 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
       style: UIAlertActionStyle.default,
       handler: {(alert: UIAlertAction!) in
         self.showCurrentHand()
-      }))
+    }))
     
     self.present(alertController, animated: true, completion: nil)
   }
@@ -314,6 +320,19 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     self.present(alertController, animated: true, completion: nil)
   }
   
+  private func prepeareNextTurn(currentPlayerIndex: Int) {
+    historyViews.append(applyStateChanges(for: currentPlayerIndex))
+    if historyViews.count == game.players.count {
+      let toRemove = historyViews.removeFirst()
+      for view in toRemove {
+        view.chip.isInHistory = false
+        view.updateChipBackgroundColor(forState: .normal)
+      }
+    }
+    handViews[currentPlayerIndex].hide()
+    waitForNextPlayer()
+  }
+  
   private func endTurn() {
     let currentPlayerIndex = game.currentPlayerIndex
     
@@ -324,10 +343,8 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
       if result.success {
         game.players[currentPlayerIndex].updatedState =
           getCurrentHandState(playerIndex: currentPlayerIndex)
-        applyStateChanges(for: currentPlayerIndex)
-        handViews[currentPlayerIndex].hide()
         game.drawChip()
-        waitForNextPlayer()
+        prepeareNextTurn(currentPlayerIndex: currentPlayerIndex)
       } else {
         for error in result.errors {
           hightlightWrongPlacedChipsOnBoard(range: error.cellRange)
@@ -347,9 +364,7 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
         onPlayerWon()
         return
       }
-      handViews[currentPlayerIndex].hide()
-      applyStateChanges(for: currentPlayerIndex)
-      waitForNextPlayer()
+      prepeareNextTurn(currentPlayerIndex: currentPlayerIndex)
     } else {
       var errorsList = [String]()
       for error in result.errors {

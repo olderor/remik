@@ -50,6 +50,7 @@ class Chip {
   
   var gamePosition = ChipGamePosition.inHand
   var initialGamePosition = ChipGamePosition.inHand
+  var isInHistory = false
   
   fileprivate init(color: ChipColor, number: Int?, text: String, type: ChipType) {
     self.color = color
