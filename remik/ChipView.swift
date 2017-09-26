@@ -129,7 +129,7 @@ class ChipView: UIView {
     backgroundColor = ChipView.getChipBackgroundColor(forState: .normal)
     layer.cornerRadius = 5.0
     layer.borderColor = chip.color.getBorderColor().cgColor
-    layer.borderWidth = 2.0
+    layer.borderWidth = 5.0
     switch chip.type {
     case .coloredJoker:
       imageView = UIImageView(frame: CGRect(x: imageViewOffset, y: imageViewOffset, width: frame.width - 2 * imageViewOffset, height: frame.height - 2 * imageViewOffset))
