@@ -31,6 +31,13 @@ extension ChipColor {
     }
   }
   
+  func getBorderGradientColors() -> [UIColor] {
+    if self == .any {
+      return [UIColor].rainbow2
+    }
+    return [getBorderColor()]
+  }
+  
   func getBorderColor() -> UIColor {
     switch self {
     case .red:
@@ -85,9 +92,108 @@ extension ChipView {
   }
 }
 
-class ChipView: UIView {
+extension UIColor {
+  static var indigo: UIColor {
+    return UIColor.init(
+      red: 75.0 / 255.0,
+      green: 0.0,
+      blue: 130.0 / 255.0,
+      alpha: 1.0)
+  }
+  
+  static var violet: UIColor {
+    return UIColor.init(
+      red: 127.0 / 255.0,
+      green: 0.0,
+      blue: 255.0 / 255.0,
+      alpha: 1.0)
+  }
+  
+  convenience init(hexValue: Int) {
+    self.init(
+      red: CGFloat((hexValue & 0xFF0000) >> 16) / 255.0,
+      green: CGFloat((hexValue & 0x00FF00) >> 8) / 255.0,
+      blue: CGFloat((hexValue & 0x0000FF) >> 0) / 255.0,
+      alpha: 1.0)
+  }
+}
+
+extension Array where Element: UIColor  {
+  static var rainbow: [Element] {
+    return [UIColor.red,
+            UIColor.orange,
+            UIColor.yellow,
+            UIColor.green,
+            UIColor.blue,
+            UIColor.indigo,
+            UIColor.violet] as! [Element]
+  }
+  static var rainbow2: [Element] {
+    return [UIColor.init(hexValue: 0x61bb46),
+            UIColor.init(hexValue: 0xfdb827),
+            UIColor.init(hexValue: 0xf5821f),
+            UIColor.init(hexValue: 0xe03a3e),
+            UIColor.init(hexValue: 0x963d97),
+            UIColor.init(hexValue: 0x009ddc)] as! [Element]
+  }
+}
+
+infix operator *: MultiplicationPrecedence
+extension Array {
+  static func * (left: Array, right: Int) -> Array {
+    var result = [Element]()
+    for _ in 0..<right {
+      for index in 0..<left.count {
+        result.append(left[index])
+      }
+    }
+    return result
+  }
+  
+  func getShiftedCopy(shiftingValue: Int) -> Array {
+    var result = [Element]()
+    for index in shiftingValue..<self.count {
+      result.append(self[index])
+    }
+    for index in 0..<shiftingValue {
+      result.append(self[index])
+    }
+    return result
+  }
+}
+
+extension CAGradientLayer {
+  static func getGradientBorder(colors: [CGColor],
+                                bounds: CGRect,
+                                width: CGFloat = 10,
+                                cornerRadius: CGFloat = 5) -> CAGradientLayer {
+    
+    let gradientLayer = CAGradientLayer()
+    gradientLayer.frame =  CGRect(origin: CGPoint.zero, size: bounds.size)
+    gradientLayer.startPoint = CGPoint(x: 1.0, y: 1.0)
+    gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
+    gradientLayer.colors = colors
+    
+    let shapeLayer = CAShapeLayer()
+    shapeLayer.lineWidth = width
+    shapeLayer.path = UIBezierPath(rect: bounds).cgPath
+    shapeLayer.fillColor = nil
+    shapeLayer.strokeColor = UIColor.black.cgColor
+    gradientLayer.mask = shapeLayer
+    
+    gradientLayer.cornerRadius = cornerRadius
+    return gradientLayer
+  }
+}
+
+class ChipView: UIView, CAAnimationDelegate {
   var label: UILabel!
   var imageView: UIImageView!
+  
+  var gradientLayer: CAGradientLayer!
+  var gradientColorsOffset = 0
+  var gradientColors: [CGColor]!
+  
   var chip: Chip
   
   let imageViewOffset: CGFloat = 5
@@ -138,9 +244,17 @@ class ChipView: UIView {
     super.init(frame: frame)
     currentLocation = self.center
     updateChipBackgroundColor(forState: .normal)
-    layer.cornerRadius = 5.0
-    layer.borderColor = chip.color.getBorderColor().cgColor
-    layer.borderWidth = 5.0
+    
+    gradientColors = chip.color.getBorderGradientColors().map({ $0.cgColor })
+    
+    self.layer.cornerRadius = 5
+    gradientLayer = CAGradientLayer.getGradientBorder(
+      colors: getCurrentGradientColors(),
+      bounds: self.layer.bounds,
+      cornerRadius: self.layer.cornerRadius)
+    self.layer.addSublayer(gradientLayer)
+    gradientLayer.drawsAsynchronously = true
+    
     switch chip.type {
     case .coloredJoker:
       imageView = UIImageView(frame: CGRect(x: imageViewOffset, y: imageViewOffset, width: frame.width - 2 * imageViewOffset, height: frame.height - 2 * imageViewOffset))
@@ -155,13 +269,36 @@ class ChipView: UIView {
       label.font = UIFont.boldSystemFont(ofSize: 20.0)
       self.addSubview(label)
       break
-    default:
+    case .anyJoker:
+      addBorderAnimation()
       break
     }
   }
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+  
+  func getCurrentGradientColors() -> [CGColor] {
+    let colors = gradientColors.getShiftedCopy(shiftingValue: gradientColorsOffset)
+    return colors * 3
+  }
+  
+  func addBorderAnimation() {
+    let animation = CABasicAnimation(keyPath: "colors")
+    animation.fillMode = kCAFillModeForwards
+    // animation.fromValue = getCurrentGradientColors()
+    gradientColorsOffset = (gradientColorsOffset + 1) % gradientColors.count
+    animation.toValue = getCurrentGradientColors()
+    animation.duration = 0.5
+    animation.isRemovedOnCompletion = false
+    animation.delegate = self
+    self.gradientLayer.add(animation, forKey: "colorChange")
+  }
+  
+  func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+      gradientLayer.colors = getCurrentGradientColors()
+      addBorderAnimation()
   }
   
   func addAnimationToCurrentPosition() {

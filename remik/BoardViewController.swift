@@ -320,8 +320,13 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     self.present(alertController, animated: true, completion: nil)
   }
   
-  private func prepeareNextTurn(currentPlayerIndex: Int) {
+  private func prepeareNextTurn(currentPlayerIndex: Int, shouldDraw: Bool) {
     historyViews.append(applyStateChanges(for: currentPlayerIndex))
+    
+    if shouldDraw {
+      game.drawChip()
+    }
+    
     if historyViews.count == game.players.count {
       let toRemove = historyViews.removeFirst()
       for view in toRemove {
@@ -343,8 +348,7 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
       if result.success {
         game.players[currentPlayerIndex].updatedState =
           getCurrentHandState(playerIndex: currentPlayerIndex)
-        game.drawChip()
-        prepeareNextTurn(currentPlayerIndex: currentPlayerIndex)
+        prepeareNextTurn(currentPlayerIndex: currentPlayerIndex, shouldDraw: true)
       } else {
         for error in result.errors {
           hightlightWrongPlacedChipsOnBoard(range: error.cellRange)
@@ -364,7 +368,7 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
         onPlayerWon()
         return
       }
-      prepeareNextTurn(currentPlayerIndex: currentPlayerIndex)
+      prepeareNextTurn(currentPlayerIndex: currentPlayerIndex, shouldDraw: false)
     } else {
       var errorsList = [String]()
       for error in result.errors {
