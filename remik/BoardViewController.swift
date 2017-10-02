@@ -393,14 +393,14 @@ class BoardViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
       message: "You did some actions that turned board into incorrect state. Do you want to cancel your actions and end the turn by drawing a chip or continue your turn and do some other actions?", preferredStyle: .alert)
     alertController.addAction(UIAlertAction(
       title: "Reset",
-      style: UIAlertActionStyle.default,
+      style: .destructive,
       handler: {(alert: UIAlertAction!) in
         self.resetStateChanges(for: self.game.currentPlayerIndex)
         self.endTurn()
     }))
     alertController.addAction(UIAlertAction(
       title: "Continue turn",
-      style: UIAlertActionStyle.default,
+      style: .default,
       handler: nil))
     self.present(alertController, animated: true, completion: nil)
   }
