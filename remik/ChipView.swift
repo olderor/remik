@@ -245,15 +245,21 @@ class ChipView: UIView, CAAnimationDelegate {
     currentLocation = self.center
     updateChipBackgroundColor(forState: .normal)
     
-    gradientColors = chip.color.getBorderGradientColors().map({ $0.cgColor })
-    
     self.layer.cornerRadius = 5
-    gradientLayer = CAGradientLayer.getGradientBorder(
-      colors: getCurrentGradientColors(),
-      bounds: self.layer.bounds,
-      cornerRadius: self.layer.cornerRadius)
-    self.layer.addSublayer(gradientLayer)
-    gradientLayer.drawsAsynchronously = true
+    if chip.type == .anyJoker {
+      gradientColors = chip.color.getBorderGradientColors().map({ $0.cgColor })
+    
+      self.layer.cornerRadius = 5
+      gradientLayer = CAGradientLayer.getGradientBorder(
+        colors: getCurrentGradientColors(),
+        bounds: self.layer.bounds,
+        cornerRadius: self.layer.cornerRadius)
+      self.layer.addSublayer(gradientLayer)
+      gradientLayer.drawsAsynchronously = true
+    } else {
+      self.layer.borderColor = self.chip.color.getBorderColor().cgColor
+      self.layer.borderWidth = 5
+    }
     
     switch chip.type {
     case .coloredJoker:

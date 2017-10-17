@@ -29,7 +29,7 @@ class ChipsCollection {
   static let maxNumber = 17
   static let numberCount = 2
   static let coloredJokersCount = 2
-  static let uncoloredJokersCount = 4
+  static let uncoloredJokersCount = 8
   
   init() {
     collection = ChipsCollection.createNewCollection()
